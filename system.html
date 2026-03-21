@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>FlexTram System Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow-x:hidden}
+body{
+  font-family:'Montserrat',sans-serif;
+  background:#070D1C;
+  color:#F0F4F8;
+}
+
+/* ── NAV ── */
+.sys-nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 32px;
+  background:rgba(7,13,28,.85);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.sys-nav .logo{font-weight:700;font-size:18px;letter-spacing:2px;text-transform:uppercase;color:#fff}
+.sys-nav .logo span{color:#51cbce}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+  padding:100px 24px 60px;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-40%;left:-20%;
+  width:140%;height:140%;
+  background:radial-gradient(ellipse at 30% 20%,rgba(81,203,206,.08) 0%,transparent 60%),
+             radial-gradient(ellipse at 70% 80%,rgba(245,89,61,.06) 0%,transparent 50%);
+  pointer-events:none;
+}
+.hero h1{font-size:clamp(28px,5vw,52px);font-weight:700;margin-bottom:12px;position:relative}
+.hero h1 em{font-style:normal;color:#51cbce}
+.hero p.sub{font-size:clamp(14px,2vw,18px);color:#7A9BB5;max-width:600px;margin:0 auto 48px;line-height:1.6;position:relative}
+
+/* ── TOGGLE ── */
+.toggle-row{
+  display:flex;align-items:center;gap:16px;
+  position:relative;z-index:2;margin-bottom:32px;
+}
+.toggle-label{
+  font-size:14px;font-weight:600;letter-spacing:1px;text-transform:uppercase;
+  transition:color .4s;
+}
+.toggle-label.active{color:#F0F4F8}
+.toggle-label.dim{color:#4A6070}
+.toggle-label.chaos{color:#f5593d}
+.toggle-label.order{color:#51cbce}
+
+.switch{
+  width:64px;height:32px;border-radius:16px;cursor:pointer;
+  background:#f5593d;position:relative;
+  transition:background .5s cubic-bezier(.34,1.56,.64,1);
+  border:2px solid rgba(255,255,255,.1);
+  flex-shrink:0;
+}
+.switch.on{background:#51cbce}
+.switch .knob{
+  width:24px;height:24px;border-radius:50%;
+  background:#fff;position:absolute;top:2px;left:3px;
+  transition:transform .5s cubic-bezier(.34,1.56,.64,1);
+  box-shadow:0 2px 8px rgba(0,0,0,.3);
+}
+.switch.on .knob{transform:translateX(32px)}
+
+/* ── CANVAS ── */
+.canvas-wrap{
+  position:relative;width:100%;max-width:960px;
+  aspect-ratio:960/520;
+  border-radius:16px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.06);
+  background:#0A1628;
+  box-shadow:0 0 80px rgba(81,203,206,.06);
+}
+.canvas-wrap canvas{width:100%;height:100%;display:block}
+
+/* ── STATS ── */
+.stats{
+  display:flex;gap:24px;flex-wrap:wrap;justify-content:center;
+  margin-top:32px;position:relative;
+}
+.stat{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;padding:16px 24px;text-align:center;
+  min-width:140px;
+  transition:border-color .4s,background .4s;
+}
+.stat.bad{border-color:rgba(245,89,61,.3);background:rgba(245,89,61,.06)}
+.stat.good{border-color:rgba(81,203,206,.3);background:rgba(81,203,206,.06)}
+.stat .val{font-size:28px;font-weight:700;line-height:1;margin-bottom:4px;transition:color .4s}
+.stat .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#7A9BB5}
+
+/* ── SECTIONS ── */
+.info-section{
+  max-width:800px;margin:0 auto;padding:80px 24px;text-align:center;
+}
+.info-section h2{font-size:clamp(22px,3.5vw,36px);font-weight:700;margin-bottom:16px}
+.info-section h2 span{color:#51cbce}
+.info-section p{color:#7A9BB5;line-height:1.7;font-size:clamp(14px,1.8vw,16px)}
+
+/* ── FOOTER ── */
+.sys-footer{
+  text-align:center;padding:32px 24px;
+  color:#4A6070;font-size:12px;
+  border-top:1px solid rgba(255,255,255,.04);
+}
+</style>
+</head>
+<body>
+
+<nav class="sys-nav">
+  <div class="logo">Flex<span>Tram</span></div>
+</nav>
+
+<section class="hero">
+  <h1>The Parking Lot <em>Problem</em></h1>
+  <p class="sub">Large events move thousands of people across massive lots. Golf carts create chaos. FlexTram creates order.</p>
+
+  <div class="toggle-row">
+    <span class="toggle-label chaos active" id="lblChaos">Golf Carts</span>
+    <div class="switch" id="modeSwitch">
+      <div class="knob"></div>
+    </div>
+    <span class="toggle-label order dim" id="lblOrder">FlexTram</span>
+  </div>
+
+  <div class="canvas-wrap">
+    <canvas id="cv"></canvas>
+  </div>
+
+  <div class="stats">
+    <div class="stat bad" id="statThroughput"><div class="val" id="valThroughput">0</div><div class="lbl">People Moved / min</div></div>
+    <div class="stat bad" id="statCollisions"><div class="val" id="valCollisions">0</div><div class="lbl">Incidents</div></div>
+    <div class="stat bad" id="statWait"><div class="val" id="valWait">0s</div><div class="lbl">Avg Wait</div></div>
+    <div class="stat bad" id="statCapacity"><div class="val" id="valCapacity">0%</div><div class="lbl">Lot Utilization</div></div>
+    <div class="stat bad" id="statRevenue"><div class="val" id="valRevenue">$0</div><div class="lbl">Ad Revenue</div></div>
+  </div>
+</section>
+
+<section class="info-section">
+  <h2>From Chaos to <span>Revenue</span></h2>
+  <p>FlexTram replaces scattered golf carts with a guided tram system that follows fixed routes through your lot. Attendees line up at designated stops, board in order, and arrive safely. No rogue carts. No pedestrian collisions. No gridlock.</p>
+  <br>
+  <p>Better yet — <strong style="color:#51cbce">monetize every square foot</strong>. Each stop becomes an experiential ad activation zone. Each tram is a moving billboard with full-wrap branding. Captive audiences, guaranteed dwell time, premium impressions. Turn your parking lot from a liability into a revenue center.</p>
+</section>
+
+<footer class="sys-footer">&copy; 2026 FlexTram &mdash; Built To Move</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ════════════════════════════════════════════
+   CONSTANTS
+   ════════════════════════════════════════════ */
+const cv = document.getElementById('cv');
+const ctx = cv.getContext('2d');
+const W = 960, H = 520;
+
+// Colors
+const C = {
+  lot:     '#141E30',
+  lotLine: 'rgba(255,255,255,.04)',
+  person:  '#60A5FA',   // blue dot
+  personG: '#34D399',   // green (orderly person)
+  cart:    '#FB923C',   // orange golf cart
+  cartBad: '#f5593d',   // collision flash
+  tram:    '#51cbce',   // teal tram
+  track:   'rgba(81,203,206,.25)',
+  trackGlow:'rgba(81,203,206,.08)',
+  stop:    '#51cbce',
+  queue:   '#34D399',
+  warn:    '#FBBF24',
+  text:    '#7A9BB5',
+  white:   '#F0F4F8',
+};
+
+/* ════════════════════════════════════════════
+   STATE
+   ════════════════════════════════════════════ */
+let mode = 0;        // 0 = chaos, 1 = flextram
+let modeA = 0;       // animated blend 0→1
+let rafId = null;
+let lastTs = 0;
+
+/* resize */
+function resize(){
+  const r = cv.parentElement.getBoundingClientRect();
+  cv.width = Math.round(r.width * devicePixelRatio);
+  cv.height = Math.round(r.height * devicePixelRatio);
+}
+resize();
+window.addEventListener('resize', resize);
+
+function sx(x){ return x * cv.width / W }
+function sy(y){ return y * cv.height / H }
+
+/* ════════════════════════════════════════════
+   CHAOS MODE — golf carts + pedestrians
+   ════════════════════════════════════════════ */
+const CHAOS_PEOPLE = [];
+const CHAOS_CARTS  = [];
+let chaosCollisions = 0;
+let chaosMoved = 0;
+let chaosSpawnTimer = 0;
+let chaosIncidentFlash = [];
+
+function initChaos(){
+  CHAOS_PEOPLE.length = 0;
+  CHAOS_CARTS.length = 0;
+  chaosCollisions = 0;
+  chaosMoved = 0;
+  chaosSpawnTimer = 0;
+  chaosIncidentFlash.length = 0;
+
+  // spawn initial crowd
+  for(let i=0;i<90;i++){
+    CHAOS_PEOPLE.push(makePerson());
+  }
+  // spawn golf carts
+  for(let i=0;i<8;i++){
+    CHAOS_CARTS.push(makeCart(i));
+  }
+}
+
+function makePerson(){
+  // people spawn at entry (left) and drift toward venue (right)
+  let x = 30 + Math.random()*120;
+  let y = 40 + Math.random()*(H-80);
+  return {
+    x, y,
+    vx: .15 + Math.random()*.3, // bias toward venue (right)
+    vy: (Math.random()-.5)*0.4,
+    wander: Math.random()*Math.PI*2,
+    r: 4 + Math.random()*1.5,
+    hit: 0,
+    opacity: .5 + Math.random()*.5,
+  };
+}
+
+function makeCart(i){
+  // carts wander somewhat randomly
+  let angle = Math.random()*Math.PI*2;
+  return {
+    x: 200 + Math.random()*560,
+    y: 80 + Math.random()*360,
+    angle,
+    speed: 1.2 + Math.random()*1.0,
+    turnTimer: 0,
+    turnDir: Math.random()<.5?1:-1,
+    w: 32, h: 16,
+    flash: 0, // collision flash
+    passengers: Math.floor(Math.random()*3)+1,
+  };
+}
+
+function updateChaos(dt){
+  chaosSpawnTimer += dt;
+  if(chaosSpawnTimer > 200 && CHAOS_PEOPLE.length < 150){
+    CHAOS_PEOPLE.push(makePerson());
+    chaosSpawnTimer = 0;
+  }
+
+  // update people
+  for(let p of CHAOS_PEOPLE){
+    p.wander += (Math.random()-.5)*.15;
+    p.vx += Math.cos(p.wander)*.02;
+    p.vy += Math.sin(p.wander)*.02;
+    // drag
+    p.vx *= .97; p.vy *= .97;
+    p.x += p.vx; p.y += p.vy;
+    // bounds — strong pushback so dots don't stick to edges
+    if(p.x<40){ p.vx+=.4; p.x=40; }
+    if(p.x>W-40){ p.vx-=.4; p.x=W-40; }
+    if(p.y<40){ p.vy+=.4; p.y=40; }
+    if(p.y>H-40){ p.vy-=.4; p.y=H-40; }
+    if(p.hit>0) p.hit -= dt;
+  }
+
+  // update carts
+  for(let c of CHAOS_CARTS){
+    c.turnTimer -= dt;
+    if(c.turnTimer<=0){
+      c.turnDir = Math.random()<.5?1:-1;
+      c.turnTimer = 800+Math.random()*2000;
+      c.speed = 1.0 + Math.random()*1.2;
+    }
+    c.angle += c.turnDir * .008;
+    c.x += Math.cos(c.angle)*c.speed;
+    c.y += Math.sin(c.angle)*c.speed;
+    // bounce off edges
+    if(c.x<60||c.x>W-60){ c.angle = Math.PI - c.angle; c.x = Math.max(60,Math.min(W-60,c.x)); }
+    if(c.y<60||c.y>H-60){ c.angle = -c.angle; c.y = Math.max(60,Math.min(H-60,c.y)); }
+    if(c.flash>0) c.flash -= dt;
+
+    // check collisions with people
+    for(let p of CHAOS_PEOPLE){
+      let dx = p.x - c.x, dy = p.y - c.y;
+      let dist = Math.sqrt(dx*dx+dy*dy);
+      if(dist < 22){
+        // push person away
+        p.vx += dx/dist * 2;
+        p.vy += dy/dist * 2;
+        if(p.hit<=0){
+          p.hit = 600;
+          c.flash = 400;
+          if(Math.random()<.3){
+            chaosCollisions++;
+            chaosIncidentFlash.push({x:p.x,y:p.y,t:800});
+          }
+        }
+      }
+    }
+  }
+
+  // incidents decay
+  for(let i=chaosIncidentFlash.length-1;i>=0;i--){
+    chaosIncidentFlash[i].t -= dt;
+    if(chaosIncidentFlash[i].t<=0) chaosIncidentFlash.splice(i,1);
+  }
+
+  chaosMoved = Math.floor(12 + Math.sin(Date.now()/3000)*4);
+}
+
+function drawChaos(alpha){
+  ctx.globalAlpha = alpha;
+
+  // lot markings — parking grid
+  ctx.strokeStyle = C.lotLine;
+  ctx.lineWidth = sx(1);
+  for(let x=60;x<W;x+=50){
+    ctx.beginPath();ctx.moveTo(sx(x),sy(50));ctx.lineTo(sx(x),sy(H-30));ctx.stroke();
+  }
+  for(let y=50;y<H;y+=50){
+    ctx.beginPath();ctx.moveTo(sx(40),sy(y));ctx.lineTo(sx(W-20),sy(y));ctx.stroke();
+  }
+
+  // entry/exit labels — big and prominent
+  ctx.font = `700 ${sx(16)}px Montserrat`;
+  ctx.textAlign = 'center';
+  // ENTRY marker
+  ctx.fillStyle = 'rgba(96,165,250,.15)';
+  ctx.beginPath();
+  ctx.roundRect(sx(30),sy(12),sx(100),sy(32),sx(6));
+  ctx.fill();
+  ctx.fillStyle = C.person;
+  ctx.fillText('ENTRY', sx(80), sy(35));
+  // VENUE marker
+  ctx.fillStyle = 'rgba(52,211,153,.15)';
+  ctx.beginPath();
+  ctx.roundRect(sx(810),sy(12),sx(110),sy(32),sx(6));
+  ctx.fill();
+  ctx.fillStyle = '#34D399';
+  ctx.fillText('VENUE', sx(865), sy(35));
+
+  // draw people
+  for(let p of CHAOS_PEOPLE){
+    ctx.beginPath();
+    ctx.arc(sx(p.x),sy(p.y),sx(p.r),0,Math.PI*2);
+    if(p.hit>0){
+      ctx.fillStyle = C.cartBad;
+      ctx.shadowColor = C.cartBad;
+      ctx.shadowBlur = sx(8);
+    } else {
+      ctx.fillStyle = C.person;
+      ctx.shadowColor = C.person;
+      ctx.shadowBlur = sx(3);
+    }
+    ctx.globalAlpha = alpha * p.opacity;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+  ctx.globalAlpha = alpha;
+
+  // draw carts
+  for(let c of CHAOS_CARTS){
+    ctx.save();
+    ctx.translate(sx(c.x),sy(c.y));
+    ctx.rotate(c.angle);
+    let col = c.flash>0 ? C.cartBad : C.cart;
+    // cart body
+    ctx.fillStyle = col;
+    ctx.shadowColor = col;
+    ctx.shadowBlur = c.flash>0 ? sx(12) : sx(4);
+    ctx.beginPath();
+    ctx.roundRect(sx(-c.w/2),sy(-c.h/2),sx(c.w),sy(c.h),sx(4));
+    ctx.fill();
+    // windshield
+    ctx.fillStyle = 'rgba(255,255,255,.3)';
+    ctx.fillRect(sx(c.w/2-6),sy(-c.h/2+2),sx(5),sy(c.h-4));
+    ctx.shadowBlur=0;
+    ctx.restore();
+  }
+
+  // collision flashes
+  for(let f of chaosIncidentFlash){
+    let a = f.t / 800;
+    ctx.beginPath();
+    ctx.arc(sx(f.x),sy(f.y),sx(18*(1-a)+6),0,Math.PI*2);
+    ctx.strokeStyle = `rgba(245,89,61,${a*.8})`;
+    ctx.lineWidth = sx(2);
+    ctx.stroke();
+    // "!" marker
+    ctx.fillStyle = `rgba(245,89,61,${a})`;
+    ctx.font = `bold ${sx(18)}px Montserrat`;
+    ctx.textAlign = 'center';
+    ctx.fillText('!', sx(f.x), sy(f.y-18));
+  }
+
+  // gridlock text
+  if(CHAOS_PEOPLE.length > 100){
+    let pulse = .5 + Math.sin(Date.now()/400)*.5;
+    ctx.fillStyle = `rgba(245,89,61,${.15+pulse*.15})`;
+    ctx.font = `bold ${sx(20)}px Montserrat`;
+    ctx.textAlign = 'center';
+    ctx.fillText('GRIDLOCK', sx(W/2), sy(H-12));
+  }
+
+  ctx.globalAlpha = 1;
+}
+
+/* ════════════════════════════════════════════
+   FLEXTRAM MODE — trams on tracks, orderly queues
+   ════════════════════════════════════════════ */
+const TRACKS = [
+  {pts:[{x:50,y:400},{x:300,y:400},{x:480,y:395},{x:660,y:400},{x:910,y:400}], color:'#51cbce'},
+];
+
+const STOPS = [
+  {x:80,  y:400, label:'ENTRY',     track:0, ad:'COCA-COLA LOUNGE', adColor:'#f5593d'},
+  {x:480, y:395, label:'MID-LOT',   track:0, ad:'NIKE ACTIVATION', adColor:'#FB923C'},
+  {x:880, y:400, label:'VENUE',     track:0, ad:'VIP ENTRY', adColor:'#FBBF24'},
+];
+
+const TRAM_BRANDS = ['SPONSOR A','SPONSOR B'];
+
+const TRAMS = [];
+const FLEX_QUEUE = []; // people waiting at stops
+const WALKERS = [];    // people walking toward stops
+let flexMoved = 0;
+let flexPhase = 0;
+let adImpressions = 0;
+
+function initFlex(){
+  TRAMS.length = 0;
+  FLEX_QUEUE.length = 0;
+  WALKERS.length = 0;
+  flexMoved = 0;
+  flexPhase = 0;
+  adImpressions = 0;
+
+  // 2 trams on the single track
+  TRAMS.push({track:0, t:0, speed:.005, passengers:0, maxP:20, dir:1, loading:0, brand:TRAM_BRANDS[0]});
+  TRAMS.push({track:0, t:.55, speed:.005, passengers:0, maxP:20, dir:1, loading:0, brand:TRAM_BRANDS[1]});
+
+  // seed some queues
+  for(let s of STOPS){
+    let si = STOPS.indexOf(s);
+    if(s.label==='VENUE') continue;
+    for(let i=0;i<3+Math.floor(Math.random()*3);i++){
+      FLEX_QUEUE.push({stopIdx:si,queuePos:i,boarded:false,opacity:.6+Math.random()*.4,side:-1});
+    }
+  }
+  // seed some walkers
+  for(let i=0;i<20;i++) spawnWalker();
+}
+
+function spawnWalker(){
+  // pick a non-venue stop
+  let candidates = STOPS.filter(s=>s.label!=='VENUE');
+  let s = candidates[Math.floor(Math.random()*candidates.length)];
+  let si = STOPS.indexOf(s);
+  // track at bottom — all people come from the top and queue above the track
+  let x = s.x + (Math.random()-.5)*120;
+  let y = -10 - Math.random()*30;
+  let side = -1; // queue above track
+  WALKERS.push({x, y, targetStop:si, speed:.6+Math.random()*.4, opacity:.4+Math.random()*.5, arrived:false, side});
+}
+
+function catmull(pts, t){
+  // simple linear interp along polyline
+  let totalLen = 0;
+  let segs = [];
+  for(let i=0;i<pts.length-1;i++){
+    let dx=pts[i+1].x-pts[i].x, dy=pts[i+1].y-pts[i].y;
+    let len=Math.sqrt(dx*dx+dy*dy);
+    segs.push({len,i});
+    totalLen+=len;
+  }
+  let target = t * totalLen;
+  let acc = 0;
+  for(let s of segs){
+    if(acc+s.len >= target){
+      let lt = (target-acc)/s.len;
+      let p0=pts[s.i], p1=pts[s.i+1];
+      return {
+        x: p0.x + (p1.x-p0.x)*lt,
+        y: p0.y + (p1.y-p0.y)*lt,
+        angle: Math.atan2(p1.y-p0.y, p1.x-p0.x),
+      };
+    }
+    acc+=s.len;
+  }
+  let last=pts[pts.length-1],prev=pts[pts.length-2];
+  return{x:last.x,y:last.y,angle:Math.atan2(last.y-prev.y,last.x-prev.x)};
+}
+
+function updateFlex(dt){
+  flexPhase += dt;
+
+  // spawn new walkers from edges
+  if(Math.random()<.02 && WALKERS.length < 20) spawnWalker();
+
+  // move walkers toward their target stop
+  for(let w of WALKERS){
+    if(w.arrived) continue;
+    let s = STOPS[w.targetStop];
+    // target the queue area on walker's side of the track
+    let count = FLEX_QUEUE.filter(q=>q.stopIdx===w.targetStop&&!q.boarded&&q.side===w.side).length;
+    let tx = s.x - 14 - count * 8;
+    let ty = s.y + (w.side * 30);
+    let dx = tx - w.x, dy = ty - w.y;
+    let dist = Math.sqrt(dx*dx+dy*dy);
+    if(dist < 8){
+      // snap to queue position and convert
+      w.arrived = true;
+      if(count < 10){
+        FLEX_QUEUE.push({stopIdx:w.targetStop,queuePos:count,boarded:false,opacity:w.opacity,side:w.side});
+        adImpressions++;
+      }
+    } else {
+      // decelerate as they approach
+      let spd = Math.min(w.speed, dist * .06);
+      spd = Math.max(spd, .3);
+      w.x += (dx/dist) * spd;
+      w.y += (dy/dist) * spd;
+    }
+  }
+  // clean up arrived walkers
+  for(let i=WALKERS.length-1;i>=0;i--){
+    if(WALKERS[i].arrived) WALKERS.splice(i,1);
+  }
+
+  // update trams
+  for(let tr of TRAMS){
+    let track = TRACKS[tr.track];
+    // check if near a stop
+    let atStop = false;
+    for(let s of STOPS){
+      if(s.track !== tr.track) continue;
+      let pos = catmull(track.pts, tr.t);
+      let dx=pos.x-s.x, dy=pos.y-s.y;
+      if(Math.sqrt(dx*dx+dy*dy)<45){
+        atStop = true;
+        if(tr.loading<=0){
+          // unload at venue
+          if(s.label === 'VENUE' && tr.passengers > 0){
+            flexMoved += tr.passengers;
+            tr.passengers = 0;
+          }
+          // board people at non-venue stops
+          if(s.label !== 'VENUE'){
+            let si = STOPS.indexOf(s);
+            let waiting = FLEX_QUEUE.filter(q=>q.stopIdx===si&&!q.boarded);
+            let toBoard = Math.min(waiting.length, tr.maxP - tr.passengers, 5);
+            for(let i=0;i<toBoard;i++){
+              waiting[i].boarded = true;
+              tr.passengers++;
+              flexMoved++;
+            }
+          }
+          tr.loading = 100;
+        }
+        tr.loading -= dt;
+        break;
+      }
+    }
+
+    if(!atStop || tr.loading <= 0){
+      tr.t += tr.speed * tr.dir;
+      if(tr.t >= 1){ tr.t = 1; tr.dir = -1; }
+      if(tr.t <= 0){ tr.t = 0; tr.dir = 1; }
+      // tram wrap impressions as it passes people
+      if(Math.random()<.02) adImpressions++;
+    }
+  }
+
+  // reindex queues
+  for(let si=0;si<STOPS.length;si++){
+    let q = FLEX_QUEUE.filter(q=>q.stopIdx===si&&!q.boarded);
+    q.forEach((p,i)=>p.queuePos=i);
+  }
+  // remove boarded
+  for(let i=FLEX_QUEUE.length-1;i>=0;i--){
+    if(FLEX_QUEUE[i].boarded) FLEX_QUEUE.splice(i,1);
+  }
+}
+
+function drawFlex(alpha){
+  ctx.globalAlpha = alpha;
+
+  // subtle grid
+  ctx.strokeStyle = 'rgba(81,203,206,.03)';
+  ctx.lineWidth = sx(1);
+  for(let x=0;x<W;x+=28){
+    ctx.beginPath();ctx.moveTo(sx(x),0);ctx.lineTo(sx(x),sy(H));ctx.stroke();
+  }
+  for(let y=0;y<H;y+=28){
+    ctx.beginPath();ctx.moveTo(0,sy(y));ctx.lineTo(sx(W),sy(y));ctx.stroke();
+  }
+
+  // draw tracks
+  for(let track of TRACKS){
+    // glow
+    ctx.beginPath();
+    ctx.moveTo(sx(track.pts[0].x),sy(track.pts[0].y));
+    for(let i=1;i<track.pts.length;i++){
+      ctx.lineTo(sx(track.pts[i].x),sy(track.pts[i].y));
+    }
+    ctx.strokeStyle = C.trackGlow;
+    ctx.lineWidth = sx(28);
+    ctx.stroke();
+
+    // rail lines
+    for(let offset of [-7,7]){
+      ctx.beginPath();
+      ctx.moveTo(sx(track.pts[0].x),sy(track.pts[0].y+offset));
+      for(let i=1;i<track.pts.length;i++){
+        ctx.lineTo(sx(track.pts[i].x),sy(track.pts[i].y+offset));
+      }
+      ctx.strokeStyle = C.track;
+      ctx.lineWidth = sx(2);
+      ctx.stroke();
+    }
+
+    // ties
+    ctx.strokeStyle = 'rgba(81,203,206,.1)';
+    ctx.lineWidth = sx(1);
+    for(let t=0;t<=1;t+=.02){
+      let p = catmull(track.pts, t);
+      let perp = p.angle + Math.PI/2;
+      ctx.beginPath();
+      ctx.moveTo(sx(p.x+Math.cos(perp)*10),sy(p.y+Math.sin(perp)*10));
+      ctx.lineTo(sx(p.x-Math.cos(perp)*10),sy(p.y-Math.sin(perp)*10));
+      ctx.stroke();
+    }
+  }
+
+  // draw walkers approaching stops
+  for(let w of WALKERS){
+    if(w.arrived) continue;
+    ctx.beginPath();
+    ctx.arc(sx(w.x),sy(w.y),sx(5),0,Math.PI*2);
+    ctx.fillStyle = C.personG;
+    ctx.shadowColor = C.personG;
+    ctx.shadowBlur = sx(2);
+    ctx.globalAlpha = alpha * w.opacity;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+  ctx.globalAlpha = alpha;
+
+  // draw stops with ad activation callouts
+  for(let s of STOPS){
+    // ad activation zone glow
+    let adPulse = .4 + Math.sin(Date.now()/800 + STOPS.indexOf(s))*.3;
+    ctx.fillStyle = `rgba(255,255,255,${.02*adPulse})`;
+    ctx.beginPath();
+    ctx.roundRect(sx(s.x-80),sy(s.y-88),sx(160),sy(78),sx(8));
+    ctx.fill();
+
+    // dashed ad zone border
+    ctx.strokeStyle = `${s.adColor}40`;
+    ctx.lineWidth = sx(1);
+    ctx.setLineDash([sx(4),sx(4)]);
+    ctx.beginPath();
+    ctx.roundRect(sx(s.x-80),sy(s.y-88),sx(160),sy(78),sx(8));
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // ad activation label
+    ctx.fillStyle = s.adColor;
+    ctx.globalAlpha = alpha * (.5 + adPulse*.4);
+    ctx.font = `700 ${sx(13)}px Montserrat`;
+    ctx.textAlign = 'center';
+    ctx.fillText(s.ad, sx(s.x), sy(s.y-62));
+    ctx.globalAlpha = alpha;
+
+    // "EXPERIENTIAL" tag
+    ctx.fillStyle = s.adColor;
+    ctx.globalAlpha = alpha * .7;
+    ctx.font = `700 ${sx(9)}px Montserrat`;
+    ctx.fillText('\u2606 EXPERIENTIAL', sx(s.x), sy(s.y-78));
+    ctx.globalAlpha = alpha;
+
+    // platform
+    ctx.fillStyle = 'rgba(81,203,206,.08)';
+    ctx.beginPath();
+    ctx.roundRect(sx(s.x-28),sy(s.y-42),sx(56),sy(32),sx(5));
+    ctx.fill();
+
+    // stop marker
+    ctx.beginPath();
+    ctx.arc(sx(s.x),sy(s.y-26),sx(8),0,Math.PI*2);
+    ctx.fillStyle = C.stop;
+    ctx.shadowColor = C.stop;
+    ctx.shadowBlur = sx(10);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    // label
+    ctx.fillStyle = C.white;
+    ctx.font = `700 ${sx(14)}px Montserrat`;
+    ctx.textAlign = 'center';
+    ctx.fillText(s.label, sx(s.x), sy(s.y-48));
+  }
+
+  // draw queues
+  for(let q of FLEX_QUEUE){
+    if(q.boarded) continue;
+    let s = STOPS[q.stopIdx];
+    let side = q.side || -1;
+    let qx = s.x - 14 - q.queuePos * 9;
+    let qy = s.y + (side * 30);
+    ctx.beginPath();
+    ctx.arc(sx(qx),sy(qy),sx(5),0,Math.PI*2);
+    ctx.fillStyle = C.queue;
+    ctx.shadowColor = C.queue;
+    ctx.shadowBlur = sx(2);
+    ctx.globalAlpha = alpha * q.opacity;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+  ctx.globalAlpha = alpha;
+
+  // draw trams
+  for(let tr of TRAMS){
+    let track = TRACKS[tr.track];
+    let pos = catmull(track.pts, tr.t);
+    ctx.save();
+    ctx.translate(sx(pos.x),sy(pos.y));
+    ctx.rotate(pos.angle);
+
+    // tram body
+    let col = track.color;
+    ctx.fillStyle = col;
+    ctx.shadowColor = col;
+    ctx.shadowBlur = sx(14);
+    ctx.beginPath();
+    ctx.roundRect(sx(-36),sy(-14),sx(72),sy(28),sx(6));
+    ctx.fill();
+
+    // brand wrap stripe
+    ctx.fillStyle = 'rgba(255,255,255,.12)';
+    ctx.fillRect(sx(-36),sy(-4),sx(72),sy(8));
+
+    // brand name on tram
+    ctx.fillStyle = 'rgba(255,255,255,.7)';
+    ctx.font = `bold ${sx(9)}px Montserrat`;
+    ctx.textAlign = 'center';
+    ctx.shadowBlur = 0;
+    ctx.fillText(tr.brand, 0, sy(2));
+
+    // "AD SPACE" label above tram
+    ctx.fillStyle = 'rgba(255,255,255,.45)';
+    ctx.font = `700 ${sx(7)}px Montserrat`;
+    ctx.fillText('WRAP AD', 0, sy(-18));
+
+    // windows
+    ctx.fillStyle = 'rgba(255,255,255,.2)';
+    for(let w=-26;w<=18;w+=12){
+      ctx.fillRect(sx(w),sy(-11),sx(9),sy(7));
+    }
+
+    // passenger count
+    ctx.fillStyle = '#fff';
+    ctx.font = `bold ${sx(10)}px Montserrat`;
+    ctx.textAlign = 'center';
+    ctx.fillText(tr.passengers, 0, sy(12));
+
+    ctx.restore();
+  }
+
+  // "0 incidents" badge
+  let pulse = .7 + Math.sin(Date.now()/600)*.3;
+  ctx.fillStyle = `rgba(52,211,153,${.12*pulse})`;
+  ctx.beginPath();
+  ctx.roundRect(sx(W/2-80),sy(H-44),sx(160),sy(30),sx(14));
+  ctx.fill();
+  ctx.fillStyle = `rgba(52,211,153,${.8*pulse})`;
+  ctx.font = `700 ${sx(13)}px Montserrat`;
+  ctx.textAlign = 'center';
+  ctx.fillText('0 INCIDENTS', sx(W/2), sy(H-24));
+
+  ctx.globalAlpha = 1;
+}
+
+/* ════════════════════════════════════════════
+   STATS
+   ════════════════════════════════════════════ */
+const elThroughput = document.getElementById('valThroughput');
+const elCollisions = document.getElementById('valCollisions');
+const elWait = document.getElementById('valWait');
+const elCapacity = document.getElementById('valCapacity');
+const elRevenue = document.getElementById('valRevenue');
+const statEls = document.querySelectorAll('.stat');
+
+function updateStats(){
+  if(modeA < .5){
+    // chaos stats
+    elThroughput.textContent = chaosMoved;
+    elThroughput.style.color = '#FB923C';
+    elCollisions.textContent = chaosCollisions;
+    elCollisions.style.color = '#f5593d';
+    elWait.textContent = (8+Math.floor(Math.random()*3))+'m';
+    elWait.style.color = '#FB923C';
+    elCapacity.textContent = Math.min(95,45+Math.floor(CHAOS_PEOPLE.length*.4))+'%';
+    elCapacity.style.color = '#FBBF24';
+    elRevenue.textContent = '$0';
+    elRevenue.style.color = '#f5593d';
+    statEls.forEach(s=>{s.classList.remove('good');s.classList.add('bad')});
+  } else {
+    // flex stats
+    elThroughput.textContent = Math.floor(flexMoved * .6 + 40);
+    elThroughput.style.color = '#34D399';
+    elCollisions.textContent = '0';
+    elCollisions.style.color = '#34D399';
+    elWait.textContent = '45s';
+    elWait.style.color = '#51cbce';
+    elCapacity.textContent = '92%';
+    elCapacity.style.color = '#51cbce';
+    // ad revenue: impressions × CPM-like rate
+    let rev = Math.floor(adImpressions * 2.5);
+    elRevenue.textContent = '$'+rev.toLocaleString();
+    elRevenue.style.color = '#34D399';
+    statEls.forEach(s=>{s.classList.remove('bad');s.classList.add('good')});
+  }
+}
+
+/* ════════════════════════════════════════════
+   RENDER LOOP
+   ════════════════════════════════════════════ */
+initChaos();
+initFlex();
+
+function render(ts){
+  let dt = Math.min(ts - lastTs, 50);
+  lastTs = ts;
+
+  // blend mode
+  let target = mode;
+  modeA += (target - modeA) * .03;
+
+  ctx.clearRect(0,0,cv.width,cv.height);
+
+  // background
+  ctx.fillStyle = C.lot;
+  ctx.fillRect(0,0,cv.width,cv.height);
+
+  // update & draw
+  if(modeA < .99){
+    updateChaos(dt);
+    drawChaos(1 - modeA);
+  }
+  if(modeA > .01){
+    updateFlex(dt);
+    drawFlex(modeA);
+  }
+
+  updateStats();
+
+  rafId = requestAnimationFrame(render);
+}
+
+// start on visibility
+const obs = new IntersectionObserver((entries)=>{
+  if(entries[0].isIntersecting && !rafId){
+    lastTs = performance.now();
+    rafId = requestAnimationFrame(render);
+  }
+},{threshold:.1});
+obs.observe(cv);
+
+/* ════════════════════════════════════════════
+   TOGGLE SWITCH
+   ════════════════════════════════════════════ */
+const sw = document.getElementById('modeSwitch');
+const lblC = document.getElementById('lblChaos');
+const lblO = document.getElementById('lblOrder');
+
+sw.addEventListener('click', ()=>{
+  mode = mode === 0 ? 1 : 0;
+  sw.classList.toggle('on', mode===1);
+  lblC.classList.toggle('active', mode===0);
+  lblC.classList.toggle('dim', mode===1);
+  lblO.classList.toggle('active', mode===1);
+  lblO.classList.toggle('dim', mode===0);
+
+  // re-init when switching back
+  if(mode===0) initChaos();
+  if(mode===1) initFlex();
+});
+
+})();
+</script>
+</body>
+</html>
