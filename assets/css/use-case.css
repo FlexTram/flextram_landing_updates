@@ -329,12 +329,42 @@
   line-height: 1.5;
 }
 
+/* ---- COMPARISON CARDS ---- */
+.flextram-wrap { padding: 1.5rem 0; }
+.flextram-label { font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: #888780; margin-bottom: 1.25rem; }
+.flextram-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 1rem; }
+.flextram-card { background: #ffffff; border: 0.5px solid rgba(0,0,0,0.12); border-radius: 12px; padding: 1.1rem 1.25rem 1.25rem; display: flex; flex-direction: column; gap: 10px; }
+.flextram-card.featured { border: 2px solid #1D9E75; }
+.flextram-badge { display: inline-block; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; align-self: flex-start; }
+.badge-gray { background: #F1EFE8; color: #5F5E5A; }
+.badge-teal { background: #E1F5EE; color: #0F6E56; }
+.flextram-card-title { font-size: 14px; font-weight: 500; color: #1a1a1a; }
+.flextram-card-cap { font-size: 12px; color: #5F5E5A; }
+.flextram-divider { border: none; border-top: 0.5px solid rgba(0,0,0,0.12); }
+.flextram-drivers-label { font-size: 11px; color: #888780; margin-bottom: 5px; }
+.flextram-driver-icons { display: flex; flex-wrap: wrap; gap: 5px; }
+.flextram-driver-icon { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.flextram-driver-head { width: 12px; height: 12px; border-radius: 50%; }
+.flextram-driver-body { width: 16px; height: 10px; border-radius: 4px 4px 0 0; }
+.flextram-driver-icon.active .flextram-driver-head { background: #1D9E75; }
+.flextram-driver-icon.active .flextram-driver-body { background: #1D9E75; }
+.flextram-driver-icon.dim .flextram-driver-head { background: #ccc; }
+.flextram-driver-icon.dim .flextram-driver-body { background: #ccc; }
+.flextram-pct-row { display: flex; align-items: baseline; gap: 5px; margin-top: 4px; }
+.flextram-pct-num { font-size: 26px; font-weight: 500; }
+.flextram-pct-num.teal { color: #0F6E56; }
+.flextram-pct-desc { font-size: 12px; color: #5F5E5A; }
+.flextram-note { font-size: 11.5px; color: #888780; line-height: 1.6; margin-top: 1rem; }
+.flextram-note strong { font-weight: 500; color: #5F5E5A; }
+
 /* ---- RESPONSIVE ---- */
 
 @media (max-width: 768px) {
   .page {
     padding: 1.5rem var(--page-padding) 3rem;
   }
+
+  .flextram-cards { grid-template-columns: 1fr; }
 
   .hero h1 {
     font-size: clamp(24px, 5vw, 36px);
