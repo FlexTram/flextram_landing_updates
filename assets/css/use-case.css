@@ -9,6 +9,15 @@
   padding: 2rem var(--page-padding) 4rem;
 }
 
+/* ---- HERO IMAGE ---- */
+.hero-image {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
 /* ---- BREADCRUMB ---- */
 .breadcrumb {
   font-size: 12px;
