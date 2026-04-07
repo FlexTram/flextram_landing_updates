@@ -91,6 +91,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.flextram.com/solutions/convention-centers</loc>
+    <lastmod>2026-04-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.flextram.com/solutions/labor-companies</loc>
+    <lastmod>2026-04-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.flextram.com/system.html</loc>
     <lastmod>2026-04-06</lastmod>
     <changefreq>monthly</changefreq>
