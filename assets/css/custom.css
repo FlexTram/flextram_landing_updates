@@ -250,6 +250,88 @@ p, .description, .card-description {
   justify-content: center;
   align-items: center;
   height: 150px;
-  img {
+}
+
+/* =============================================
+   Mobile Responsive — Homepage
+   ============================================= */
+
+/* Tablet */
+@media (max-width: 768px) {
+  .navbar .navbar-brand img {
+    max-width: 40%;
+  }
+
+  .navbar .container-fluid {
+    padding-left: 15px;
+  }
+
+  .video-background iframe {
+    width: 150%;
+    height: 150%;
+  }
+
+  .features-2 .card[data-background="image"] {
+    min-height: 280px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  .navbar .navbar-brand img {
+    max-width: 50%;
+  }
+
+  .video-background iframe {
+    width: 200%;
+    height: 200%;
+  }
+
+  .page-header {
+    min-height: 60vh !important;
+  }
+
+  .features-2 .card[data-background="image"] {
+    min-height: 250px;
+  }
+
+  .card-category {
+    font-size: 1.2em;
+  }
+
+  .card-description {
+    font-size: 14px;
+  }
+
+  .slick-slide {
+    margin: 0px 10px;
+  }
+
+  .vertical-center {
+    height: 100px;
+  }
+}
+
+/* Small phone */
+@media (max-width: 375px) {
+  .navbar .navbar-brand img {
+    max-width: 60%;
+  }
+
+  .slick-slide {
+    margin: 0px 5px;
+  }
+
+  .vertical-center {
+    height: 80px;
+  }
+
+  h1, .h1 {
+    font-size: clamp(1.6rem, 5vw, 2.5rem);
+  }
+
+  h2, .h2 {
+    font-size: clamp(1.3rem, 4vw, 2rem);
+    padding: 10px;
   }
 }
