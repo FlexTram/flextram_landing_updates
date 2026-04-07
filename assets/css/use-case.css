@@ -326,12 +326,181 @@
 }
 
 /* ---- RESPONSIVE ---- */
+
+@media (max-width: 768px) {
+  .page {
+    padding: 1.5rem var(--page-padding) 3rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(24px, 5vw, 36px);
+  }
+
+  .hero-sub {
+    max-width: 100%;
+    font-size: 15px;
+  }
+
+  .hero-image {
+    max-height: 300px;
+    border-radius: 8px;
+  }
+
+  .pain-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .table-wrap {
+    margin: 0 calc(-1 * var(--page-padding));
+    padding: 0 var(--page-padding);
+  }
+
+  .compare-table {
+    font-size: 13px;
+  }
+
+  .compare-table th, .compare-table td {
+    padding: 8px 8px 8px 0;
+  }
+}
+
 @media (max-width: 680px) {
   .stats-row { grid-template-columns: repeat(2, 1fr); }
   .cta-block { flex-direction: column; }
-  .cta-actions { flex-direction: row; }
+  .cta-actions { flex-direction: row; gap: 8px; }
 }
+
+@media (max-width: 576px) {
+  .hero h1 {
+    font-size: clamp(22px, 5vw, 30px);
+  }
+
+  .hero-sub {
+    font-size: 14px;
+  }
+
+  .hero-image {
+    max-height: 250px;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-ctas {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .hero-ctas a {
+    text-align: center;
+  }
+
+  .pain-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .solution-block {
+    font-size: 14px;
+  }
+
+  .solution-block p {
+    margin-bottom: 0.75rem;
+  }
+
+  .compare-table {
+    font-size: 12px;
+    min-width: 420px;
+  }
+
+  .compare-table th, .compare-table td {
+    padding: 6px 6px 6px 0;
+  }
+
+  .testimonial {
+    padding: 1rem;
+  }
+
+  .testimonial-quote {
+    font-size: 15px;
+  }
+
+  .specs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .use-cases-strip {
+    gap: 6px;
+  }
+
+  .use-case-pill {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+
+  .section-heading {
+    font-size: clamp(20px, 4vw, 28px);
+  }
+
+  .faq-q {
+    font-size: 14px;
+  }
+
+  .faq-a p {
+    font-size: 13px;
+  }
+
+  .related-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-block-text h2 {
+    font-size: clamp(20px, 4vw, 26px);
+  }
+
+  .cta-block-text p {
+    font-size: 14px;
+  }
+}
+
 @media (max-width: 420px) {
   .stats-row { grid-template-columns: 1fr 1fr; }
   .cta-actions { flex-direction: column; }
+
+  .stat-num {
+    font-size: 24px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 375px) {
+  .page {
+    padding: 1rem var(--page-padding) 2rem;
+  }
+
+  .hero h1 {
+    font-size: 20px;
+  }
+
+  .hero-image {
+    max-height: 200px;
+  }
+
+  .specs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .compare-table {
+    font-size: 11px;
+    min-width: 360px;
+  }
+
+  .pain-title {
+    font-size: 13px;
+  }
+
+  .pain-desc {
+    font-size: 11px;
+  }
 }
