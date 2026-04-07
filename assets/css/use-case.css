@@ -7,15 +7,19 @@
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 2rem var(--page-padding) 4rem;
+  overflow-x: hidden;
 }
 
 /* ---- HERO IMAGE ---- */
 .hero-image {
   width: 100%;
+  max-width: 100%;
+  height: auto;
   max-height: 400px;
   object-fit: cover;
   border-radius: 12px;
   margin-bottom: 2rem;
+  display: block;
 }
 
 /* ---- BREADCRUMB ---- */
@@ -383,6 +387,11 @@
     max-height: 250px;
     border-radius: 6px;
     margin-bottom: 1.5rem;
+    margin-left: calc(-1 * var(--page-padding));
+    margin-right: calc(-1 * var(--page-padding));
+    width: calc(100% + 2 * var(--page-padding));
+    max-width: calc(100% + 2 * var(--page-padding));
+    border-radius: 0;
   }
 
   .hero-ctas {
@@ -484,7 +493,7 @@
   }
 
   .hero-image {
-    max-height: 200px;
+    max-height: 180px;
   }
 
   .specs-grid {
