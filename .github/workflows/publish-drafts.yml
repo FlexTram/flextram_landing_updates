@@ -1,0 +1,67 @@
+name: Publish scheduled blog posts
+
+on:
+  schedule:
+    # Runs daily at 9:00 AM UTC (2:00 AM PT / 5:00 AM ET)
+    - cron: '0 9 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Publish drafts whose date has arrived
+        run: |
+          TODAY=$(date -u +%Y-%m-%d)
+          PUBLISHED=0
+
+          echo "Today is $TODAY"
+          echo "Checking blog/_drafts/ for publishable articles..."
+
+          for draft in blog/_drafts/*.html; do
+            [ -f "$draft" ] || continue
+
+            # Extract date from filename: YYYY-MM-DD_slug.html
+            FILENAME=$(basename "$draft")
+            PUB_DATE=$(echo "$FILENAME" | grep -oP '^\d{4}-\d{2}-\d{2}')
+
+            if [ -z "$PUB_DATE" ]; then
+              echo "SKIP: $FILENAME (no date prefix found)"
+              continue
+            fi
+
+            if [ "$PUB_DATE" \<= "$TODAY" ]; then
+              # Extract slug (everything after the date and underscore)
+              SLUG=$(echo "$FILENAME" | sed "s/^${PUB_DATE}_//")
+              DEST="blog/$SLUG"
+
+              echo "PUBLISH: $FILENAME -> $DEST (scheduled for $PUB_DATE)"
+              mv "$draft" "$DEST"
+
+              # Add to sitemap
+              SLUG_NO_EXT=$(echo "$SLUG" | sed 's/.html$//')
+              sed -i "/<\/urlset>/i\\  <url>\n    <loc>https://www.flextram.com/blog/${SLUG_NO_EXT}</loc>\n    <lastmod>${TODAY}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>" sitemap.xml
+
+              PUBLISHED=$((PUBLISHED + 1))
+            else
+              echo "WAIT: $FILENAME (scheduled for $PUB_DATE, not yet)"
+            fi
+          done
+
+          echo "Published $PUBLISHED article(s)"
+          echo "PUBLISHED=$PUBLISHED" >> $GITHUB_ENV
+
+      - name: Commit and push
+        if: env.PUBLISHED != '0'
+        run: |
+          git config user.name "FlexTram Bot"
+          git config user.email "noreply@flextram.com"
+          git add blog/ sitemap.xml
+          git commit -m "Publish ${{ env.PUBLISHED }} scheduled blog post(s) [automated]"
+          git push
