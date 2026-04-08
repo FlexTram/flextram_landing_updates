@@ -39,14 +39,33 @@ jobs:
             if [ "$PUB_DATE" \<= "$TODAY" ]; then
               # Extract slug (everything after the date and underscore)
               SLUG=$(echo "$FILENAME" | sed "s/^${PUB_DATE}_//")
+              SLUG_NO_EXT=$(echo "$SLUG" | sed 's/.html$//')
               DEST="blog/$SLUG"
 
               echo "PUBLISH: $FILENAME -> $DEST (scheduled for $PUB_DATE)"
+
+              # Parse BLOG_META from HTML comment block
+              META_TITLE=$(sed -n 's/^title: //p' "$draft" | head -1)
+              META_EXCERPT=$(sed -n 's/^excerpt: //p' "$draft" | head -1)
+              META_CATEGORY=$(sed -n 's/^category: //p' "$draft" | head -1)
+              META_DATE_DISPLAY=$(sed -n 's/^date_display: //p' "$draft" | head -1)
+              META_IMAGE=$(sed -n 's/^image: //p' "$draft" | head -1)
+              META_IMAGE_ALT=$(sed -n 's/^image_alt: //p' "$draft" | head -1)
+
+              # Move draft to live
               mv "$draft" "$DEST"
 
               # Add to sitemap
-              SLUG_NO_EXT=$(echo "$SLUG" | sed 's/.html$//')
               sed -i "/<\/urlset>/i\\  <url>\n    <loc>https://www.flextram.com/blog/${SLUG_NO_EXT}</loc>\n    <lastmod>${TODAY}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>" sitemap.xml
+
+              # Add card to blog hub page (before the NEW-ARTICLES-ABOVE marker)
+              if [ -n "$META_TITLE" ]; then
+                CARD_HTML="      <a href=\"/blog/${SLUG}\" class=\"blog-card\">\n        <img class=\"blog-card-img\" loading=\"lazy\" src=\"${META_IMAGE}\" alt=\"${META_IMAGE_ALT}\">\n        <div class=\"blog-card-body\">\n          <div class=\"blog-card-meta\">${META_DATE_DISPLAY} \\&middot; ${META_CATEGORY}</div>\n          <div class=\"blog-card-title\">${META_TITLE}</div>\n          <div class=\"blog-card-excerpt\">${META_EXCERPT}</div>\n        </div>\n      </a>\n"
+                sed -i "/<!-- NEW-ARTICLES-ABOVE -->/i\\${CARD_HTML}" blog/index.html
+                echo "  Added hub card for: $META_TITLE"
+              else
+                echo "  WARNING: No BLOG_META found, skipping hub card"
+              fi
 
               PUBLISHED=$((PUBLISHED + 1))
             else
