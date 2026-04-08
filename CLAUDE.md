@@ -12,10 +12,10 @@
 ## What's here
 Static HTML site built on **Paper Kit 2 PRO v2.3.0** (Creative Tim). No build tools or package.json -- just HTML/CSS/JS served as-is.
 
-### Pages (20 total)
-- `index.html` -- Main FlexTram landing page (video hero, client logos, contact form)
-- `landing-page.html` -- Secondary landing page
-- `system.html` -- System/product details page with before/after animation
+### Pages (24 total)
+- `index.html` -- Main FlexTram landing page (self-hosted video hero, client logos, contact form)
+- `landing-page.html` -- Secondary landing page (full SEO meta)
+- `system.html` -- System/product details page with before/after animation (easter egg, noindex)
 - `solutions/index.html` -- Solutions hub with 17 industry cards (images + SEO descriptions)
 - `solutions/airport-fbo.html` -- Airport & FBO use case page
 - `solutions/resort-hotel.html` -- Resort & hotel shuttles
@@ -34,33 +34,65 @@ Static HTML site built on **Paper Kit 2 PRO v2.3.0** (Creative Tim). No build to
 - `solutions/labor-companies.html` -- Labor & staffing companies
 - `solutions/golf-courses.html` -- Golf courses
 - `solutions/planned-communities.html` -- Planned communities
+- `blog/index.html` -- Blog hub page
+- `blog/onsite-transportation-paradigm.html` -- First blog article (live)
+- `blog/_drafts/` -- Scheduled articles (auto-published by GitHub Actions)
 
 ### Key directories
-- `assets/css/` -- Stylesheets (Bootstrap, Paper Kit, `custom.css`, `global.css`, `solutions.css`, `use-case.css`)
+- `assets/css/` -- Stylesheets (Bootstrap purged, Paper Kit purged, `custom.css`, `global.css`, `solutions.css`, `use-case.css`, `blog.css`, `blog-post.css`)
 - `assets/img/` -- Images (hero photos, event photos, logos, favicon)
+- `assets/img/640/` -- Responsive 640px mobile variants (21 images)
 - `assets/img/logos/` -- Client logos for scrolling carousel (26 logos)
 - `assets/img/solutions/` -- Industry images for solutions cards (17 images)
-- `assets/img/hero-*.jpg` -- Hero photos for solution sub-pages (10 photos)
-- `assets/js/` -- JavaScript
+- `assets/img/hero-*.jpg` -- Hero photos for all 17 solution sub-pages
+- `assets/video/hero.mp4` -- Self-hosted hero video (4MB, 36s, 720p)
+- `assets/js/` -- JavaScript (core only: jQuery, Popper, Bootstrap, Paper Kit, Slick)
 - `_source_files/` -- Original source images (gitignored)
+- `.github/workflows/` -- GitHub Actions (auto-publish blog drafts)
 
 ### Fonts
 - **Homepage:** Inter (body) + Montserrat (headings) via Google Fonts
-- **Solutions pages:** DM Sans (body) + Instrument Serif (headings) via Google Fonts
+- **Solutions + Blog pages:** DM Sans (body) + Instrument Serif (headings) via Google Fonts
 
 ### SEO setup
-- `sitemap.xml` -- All 20 pages listed
+- `sitemap.xml` -- All pages listed (solutions, blog, homepage)
 - `robots.txt` -- Allow all, sitemap reference
-- JSON-LD structured data: Organization, Product, BreadcrumbList schemas
-- Schema.org FAQPage microdata on all 17 industry pages (102+ FAQ questions)
+- JSON-LD structured data: Organization, BreadcrumbList, BlogPosting, FAQPage schemas
+- FAQPage JSON-LD on all 17 industry pages (86 FAQ items) + blog articles
 - OG/Twitter meta tags on all pages
 - Canonical URLs on all pages pointing to flextram.com
 - Keyword-rich alt tags on every image across the site
+- GA4 tracking (G-ZYK6B5M9QT) on all pages
+- Instagram sameAs in Organization schema on all pages
+- Registered in Google Search Console, sitemap submitted
+
+### Performance optimizations
+- CSS purged: Bootstrap 152KB→9KB, Paper Kit 313KB→34KB (422KB saved)
+- Critical CSS inlined on homepage, stylesheets deferred
+- Image lazy loading (46 images), fetchpriority="high" on hero images
+- Responsive images: srcset with 640px mobile variants on 21 images
+- Self-hosted video replaces YouTube iframe (554MB→4MB)
+- 11 unused JS plugins removed from homepage and landing page
+- Lighthouse: SEO 100, Best Practices 100, Performance 60, Accessibility 88
+
+### Blog system
+- Hub page at `/blog/` with article card grid
+- Article template uses `blog-post.css` (based on use-case.css patterns)
+- **Auto-publish workflow:** GitHub Actions runs daily at 9 AM UTC
+  - Drafts in `blog/_drafts/` with filename `YYYY-MM-DD_slug.html`
+  - When date arrives: moves to `blog/`, updates sitemap, adds card to hub page
+  - Drafts include `BLOG_META` comment block for hub card metadata
+  - Can also trigger manually from GitHub Actions tab
+- **Scheduled articles:**
+  - April 15: "The True Cost of the Golf Cart" (Operations)
+  - April 22: "The Fan Experience Gap" (Fan Experience)
+  - April 29: "Sponsorship's Untapped Frontier" (Revenue)
 
 ### Contact form
 - Formspree endpoint: `https://formspree.io/f/mvzzoarr`
 - Form ID: `#contact-form` (used as anchor target from all CTAs)
-- All solution page "Request Info" buttons link to `/#contact-form`
+- All solution page and blog "Request Info" buttons link to `/#contact-form`
+- Form labels properly associated with inputs for accessibility
 
 ### Client logos in carousel (26)
 Tesla, Amazon, NASCAR, Live Nation, AEG, Coachella, Stagecoach, Lollapalooza, Bonnaroo, EDC, Rolling Loud, Insomniac, C3 Presents, Sick New World, FloydFest, When We Were Young, Lovers & Friends, Innings Festival, Desert Daze, Besame Mucho, FSU, Ingredion, LAZ Parking, Savannah Bananas, Dreamstate, ZA Queen Mary
@@ -72,13 +104,19 @@ Tesla, Amazon, NASCAR, Live Nation, AEG, Coachella, Stagecoach, Lollapalooza, Bo
 - **NOT electric** -- use "compact", "small format", or "agile" (never "electric")
 - Top speed and operating range removed (not relevant to marketing)
 
+### Navigation
+- All pages have: Solutions, Blog, Contact links
+- Homepage nav: inline-styled white links over video hero
+- Solutions + Blog pages: `.nav-links` with `.nav-link` classes
+- Logo links to `/` on all pages (no target="_blank")
+
 ### CNAME
 Set to `www.flextram.com`
 
 ## Dev server
-No npm/build step needed. Run from repo root:
+Use the Claude Preview tool with `.claude/launch.json`, or run manually:
 ```
-python3 -m http.server 8080
+npx http-server -p 8080 -c-1
 ```
 Then open http://localhost:8080
 
@@ -88,9 +126,9 @@ Then open http://localhost:8080
 git add [files] && git commit -m "message"
 git push origin master && git push production master
 ```
-Note: `gh` CLI installed at `/usr/local/bin/gh`, authenticated as FlexTram account.
+Note: `gh` CLI installed at `/usr/local/bin/gh`, authenticated as FlexTram account with `workflow` scope.
 
-## Status (2026-04-07)
+## Status
 
 ### Session 1 (2026-04-06) -- Foundation
 - New FlexTram branding (logos, favicon with X icon)
@@ -147,8 +185,21 @@ Note: `gh` CLI installed at `/usr/local/bin/gh`, authenticated as FlexTram accou
 - Removed demo.css (58KB) from homepage and landing page
 - Converted FAQPage microdata to JSON-LD on all 17 sub-pages (86 FAQ items)
 - Fixed accessibility: removed viewport zoom restrictions, added form label associations
-- Lighthouse audit: SEO 100, Best Practices 100, Accessibility 83→improved, Performance 46 (homepage) / 63 (sub-pages)
+- Lighthouse audit: SEO 100, Best Practices 100, Accessibility 83→88, Performance 46→60
 - Registered flextram.com in Google Search Console and submitted sitemap.xml
+
+### Session 4 (2026-04-08) -- Performance, Blog & Content
+- Performance optimization: responsive images with srcset (21 images, 640px mobile variants)
+- CSS purge: Bootstrap 152KB→9KB, Paper Kit 313KB→34KB (422KB total savings)
+- Critical CSS inlined on homepage, stylesheets deferred via preload
+- Lighthouse performance: 46→60, FCP 5.3s→3.1s, LCP 16.9s→8.4s, TBT 510→260ms
+- Built blog section: hub page (/blog/), article template, blog.css + blog-post.css
+- Published first article: "The Onsite Transportation Paradigm Is Changing — Here's Why"
+- Added Blog nav link to all 23 pages site-wide
+- GitHub Actions auto-publish workflow for scheduled blog posts
+- Scheduled 3 future articles: golf cart cost (Apr 15), fan experience gap (Apr 22), sponsorship frontier (Apr 29)
+- All blog articles fully SEO optimized: BlogPosting + FAQPage JSON-LD, article OG tags, internal links to solution pages, responsive hero images
+- Removed operating range spec from all 17 sub-pages
 
 ---
 
@@ -159,10 +210,11 @@ Note: `gh` CLI installed at `/usr/local/bin/gh`, authenticated as FlexTram accou
 - [ ] **Add real testimonials** -- All testimonials are anonymous placeholders; remove or replace with named quotes
 
 ### Medium priority
-- [ ] **Improve homepage performance score** -- Currently 46; main issues are render-blocking CSS (bootstrap + paper-kit), unused CSS (~446KB), and oversized images on mobile
 - [ ] **Custom OG images** -- Create dedicated social sharing images instead of reusing card images
+- [ ] **Write more blog articles** -- Continue weekly publishing cadence beyond April 29
 
 ### Low priority
 - [ ] **Consider adding a /specs page** -- Multiple solution pages reference specs
 - [ ] **Fix heading order on homepage** -- Lighthouse flagged non-sequential heading levels
 - [ ] **Improve color contrast** -- Some text/background combos don't meet WCAG AA ratio
+- [ ] **Further homepage performance** -- Remaining LCP bottleneck is video element; consider poster frame or smaller video
