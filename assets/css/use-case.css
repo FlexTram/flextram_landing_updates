@@ -183,29 +183,6 @@
 .win { color: #0F6E56; font-weight: 500; }
 .lose { color: var(--color-text-tertiary); }
 
-/* ---- TESTIMONIAL ---- */
-.testimonial {
-  border-left: 2px solid var(--color-teal-mid);
-  border-radius: 0;
-  padding: 1rem 1.25rem;
-  margin-bottom: 2rem;
-  background: var(--color-teal-bg);
-}
-.testimonial-quote {
-  font-family: var(--font-serif);
-  font-size: 17px;
-  font-style: italic;
-  color: #085041;
-  line-height: 1.6;
-  margin-bottom: 0.75rem;
-}
-.testimonial-attr {
-  font-size: 12px;
-  color: var(--color-teal-fg);
-  font-weight: 500;
-  font-style: normal;
-}
-
 /* ---- SPECS ---- */
 .specs-grid {
   display: grid;
@@ -310,12 +287,22 @@
   display: block;
   border: 0.5px solid var(--color-border-light);
   border-radius: var(--radius-lg);
-  padding: 1rem 1.125rem;
+  padding: 0;
+  overflow: hidden;
   transition: border-color 0.15s, background 0.15s;
 }
 .related-card:hover {
   border-color: var(--color-border-mid);
   background: var(--color-bg-secondary);
+}
+.related-card-img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  display: block;
+}
+.related-card-body {
+  padding: 0.75rem 1rem;
 }
 .related-card-title {
   font-size: 13px;
@@ -329,9 +316,29 @@
   line-height: 1.5;
 }
 
+/* ---- STICKY CTA ---- */
+.sticky-cta {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  background: var(--color-text-primary);
+  color: var(--color-bg-primary);
+  border: 0.5px solid var(--color-text-primary);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  z-index: 100;
+  transition: opacity 0.2s;
+  text-decoration: none;
+}
+.sticky-cta:hover { opacity: 0.82; }
+
 /* ---- COMPARISON CARDS ---- */
 .flextram-wrap { padding: 1.5rem 0; }
-.flextram-label { font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: #888780; margin-bottom: 1.25rem; }
+.flextram-label { font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1.25rem; }
 .flextram-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 1rem; }
 .flextram-card { background: #ffffff; border: 0.5px solid rgba(0,0,0,0.12); border-radius: 12px; padding: 1.1rem 1.25rem 1.25rem; display: flex; flex-direction: column; gap: 10px; }
 .flextram-card.featured { border: 2px solid #1D9E75; }
@@ -341,7 +348,7 @@
 .flextram-card-title { font-size: 14px; font-weight: 500; color: #1a1a1a; }
 .flextram-card-cap { font-size: 12px; color: #5F5E5A; }
 .flextram-divider { border: none; border-top: 0.5px solid rgba(0,0,0,0.12); }
-.flextram-drivers-label { font-size: 11px; color: #888780; margin-bottom: 5px; }
+.flextram-drivers-label { font-size: 11px; color: var(--color-text-tertiary); margin-bottom: 5px; }
 .flextram-driver-icons { display: flex; flex-wrap: wrap; gap: 5px; }
 .flextram-driver-icon { display: flex; flex-direction: column; align-items: center; gap: 2px; }
 .flextram-driver-head { width: 12px; height: 12px; border-radius: 50%; }
@@ -354,7 +361,7 @@
 .flextram-pct-num { font-size: 26px; font-weight: 500; }
 .flextram-pct-num.teal { color: #0F6E56; }
 .flextram-pct-desc { font-size: 12px; color: #5F5E5A; }
-.flextram-note { font-size: 11.5px; color: #888780; line-height: 1.6; margin-top: 1rem; }
+.flextram-note { font-size: 11.5px; color: var(--color-text-tertiary); line-height: 1.6; margin-top: 1rem; }
 .flextram-note strong { font-weight: 500; color: #5F5E5A; }
 
 /* ---- RESPONSIVE ---- */
@@ -454,14 +461,6 @@
     padding: 6px 6px 6px 0;
   }
 
-  .testimonial {
-    padding: 1rem;
-  }
-
-  .testimonial-quote {
-    font-size: 15px;
-  }
-
   .specs-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -489,6 +488,12 @@
 
   .related-grid {
     grid-template-columns: 1fr;
+  }
+
+  .sticky-cta {
+    left: 1rem;
+    right: 1rem;
+    text-align: center;
   }
 
   .cta-block-text h2 {
