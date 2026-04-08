@@ -40,11 +40,21 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@200;400;600;700&display=swap" rel="stylesheet" />
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-  <!-- CSS Files -->
-  <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="assets/css/custom.css" rel="stylesheet" />
-  <link href="assets/css/paper-kit.css?v=2.3.0" rel="stylesheet" />
+  <!-- Critical CSS: inlined for above-the-fold rendering -->
+  <style>
+    *,::after,::before{box-sizing:border-box}body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:14px;color:#66615b;background:#fff}img{vertical-align:middle;max-width:100%}a{color:#51cbce;text-decoration:none}.container{width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto;max-width:1140px}.container-fluid{width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}.row{display:flex;flex-wrap:wrap;margin-right:-15px;margin-left:-15px}.col-md-4,.col-md-6,.col-md-8{position:relative;width:100%;padding-right:15px;padding-left:15px}@media(min-width:768px){.col-md-4{flex:0 0 33.333%;max-width:33.333%}.col-md-6{flex:0 0 50%;max-width:50%}.col-md-8{flex:0 0 66.667%;max-width:66.667%}}.ml-auto{margin-left:auto}.mr-auto{margin-right:auto}.text-center{text-align:center}.navbar{position:relative;display:flex;flex-wrap:wrap;align-items:center;padding:.5rem 1rem}.navbar-absolute{position:absolute;width:100%;z-index:1031}.navbar-transparent{background:0 0!important;border-bottom:1px solid transparent}.navbar-brand img{max-width:100%}.page-header{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}.page-header .filter::after{content:"";position:absolute;width:100%;height:100%;top:0;left:0;z-index:1}.video-background{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:0}.video-background video{position:absolute;top:50%;left:50%;min-width:100%;min-height:100%;width:auto;height:auto;transform:translate(-50%,-50%);object-fit:cover}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  </style>
+  <!-- Deferred CSS Files -->
+  <link rel="preload" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="assets/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="assets/css/custom.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="assets/css/paper-kit.css?v=2.3.0" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/custom.css" rel="stylesheet" />
+    <link href="assets/css/paper-kit.css?v=2.3.0" rel="stylesheet" />
+  </noscript>
 
 
   <!-- Twitter Card -->
@@ -185,13 +195,13 @@
     <div class="container" style="padding-bottom: 60px;">
       <div class="row justify-content-center">
         <div class="col-md-4" style="padding: 10px;">
-          <img src="assets/img/coachella_stagecoach.jpg" alt="FlexTram at Coachella/Stagecoach" loading="lazy" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
+          <img src="assets/img/coachella_stagecoach.jpg" srcset="assets/img/640/coachella_stagecoach.jpg 640w, assets/img/coachella_stagecoach.jpg 1200w" sizes="(max-width: 640px) 100vw, 400px" alt="FlexTram at Coachella/Stagecoach" loading="lazy" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
         </div>
         <div class="col-md-4" style="padding: 10px;">
-          <img src="assets/img/hero_lvfg.jpg" alt="FlexTram at Las Vegas Festival Grounds" loading="lazy" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
+          <img src="assets/img/hero_lvfg.jpg" srcset="assets/img/640/hero_lvfg.jpg 640w, assets/img/hero_lvfg.jpg 1200w" sizes="(max-width: 640px) 100vw, 400px" alt="FlexTram at Las Vegas Festival Grounds" loading="lazy" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
         </div>
         <div class="col-md-4" style="padding: 10px;">
-          <img src="assets/img/flextram_event3.jpg" alt="FlexTram tram shuttle deployed at outdoor live event venue" loading="lazy" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
+          <img src="assets/img/flextram_event3.jpg" srcset="assets/img/640/flextram_event3.jpg 640w, assets/img/flextram_event3.jpg 1200w" sizes="(max-width: 640px) 100vw, 400px" alt="FlexTram tram shuttle deployed at outdoor live event venue" loading="lazy" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
         </div>
       </div>
     </div>
