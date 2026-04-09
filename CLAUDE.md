@@ -201,20 +201,46 @@ Note: `gh` CLI installed at `/usr/local/bin/gh`, authenticated as FlexTram accou
 - All blog articles fully SEO optimized: BlogPosting + FAQPage JSON-LD, article OG tags, internal links to solution pages, responsive hero images
 - Removed operating range spec from all 17 sub-pages
 
+### Session 5 (2026-04-08 continued) -- Engagement, SEO & Photos
+- Removed placeholder testimonials from all 16 solution sub-pages (will add real client quotes as they come in)
+- Added thumbnail images to "Other industries" related-solution cards on all 17 sub-pages (using hub card images)
+- Added sticky floating "Request Info →" CTA button on all 17 sub-pages (fixed bottom-right desktop, full-width mobile)
+- Created branded 404 page with custom pixel-art graphic, "End of The Line" heading, nav links
+- Fixed homepage heading hierarchy: H6 card-category → H2, H5 body text → p (Lighthouse fix, no visual change)
+- Added ItemList JSON-LD schema to solutions hub (17 ListItems with URLs)
+- Darkened tertiary text color #888780 → #6b6a64 for WCAG AA contrast compliance (3.8:1 → 5.5:1)
+- Also replaced 3 hardcoded #888780 instances in use-case.css with var(--color-text-tertiary)
+- Swapped hero images on 5 sub-pages with new real photos:
+  - Festivals: Bonnaroo fleet under staging tent
+  - Stadiums: FlexTram at Las Vegas venue with stage truss
+  - Raceways: Fleet at sunset with "TRAM 11" signage
+  - Warehouse: FlexTram at Ingredion factory (new angle)
+  - Labor: Crew in safety vests riding the tram
+- Repurposed 3 displaced hero images to better-fit pages:
+  - Old festivals (EDC sign) → Air shows
+  - Old stadiums (FSU with riders) → University & campus
+  - Old raceways (tram on street) → Convention centers
+- All new/swapped images resized to 1200px + 640px mobile srcset variants
+- Updated alt tags on all 8 changed hero images
+- Moved 7 source photos + unused images to _source_files/
+- Updated sitemap lastmod dates to 2026-04-08
+- Removed testimonial CSS from use-case.css (.testimonial, .testimonial-quote, .testimonial-attr + responsive rules)
+- GA4 early data reviewed: 90% direct traffic, 2 organic sessions (1m30s engagement), raceways & stadiums most-visited sub-pages
+
 ---
 
 ## TODOs for next session
 
 ### High priority
+- [ ] **Link Search Console to GA4** -- Needed to see organic search queries and optimize titles/descriptions
 - [ ] **Verify vehicle specs** -- Placeholder spec (16-27 passengers) needs confirmation from FlexTram team
-- [ ] **Add real testimonials** -- All testimonials are anonymous placeholders; remove or replace with named quotes
+- [ ] **Add real testimonials** -- Testimonials removed; add back with real named client quotes as they come in
 
 ### Medium priority
-- [ ] **Custom OG images** -- Create dedicated social sharing images instead of reusing card images
+- [ ] **Custom OG images** -- 6 pages still use generic pic3.JPG for social sharing (solutions hub, blog hub, convention, golf, labor, planned communities)
 - [ ] **Write more blog articles** -- Continue weekly publishing cadence beyond April 29
+- [ ] **Investigate airport-fbo bounce** -- GA4 shows 4 views but only 3s engagement; may need stronger headline/hero match
 
 ### Low priority
 - [ ] **Consider adding a /specs page** -- Multiple solution pages reference specs
-- [ ] **Fix heading order on homepage** -- Lighthouse flagged non-sequential heading levels
-- [ ] **Improve color contrast** -- Some text/background combos don't meet WCAG AA ratio
 - [ ] **Further homepage performance** -- Remaining LCP bottleneck is video element; consider poster frame or smaller video
