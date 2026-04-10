@@ -227,20 +227,36 @@ Note: `gh` CLI installed at `/usr/local/bin/gh`, authenticated as FlexTram accou
 - Removed testimonial CSS from use-case.css (.testimonial, .testimonial-quote, .testimonial-attr + responsive rules)
 - GA4 early data reviewed: 90% direct traffic, 2 organic sessions (1m30s engagement), raceways & stadiums most-visited sub-pages
 
+### Session 6 (2026-04-09) -- FIFA & Football Pages, SEO, Performance
+- Built 2 new solution landing pages: FIFA World Cup 2026, Fall Football Stadiums
+- Built 2 new blog posts: World Cup fan-first mobility, Football parking lot weakest link
+- All 4 pages restyled from Space Grotesk/dark theme to match site design (DM Sans + Instrument Serif, global.css + use-case/blog-post CSS)
+- Full SEO on all 4 pages: JSON-LD schemas (BlogPosting, FAQPage, BreadcrumbList, Organization), OG/Twitter tags, canonical URLs
+- Added soccer stadium and football stadium images for solutions hub cards
+- Updated blog hub with 2 new article cards
+- Updated solutions hub with 2 new cards + ItemList schema (17 → 19 industries)
+- Added 4 new URLs to sitemap.xml
+- Updated contact form heading: "Reserve yours today" → "See what FlexTram can do for you."
+- Added "alternateName": "FlexTrolley" to Organization JSON-LD schema on all 29 pages (captures FlexTrolley searches without displaying on site)
+- Reduced Ingredion logo size by 10% in carousel
+- Fixed airport-FBO bounce: updated headline to "Your FBO deserves better than a golf cart." (was generic "Move more passengers")
+- Homepage performance: added 89KB poster frame to hero video, changed preload="auto" to preload="metadata" (reduces LCP by loading poster instantly while video downloads in background)
+- Confirmed max passenger capacity is 27 (verified by client)
+- Search Console linked to GA4 (done by client)
+- Source draft files moved to _source_files/
+
 ---
 
 ## TODOs for next session
 
 ### High priority
-- [ ] **Link Search Console to GA4** -- Needed to see organic search queries and optimize titles/descriptions
-- [ ] **Verify vehicle specs** -- Placeholder spec (16-27 passengers) needs confirmation from FlexTram team
 - [ ] **Add real testimonials** -- Testimonials removed; add back with real named client quotes as they come in
+- [ ] **Verify external quotes** -- Blog posts cite Pam Kramer (SportsTravel Magazine) and Matt Sebek (IAVM); confirm quotes are accurately attributed before sharing widely
 
 ### Medium priority
-- [ ] **Custom OG images** -- 6 pages still use generic pic3.JPG for social sharing (solutions hub, blog hub, convention, golf, labor, planned communities)
+- [ ] **Custom OG images** -- 6+ pages still use generic pic3.JPG for social sharing (solutions hub, blog hub, convention, golf, labor, planned communities)
 - [ ] **Write more blog articles** -- Continue weekly publishing cadence beyond April 29
-- [ ] **Investigate airport-fbo bounce** -- GA4 shows 4 views but only 3s engagement; may need stronger headline/hero match
+- [ ] **Update spec from range to confirmed** -- Change "16-27 seated" to "Up to 27 seated" across all pages now that 27 is confirmed
 
 ### Low priority
 - [ ] **Consider adding a /specs page** -- Multiple solution pages reference specs
-- [ ] **Further homepage performance** -- Remaining LCP bottleneck is video element; consider poster frame or smaller video
