@@ -245,6 +245,22 @@ Note: `gh` CLI installed at `/usr/local/bin/gh`, authenticated as FlexTram accou
 - Search Console linked to GA4 (done by client)
 - Source draft files moved to _source_files/
 
+### Session 7 (2026-04-10) -- Stadium Districts Blog, Performance, Spec Update
+- Published new blog post: "Stadiums Are Becoming Neighborhoods" (stadium-districts-mixed-use-transportation.html)
+- Custom hero image for stadium districts article (stadium skyline with urban infrastructure)
+- Restyled from Inter/blue theme to match site design (DM Sans + Instrument Serif, blog-post.css)
+- Full SEO: 4 JSON-LD schemas, OG/Twitter tags, canonical URL, 5 FAQs
+- Preserved all 4 blockquotes with attributions (Carrie Walton Penner/Broncos, HOK, Burns & McDonnell, Brad Chambers/JLL)
+- Airport-FBO: swapped hero image to tarmac photo (was empty tram in parking lot)
+- Updated blog hub with new article card
+- Added URL to sitemap.xml
+- Updated passenger capacity from "16-27 seated" to "Up to 27 seated" across all 19 solution sub-pages (confirmed by client)
+- Updated sitemap lastmod dates to 2026-04-10
+- GA4 data reviewed: 151 views, 27 users, 55s avg engagement; organic search showing 8 impressions for branded terms (flextram, flextrolley, flex shuttle, flex trolley); FIFA blog at 54s engagement; solutions hub stickiest page at 59s
+- Submitted 9 URLs for immediate indexing in Google Search Console
+- Instagram sameAs in Organization schema on all pages
+- Registered in Google Search Console, sitemap submitted
+
 ---
 
 ## TODOs for next session
@@ -256,7 +272,6 @@ Note: `gh` CLI installed at `/usr/local/bin/gh`, authenticated as FlexTram accou
 ### Medium priority
 - [ ] **Custom OG images** -- 6+ pages still use generic pic3.JPG for social sharing (solutions hub, blog hub, convention, golf, labor, planned communities)
 - [ ] **Write more blog articles** -- Continue weekly publishing cadence beyond April 29
-- [ ] **Update spec from range to confirmed** -- Change "16-27 seated" to "Up to 27 seated" across all pages now that 27 is confirmed
 
 ### Low priority
 - [ ] **Consider adding a /specs page** -- Multiple solution pages reference specs
