@@ -85,15 +85,15 @@ a { color: inherit; text-decoration: none; }
   font-size: 14px;
   font-weight: 600;
   color: #fff;
-  background: #C4873B;
+  background: #f5593d;
   padding: 10px 24px;
   border-radius: 50px;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 .nav-cta:hover {
   transform: scale(1.05);
-  background: #B37A32;
-  box-shadow: 0 4px 15px rgba(196, 135, 59, 0.25);
+  background: #f33816;
+  box-shadow: 0 4px 15px rgba(245, 89, 61, 0.25);
   color: #fff;
 }
 
