@@ -325,6 +325,71 @@
     });
 });
   </script>
+
+  <!-- GA4 Custom Event Tracking -->
+  <script>
+  (function() {
+    if (typeof gtag !== 'function') return;
+
+    // Scroll depth tracking (fires once per threshold)
+    var scrollFired = {};
+    var ticking = false;
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        requestAnimationFrame(function() {
+          var pct = Math.round(100 * window.scrollY / (document.documentElement.scrollHeight - window.innerHeight));
+          [25, 50, 75, 100].forEach(function(t) {
+            if (pct >= t && !scrollFired[t]) {
+              scrollFired[t] = true;
+              gtag('event', 'scroll_depth', { depth_threshold: t });
+            }
+          });
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+
+    // Form visibility tracking (fires once when #contact-form enters viewport)
+    var contactForm = document.getElementById('contact-form');
+    if (contactForm && 'IntersectionObserver' in window) {
+      var formObs = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting) {
+          gtag('event', 'form_visible', { form_id: 'contact-form' });
+          formObs.disconnect();
+        }
+      }, { threshold: 0.3 });
+      formObs.observe(contactForm);
+    }
+
+    // CTA click tracking
+    document.addEventListener('click', function(e) {
+      var link = e.target.closest('a[href*="contact-form"], .nav-cta');
+      if (link) {
+        gtag('event', 'cta_click', {
+          cta_text: link.textContent.trim(),
+          cta_location: link.closest('nav') ? 'nav' : 'body'
+        });
+      }
+    });
+
+    // Form field focus tracking (fires once on first interaction)
+    var formFocusFired = false;
+    if (contactForm) {
+      contactForm.addEventListener('focusin', function() {
+        if (!formFocusFired) {
+          formFocusFired = true;
+          gtag('event', 'form_field_focus', { form_id: 'contact-form' });
+        }
+      });
+
+      // Form submission tracking
+      contactForm.addEventListener('submit', function() {
+        gtag('event', 'form_submit_success', { form_id: 'contact-form' });
+      });
+    }
+  })();
+  </script>
 </body>
 
 </html>
