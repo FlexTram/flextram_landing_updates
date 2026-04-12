@@ -267,11 +267,21 @@ Note: `gh` CLI installed at `/usr/local/bin/gh`, authenticated as FlexTram accou
 
 ### High priority
 - [ ] **Add real testimonials** -- Testimonials removed; add back with real named client quotes as they come in
-- [ ] **Verify external quotes** -- Blog posts cite Pam Kramer (SportsTravel Magazine) and Matt Sebek (IAVM); confirm quotes are accurately attributed before sharing widely
+- [ ] **Verify external quotes** -- Blog posts cite Pam Kramer (SportsTravel Magazine), Matt Sebek (IAVM), Andrew Elmer/Populous, Bill Cahill/HNTB; confirm quotes are accurately attributed before sharing widely
+- [ ] **Submit new blog URLs in Google Search Console** -- Submit festival-season-here, we-created-the-category, and hidden-cost-of-making-fans-walk for indexing as they go live
 
 ### Medium priority
 - [ ] **Custom OG images** -- 6+ pages still use generic pic3.JPG for social sharing (solutions hub, blog hub, convention, golf, labor, planned communities)
 - [ ] **Write more blog articles** -- Continue weekly publishing cadence beyond April 29
+- [ ] **Monitor blog hub engagement** -- Blog hub redesigned with featured hero post; watch if direct-landing bounce improves from 2s baseline
+- [ ] **Monitor airport-FBO engagement** -- Page rewritten with action-driven copy; watch if engagement improves from 2-3s baseline
 
 ### Low priority
 - [ ] **Consider adding a /specs page** -- Multiple solution pages reference specs
+- [ ] **Coachella Weekend 2 content push** -- Consider homepage banner ("Now at Coachella"), festivals page callout, and recap post after Weekend 2
+
+### Scheduled blog posts (auto-publish via GitHub Actions)
+- [ ] **April 15** -- "We Created the Category" (blog/_drafts/2026-04-15_we-created-the-category.html)
+- [ ] **April 18** -- "The Hidden Cost of Making Fans Walk" (blog/_drafts/2026-04-18_hidden-cost-of-making-fans-walk.html)
+- [ ] **April 22** -- "The Fan Experience Gap" (blog/_drafts/2026-04-22_fan-experience-gap.html)
+- [ ] **April 29** -- "Sponsorship's Untapped Frontier" (blog/_drafts/2026-04-29_sponsorship-untapped-frontier.html)
