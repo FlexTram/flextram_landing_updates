@@ -318,6 +318,32 @@ Note: `gh` CLI installed at `/usr/local/bin/gh`, authenticated as FlexTram accou
 ## TODOs for next session
 
 ### High priority
+- [ ] **Repo cleanup (Tier 1 + Tier 2) — ready to execute** -- Audit completed at end of Session 9. All items confirmed not referenced anywhere in the site. Safe to delete:
+  - **Tier 1 (~2.5MB, zero risk):**
+    - `assets/css/paper-kit.min.css` (227KB — only unminified paper-kit.css is used)
+    - `assets/js/paper-kit.min.js` (11KB — only paper-kit.js is used)
+    - `assets/css/bootstrap.min.css.map` (626KB — dev-only source map)
+    - `assets/css/paper-kit.css.map` (666KB — dev-only source map)
+    - `assets/demo/` directory (64KB — demo.css + vertical-nav.js, never referenced)
+    - `assets/scss/` directory (588KB — Sass source, never compiled/used, we ship pre-compiled CSS)
+    - `assets/video/fireworks.mp4` (1.58MB — never referenced, only hero.mp4 is used)
+  - **Tier 2 (~25KB, already in .gitignore):** Remove the 3 tracked .DS_Store files: `./.DS_Store`, `./assets/.DS_Store`, `./assets/img/.DS_Store`
+  - **Command to execute:** `git rm -r --cached .DS_Store assets/.DS_Store assets/img/.DS_Store assets/css/paper-kit.min.css assets/js/paper-kit.min.js assets/css/bootstrap.min.css.map assets/css/paper-kit.css.map assets/demo assets/scss assets/video/fireworks.mp4 && rm -rf assets/demo assets/scss assets/video/fireworks.mp4 assets/css/paper-kit.min.css assets/js/paper-kit.min.js assets/css/*.map && git add -A && git commit -m "..." && git push origin master && git push production master`
+
+- [ ] **Repo cleanup (Tier 3) — OPTIONAL, decide before executing** -- `_source_files/` is 109MB of archived markdown sources + old hero images (already in .gitignore, never pushed). Three options:
+  - A) Leave it alone (safe, history preserved — recommended for now)
+  - B) Delete entirely (big Claude perf win on Glob/Grep, loses archive)
+  - C) Keep only last 30 days (compromise)
+  - Note: This doesn't affect the live site or repo size — only local Claude scan performance.
+
+- [ ] **DO NOT TOUCH during cleanup:**
+  - `assets/css/bootstrap.min.css` (used), `paper-kit.css` (used), `global.css`, `custom.css`, `use-case.css`, `solutions.css`, `blog.css`, `blog-post.css`
+  - `assets/js/core/jquery.min.js`, `bootstrap.min.js`, `popper.min.js`
+  - `assets/js/paper-kit.js` (used)
+  - `assets/fonts/nucleo-icons.*` (used by paper-kit.css)
+  - `assets/video/hero.mp4` (homepage hero video)
+  - All images in `assets/img/`, `assets/img/640/`, `assets/img/logos/`, `assets/img/solutions/` — audited, 100% referenced
+
 - [ ] **Follow up on Pittsburgh motorsport festival inbound** -- 100K-spectator July event in a Pittsburgh city park, currently using shuttle buses, wants to rent a tram system. Came in same day F1 post published. Respond with discovery questions (event dates, footprint, shuttle setup, parking, ADA) and propose a discovery call. Likely Pittsburgh Vintage Grand Prix / Schenley Park.
 - [ ] **Lock in FSU testimonial usage rights** -- Testimonial from Kari Terezakis, Executive VP of Seminole Boosters (FSU Athletics fundraising arm, ~$40M/year 501c3). Email her to:
   1. Request permission to use the quote with name + title on website, sales materials
