@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(git push:*)",
+      "Bash(gh auth:*)",
+      "Bash(sips -Z 1200 \"/Users/josephbradley/Downloads/onsite_transportation_assumed_blog.jpg\" --out hero-transportation-assumed.jpg)",
+      "Bash(sips -Z 640 \"../hero-transportation-assumed.jpg\" --out hero-transportation-assumed.jpg)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(git commit -m 'Publish flagship manifesto post: Why Isnt Transportation on the List:*)",
+      "Bash(ls -lt /Users/josephbradley/Downloads/*.jpg /Users/josephbradley/Downloads/*.jpeg /Users/josephbradley/Downloads/*.png)",
+      "Bash(sips -Z 1200 \"/Users/josephbradley/Downloads/crew_retention_data_centers blog post.jpg\" --out hero-data-center-crew-retention.jpg)",
+      "Bash(sips -Z 640 \"../hero-data-center-crew-retention.jpg\" --out hero-data-center-crew-retention.jpg)",
+      "Bash(git commit -m 'Publish data center crew retention blog post:*)",
+      "mcp__mcp-registry__search_mcp_registry",
+      "Bash(git commit -m 'Update CLAUDE.md with Session 8 notes and refreshed TODOs:*)",
+      "Bash(curl -sI \"https://www.flextram.com/blog/cruise-terminals-people-moving\")",
+      "Bash(curl -sI \"https://www.flextram.com/blog/cruise-terminals-people-moving.html\")",
+      "Bash(git diff:*)",
+      "Bash(curl -sI \"http://localhost:8081/blog/why-isnt-transportation-assumed\")",
+      "Bash(curl -sI \"http://localhost:8081/solutions/airport-fbo\")",
+      "Bash(git commit -m 'Standardize internal links to pretty URLs \\(no .html extension\\):*)"
+    ]
+  }
+}
