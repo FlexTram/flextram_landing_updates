@@ -318,29 +318,47 @@ Note: `gh` CLI installed at `/usr/local/bin/gh`, authenticated as FlexTram accou
 ## TODOs for next session
 
 ### High priority
-- [ ] **Investigate airport-FBO engagement drop** -- Showed 39s engagement in one GA4 snapshot but 4s in a later one. Confirm date range, figure out if real regression or data artifact. If real, may need second copy pass.
-- [ ] **Verify auto-published drafts went live** -- Check that April 15 "We Created the Category" and April 18 "Hidden Cost of Making Fans Walk" auto-published via GitHub Actions, hub cards rendered, sitemap updated
-- [ ] **Add real testimonials** -- Testimonials removed; add back with real named client quotes as they come in
-- [ ] **Verify external quotes** -- Blog posts cite Pam Kramer (SportsTravel Magazine), Matt Sebek (IAVM), Andrew Elmer/Populous, Bill Cahill/HNTB; confirm quotes are accurately attributed before sharing widely
+- [ ] **Follow up on Pittsburgh motorsport festival inbound** -- 100K-spectator July event in a Pittsburgh city park, currently using shuttle buses, wants to rent a tram system. Came in same day F1 post published. Respond with discovery questions (event dates, footprint, shuttle setup, parking, ADA) and propose a discovery call. Likely Pittsburgh Vintage Grand Prix / Schenley Park.
+- [ ] **Lock in FSU testimonial usage rights** -- Testimonial from Kari Terezakis, Executive VP of Seminole Boosters (FSU Athletics fundraising arm, ~$40M/year 501c3). Email her to:
+  1. Request permission to use the quote with name + title on website, sales materials
+  2. Ask if she'd serve as a reference for other athletics programs (huge leverage into P4 booster orgs - Texas, Tennessee, Georgia, Ohio State, etc.)
+  3. Pitch a short FSU case study (400-600 words with photos)
+  The quote itself: "FlexTram has been a tremendous partner in supporting our football gameday parking operations... data-driven solutions adaptable to our evolving needs... important role in enhancing the overall gameday experience for our patrons."
+- [ ] **Investigate airport-FBO + cruise engagement** -- Hero images swapped today (prop plane → Gulfstream on FBO ramp; aerial ships → passengers walking pier with zone signage). Monitor if engagement climbs over next 3-5 days on fresh traffic.
+- [ ] **Verify April 18 auto-publish went live** -- "The Hidden Cost of Making Fans Walk" scheduled for Apr 18. Workflow date comparison bug was fixed today so this should deploy correctly.
+- [ ] **Add real testimonials to site** -- Hold deployment until 2-3 client quotes in hand for balance. FSU is first. CLAUDE.md TODO still open from prior sessions. Once 3 quotes in hand, add featured quote to homepage below hero, vertical-specific quotes on matching solution pages, and consider a `/case-studies` or `/clients` page.
+- [ ] **Verify external quotes in blog posts** -- Posts cite Pam Kramer (SportsTravel), Matt Sebek (IAVM), Andrew Elmer/Populous, Bill Cahill/HNTB. Confirm attribution before sharing widely.
 
 ### Medium priority
-- [ ] **Custom OG images** -- 6+ pages still use generic pic3.JPG for social sharing (solutions hub, blog hub, convention, golf, labor, planned communities). Worth fixing if sharing on LinkedIn / in meetings.
-- [ ] **Write more blog articles** -- Continue weekly publishing cadence beyond April 29. Content is the primary traffic driver (organic sessions +188% in session 8).
-- [ ] **Monitor GSC for key query movement** -- Specifically watching: "flex tram" (holding position 4.5?), "flextrolley" (moved from position 80?), new non-branded queries from manifesto/retention posts, any golf-related queries post-PGA meeting
-- [ ] **Watch for more AI referrals** -- gemini.google.com spent 73s (100% engagement). Expect more AI tool citations as content cluster grows. Note which posts they land on.
-- [ ] **Airport-FBO follow-up copy pass** -- Depending on engagement data investigation above
+- [ ] **Write "Shuttle Bus vs. Tram" comparison post** -- Pittsburgh inbound confirmed "shuttle bus alternative" is an underserved keyword cluster. Same treatment as golf cart comparison cards but for event operators already spending on bus fleets. Bigger audience / bigger budgets.
+- [ ] **Write "City Park / Urban Public Events" content** -- Pittsburgh lead surfaced a vertical we don't cover: motorsport/festival events in public city parks. Distinct from stadiums (permanent, purpose-built) and festivals (usually private ground). Examples: Pittsburgh Vintage GP, Grand Prix of Long Beach, Baltimore GP.
+- [ ] **Write "What Data-Driven Means for Your Gameday Shuttle" post** -- FSU's testimonial used "data-driven solutions adaptable to our evolving needs" unprompted. That's a differentiator vs. any golf cart rental co. Turn the jargon into concrete value (utilization rates, route optimization, peak-hour modeling, historical patterns). Good mid-funnel content for athletics ops buyers.
+- [ ] **Add "gameday parking operations" + "data-driven shuttle" keywords** -- Exact phrases FSU uses internally. Add to stadiums-arenas, football-stadiums, fifa-world-cup, raceways-motorsports solution pages. Quick SEO win.
+- [ ] **Consider an `/operations` or `/planning` page** -- Surface the ops planning layer (heat maps, route modeling, schedule integration) that FSU specifically called out as valuable. This is the "platform" story your original homepage hinted at, told through operational credibility instead of vague platform-speak.
+- [ ] **Custom OG images** -- 6+ pages still use generic pic3.JPG (solutions hub, blog hub, convention, golf, labor, planned communities).
+- [ ] **Write more blog articles** -- Continue weekly publishing cadence beyond April 29. Content is primary traffic driver (organic sessions +188% across session 8).
+- [ ] **Monitor GSC for key query movement** -- Watching: "flex tram" (holding position 4.5?), "flextrolley" (moved from position 80?), "shuttle bus alternative" / "tram rental" (new keywords added today - impressions?), new queries from manifesto/retention/F1/golf posts.
+- [ ] **Watch for more AI referrals** -- gemini.google.com + duckduckgo/organic already appearing. Expect more AI tool citations as content cluster grows.
 
 ### Low priority
-- [ ] **Consider adding a /specs page** -- Multiple solution pages reference specs
-- [ ] **Reach out to AMS Event Rentals** -- Only existing referral backlink. Ask about a dedicated FlexTram page/content with more linking. Relevant backlinks are the #1 lever for moving non-branded rankings.
-- [ ] **LinkedIn share of the manifesto post** -- "Why Isn't Transportation on the List?" designed to be shareable, best top-of-funnel content on the site
-- [ ] **Coachella Weekend 2 content push** -- Consider homepage banner ("Now at Coachella"), festivals page callout, and recap post after Weekend 2
+- [ ] **Reach out to Power 4 booster orgs for outbound** -- With Kari's reference (once secured), FlexTram has a credible door-opener to: Texas Longhorn Foundation, Tennessee Fund, Iron Bowl/Tide Pride, Georgia Bulldog Club, Gator Boosters, Texas A&M 12th Man Foundation, Buckeye Club, Wolfpack Club. These orgs talk to each other.
+- [ ] **LinkedIn post referencing FSU partnership** -- With Kari's permission, a short LinkedIn post tagging Seminole Boosters would reach exactly the collegiate athletics audience we want.
+- [ ] **Consider adding a /specs page** -- Multiple solution pages reference specs.
+- [ ] **Reach out to AMS Event Rentals** -- Only existing referral backlink. Ask about a dedicated FlexTram page with more content/linking. Relevant backlinks are #1 lever for non-branded rankings.
+- [ ] **LinkedIn share of the manifesto post** -- "Why Isn't Transportation on the List?" designed to be shareable, best top-of-funnel content.
+- [ ] **Coachella Weekend 2 content push** -- Consider homepage banner, festivals page callout, recap post.
 
-### Done in Session 8 (removed from list)
-- ✅ Submitted 4 new blog URLs in GSC (why-isnt-transportation-assumed, cruise-terminals-people-moving, golf-tournament-spectator-experience, data-center-crew-retention)
-- ✅ Monitored airport-FBO engagement (initial data showed 2s → 39s improvement; follow-up snapshot needs investigation)
-- ✅ Monitored blog hub engagement (doubled from 27s → 54s)
-- ✅ Published 6 new blog posts (covers old "write more blog articles" item for April)
+### Done in Session 9 (removed from list)
+- ✅ Monitored blog hub engagement (27s → 54s — doubled)
+- ✅ Identified airport-FBO engagement root cause (visual-copy mismatch, not technical)
+- ✅ Swapped airport-FBO hero (prop plane → Gulfstream on ramp)
+- ✅ Swapped cruise-terminals hero (aerial → passengers walking pier with zone signage)
+- ✅ Fixed auto-publish workflow date comparison bug (was silently failing)
+- ✅ Manually triggered publish of "We Created the Category" (Apr 15)
+- ✅ Standardized internal links to pretty URLs (203 href changes across 37 files)
+- ✅ Standardized blog post-meta dates to "Month Year" format (9 files)
+- ✅ Published F1 fan transportation post (grid position 6, NOT featured)
+- ✅ Added shuttle bus alternative / tram rental keywords (4 pages)
 
 ### Scheduled blog posts (auto-publish via GitHub Actions)
 - [x] **April 15** -- "We Created the Category" (should be live — verify)
