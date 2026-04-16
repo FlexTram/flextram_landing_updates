@@ -36,7 +36,7 @@ jobs:
               continue
             fi
 
-            if [ "$PUB_DATE" \<= "$TODAY" ]; then
+            if [[ ! "$PUB_DATE" > "$TODAY" ]]; then
               # Extract slug (everything after the date and underscore)
               SLUG=$(echo "$FILENAME" | sed "s/^${PUB_DATE}_//")
               SLUG_NO_EXT=$(echo "$SLUG" | sed 's/.html$//')
