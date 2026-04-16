@@ -12,7 +12,7 @@
 ## What's here
 Static HTML site built on **Paper Kit 2 PRO v2.3.0** (Creative Tim). No build tools or package.json -- just HTML/CSS/JS served as-is.
 
-### Pages (24 total)
+### Pages (30+ total)
 - `index.html` -- Main FlexTram landing page (self-hosted video hero, client logos, contact form)
 - `landing-page.html` -- Secondary landing page (full SEO meta)
 - `system.html` -- System/product details page with before/after animation (easter egg, noindex)
@@ -261,27 +261,89 @@ Note: `gh` CLI installed at `/usr/local/bin/gh`, authenticated as FlexTram accou
 - Instagram sameAs in Organization schema on all pages
 - Registered in Google Search Console, sitemap submitted
 
+### Session 8 (2026-04-11 to 2026-04-15) -- Content Sprint, Airport-FBO Rewrite, Performance Cleanup
+
+**Content published (6 new blog posts):**
+- Festival Season Is Here (Coachella context, front-of-house/back-of-house framing)
+- Data Center Construction People-Moving Problem (hyperscale campus transit gap)
+- Factory Workers Walking Two Hours (warehouse shift-change transit waste)
+- Cruise Terminals People-Moving (homeport turnaround + private island destinations)
+- Golf Tournament Spectator Experience (PGA meeting support — placed quietly in grid, not featured)
+- Why Isn't Transportation on the List? (flagship manifesto — new featured Latest post, sitemap priority 0.8)
+- Data Center Crew Retention (companion to people-moving post; labor shortage angle)
+
+**Airport-FBO page overhaul (2s → 39s engagement):**
+- Rewrote hero with "blind spot" hook modeled after FIFA World Cup page pattern: "Your FBO sells a seamless arrival. The ramp tells a different story."
+- Rewrote all 4 pain cards with vivid FBO-specific scenarios (Gulfstream scenario, aircraft liability, charter season economics, silent client churn)
+- Updated meta/Twitter/OG descriptions
+- Changed "The problem" section label to "The blind spot"
+- Added FlexTrolley mention in solution paragraph + FAQ answer
+
+**FlexTrolley SEO push (ranking work for position 80 → climbing):**
+- Added 7 visible body text mentions across: homepage, solutions hub, blog hub, festival blog, airport-FBO (FAQ + solution paragraph), data center post
+- Added FlexTrolley/flex trolley/flex shuttle to keyword meta tags on 3 pages
+- GSC results: impressions grew 12 → 16, "flex tram" appeared at position 4.5 (new page-1 ranking)
+
+**Internal linking for SEO + engagement:**
+- Added "Related reading" sections linking blog posts to 4 solution pages (cruise-terminals, warehouse-logistics, factory-tours, labor-companies)
+- Added manifesto post cross-links to stadiums-arenas, festivals-events solution pages
+- Inline blog-to-blog cross-links between data-center/factory-workers/cruise/retention posts
+
+**Homepage copy refresh (per client MD):**
+- Body: "FlexTram (also known as FlexTrolley) builds... large venues, and high-volume operations"
+- Added "The vehicle is just the starting point." as standalone paragraph
+- Removed Origin SCT / platform language (returning on dedicated page later)
+- Golf cart line: "Golf carts are for golf. Vans are for the highway. FlexTram is built for everything in between."
+- Contact header: "See what FlexTram can do for you." → "Tell us about your venue."
+
+**Performance cleanup:**
+- Converted 19 solution card PNGs to JPG (10MB → 2MB, ~85% reduction per solution page)
+- Deleted 7 unused JS plugin files + 2 unused plugin directories (~470KB)
+- Deleted 9 unused images (~1.2MB)
+- Fixed broken link in April 22 fan-experience-gap draft
+- Total repo reduction: ~9.5MB
+
+**Analytics wins:**
+- Total sessions 93 → 132 (+42%)
+- Organic sessions 8 → 23 (+188%)
+- Organic engagement rate 62.5% → 82.6%
+- Blog hub engagement 27s → 54s (doubled)
+- GSC impressions 48 → 72 (+50%)
+- AI referrals started appearing: `gemini.google.com` (100% engagement, 1m13s avg)
+- AI-search advanced operator query (`-site:reddit.com -site:twitter.com...`) surfaced data center post at position 6
+- New query discovery: "flex tram" at position 4.5 (page 1), "distribution center inurl:blog" at position 25
+
 ---
 
 ## TODOs for next session
 
 ### High priority
+- [ ] **Investigate airport-FBO engagement drop** -- Showed 39s engagement in one GA4 snapshot but 4s in a later one. Confirm date range, figure out if real regression or data artifact. If real, may need second copy pass.
+- [ ] **Verify auto-published drafts went live** -- Check that April 15 "We Created the Category" and April 18 "Hidden Cost of Making Fans Walk" auto-published via GitHub Actions, hub cards rendered, sitemap updated
 - [ ] **Add real testimonials** -- Testimonials removed; add back with real named client quotes as they come in
 - [ ] **Verify external quotes** -- Blog posts cite Pam Kramer (SportsTravel Magazine), Matt Sebek (IAVM), Andrew Elmer/Populous, Bill Cahill/HNTB; confirm quotes are accurately attributed before sharing widely
-- [ ] **Submit new blog URLs in Google Search Console** -- Submit festival-season-here, we-created-the-category, and hidden-cost-of-making-fans-walk for indexing as they go live
 
 ### Medium priority
-- [ ] **Custom OG images** -- 6+ pages still use generic pic3.JPG for social sharing (solutions hub, blog hub, convention, golf, labor, planned communities)
-- [ ] **Write more blog articles** -- Continue weekly publishing cadence beyond April 29
-- [ ] **Monitor blog hub engagement** -- Blog hub redesigned with featured hero post; watch if direct-landing bounce improves from 2s baseline
-- [ ] **Monitor airport-FBO engagement** -- Page rewritten with action-driven copy; watch if engagement improves from 2-3s baseline
+- [ ] **Custom OG images** -- 6+ pages still use generic pic3.JPG for social sharing (solutions hub, blog hub, convention, golf, labor, planned communities). Worth fixing if sharing on LinkedIn / in meetings.
+- [ ] **Write more blog articles** -- Continue weekly publishing cadence beyond April 29. Content is the primary traffic driver (organic sessions +188% in session 8).
+- [ ] **Monitor GSC for key query movement** -- Specifically watching: "flex tram" (holding position 4.5?), "flextrolley" (moved from position 80?), new non-branded queries from manifesto/retention posts, any golf-related queries post-PGA meeting
+- [ ] **Watch for more AI referrals** -- gemini.google.com spent 73s (100% engagement). Expect more AI tool citations as content cluster grows. Note which posts they land on.
+- [ ] **Airport-FBO follow-up copy pass** -- Depending on engagement data investigation above
 
 ### Low priority
 - [ ] **Consider adding a /specs page** -- Multiple solution pages reference specs
+- [ ] **Reach out to AMS Event Rentals** -- Only existing referral backlink. Ask about a dedicated FlexTram page/content with more linking. Relevant backlinks are the #1 lever for moving non-branded rankings.
+- [ ] **LinkedIn share of the manifesto post** -- "Why Isn't Transportation on the List?" designed to be shareable, best top-of-funnel content on the site
 - [ ] **Coachella Weekend 2 content push** -- Consider homepage banner ("Now at Coachella"), festivals page callout, and recap post after Weekend 2
 
+### Done in Session 8 (removed from list)
+- ✅ Submitted 4 new blog URLs in GSC (why-isnt-transportation-assumed, cruise-terminals-people-moving, golf-tournament-spectator-experience, data-center-crew-retention)
+- ✅ Monitored airport-FBO engagement (initial data showed 2s → 39s improvement; follow-up snapshot needs investigation)
+- ✅ Monitored blog hub engagement (doubled from 27s → 54s)
+- ✅ Published 6 new blog posts (covers old "write more blog articles" item for April)
+
 ### Scheduled blog posts (auto-publish via GitHub Actions)
-- [ ] **April 15** -- "We Created the Category" (blog/_drafts/2026-04-15_we-created-the-category.html)
+- [x] **April 15** -- "We Created the Category" (should be live — verify)
 - [ ] **April 18** -- "The Hidden Cost of Making Fans Walk" (blog/_drafts/2026-04-18_hidden-cost-of-making-fans-walk.html)
-- [ ] **April 22** -- "The Fan Experience Gap" (blog/_drafts/2026-04-22_fan-experience-gap.html)
+- [ ] **April 22** -- "The Fan Experience Gap" (blog/_drafts/2026-04-22_fan-experience-gap.html) -- broken link fixed in session 8
 - [ ] **April 29** -- "Sponsorship's Untapped Frontier" (blog/_drafts/2026-04-29_sponsorship-untapped-frontier.html)
