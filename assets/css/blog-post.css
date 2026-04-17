@@ -232,12 +232,67 @@
   max-width: 420px;
 }
 
+/* ---- STICKY CTA ---- */
+.sticky-cta {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  background: var(--color-text-primary);
+  color: var(--color-bg-primary);
+  border: 0.5px solid var(--color-text-primary);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  z-index: 100;
+  transition: opacity 0.2s;
+  text-decoration: none;
+}
+.sticky-cta:hover { opacity: 0.82; color: var(--color-bg-primary); text-decoration: none; }
+
+/* ---- INLINE MID-ARTICLE CTA ---- */
+.post-cta-inline {
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  margin: 2.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.post-cta-inline-text { flex: 1 1 320px; }
+.post-cta-inline h3 {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--color-text-primary);
+  margin-bottom: 0.35rem;
+  line-height: 1.25;
+}
+.post-cta-inline p {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+  margin: 0;
+  max-width: 100%;
+}
+
 /* ---- RESPONSIVE ---- */
 @media (max-width: 768px) {
   .post { padding: 1.5rem var(--page-padding) 3rem; }
   .post-title { font-size: clamp(24px, 5vw, 36px); }
   .post-subtitle { max-width: 100%; font-size: 15px; }
   .post-hero { max-height: 300px; border-radius: 8px; }
+
+  .sticky-cta {
+    left: 1rem;
+    right: 1rem;
+    text-align: center;
+  }
 }
 
 @media (max-width: 576px) {
@@ -254,6 +309,8 @@
   .post-stats { grid-template-columns: repeat(2, 1fr); }
   .post-related-grid { grid-template-columns: 1fr; }
   .post-cta { flex-direction: column; }
+  .post-cta-inline { flex-direction: column; align-items: flex-start; padding: 1.5rem; }
+  .post-cta-inline h3 { font-size: 18px; }
 }
 
 @media (max-width: 375px) {

@@ -198,3 +198,31 @@
   .blog-hub { padding: 1.5rem var(--page-padding); }
   .blog-card-img { height: 140px; }
 }
+
+/* ---- STICKY CTA ---- */
+.sticky-cta {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  background: var(--color-text-primary);
+  color: var(--color-bg-primary);
+  border: 0.5px solid var(--color-text-primary);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  z-index: 100;
+  transition: opacity 0.2s;
+  text-decoration: none;
+}
+.sticky-cta:hover { opacity: 0.82; color: var(--color-bg-primary); text-decoration: none; }
+
+@media (max-width: 768px) {
+  .sticky-cta {
+    left: 1rem;
+    right: 1rem;
+    text-align: center;
+  }
+}
