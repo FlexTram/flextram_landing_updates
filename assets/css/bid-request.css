@@ -1,0 +1,278 @@
+/* ======================
+   FlexTram — Request a Bid
+   /request-a-bid.html + /request-a-bid-received.html
+   ====================== */
+
+.bid-wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2rem var(--page-padding) 4rem;
+}
+
+/* ---- BREADCRUMB ---- */
+.bid-wrap .breadcrumb {
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.bid-wrap .bc-link {
+  color: var(--color-text-secondary);
+  transition: color 0.12s;
+}
+.bid-wrap .bc-link:hover { color: var(--color-text-primary); }
+
+/* ---- HERO ---- */
+.bid-hero {
+  margin-bottom: 2.5rem;
+  max-width: 680px;
+}
+.bid-hero .eyebrow {
+  margin-bottom: 0.75rem;
+}
+.bid-hero h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(32px, 5vw, 44px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--color-text-primary);
+  margin-bottom: 1rem;
+}
+.bid-hero h1 em {
+  font-style: italic;
+  color: var(--color-text-secondary);
+}
+.bid-hero .lead {
+  font-size: 17px;
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+  margin-bottom: 0;
+}
+
+/* ---- FORM ---- */
+.bid-form {
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+  margin-top: 2rem;
+}
+
+.bid-step {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.bid-step legend {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--color-text-primary);
+  padding: 0 0 0.5rem 0;
+  margin-bottom: 0.75rem;
+  border-bottom: 0.5px solid var(--color-border-light);
+  width: 100%;
+  float: left;
+}
+.bid-step legend span {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.bid-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.bid-field-row {
+  display: flex;
+  gap: 1rem;
+}
+.bid-field-row > .bid-field { flex: 1; min-width: 0; }
+
+.bid-field label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+.bid-field .bid-hint {
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  margin-top: 2px;
+  line-height: 1.4;
+}
+.bid-field-required {
+  color: #d64b3f;
+  margin-left: 2px;
+}
+
+.bid-field input[type="text"],
+.bid-field input[type="email"],
+.bid-field input[type="tel"],
+.bid-field input[type="number"],
+.bid-field input[type="date"],
+.bid-field select,
+.bid-field textarea {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  padding: 10px 12px;
+  border: 0.5px solid var(--color-border-mid);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  width: 100%;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  box-sizing: border-box;
+}
+.bid-field input:focus,
+.bid-field select:focus,
+.bid-field textarea:focus {
+  outline: none;
+  border-color: var(--color-text-primary);
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+}
+.bid-field textarea {
+  min-height: 120px;
+  resize: vertical;
+  font-family: var(--font-sans);
+  line-height: 1.5;
+}
+.bid-field select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 9L1.5 4.5h9z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+.bid-checkbox-group,
+.bid-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+.bid-checkbox-group label,
+.bid-radio-group label {
+  font-size: 14px;
+  font-weight: 400;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  line-height: 1.5;
+}
+.bid-checkbox-group input,
+.bid-radio-group input {
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.bid-submit-row {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 0.5rem;
+}
+.bid-submit {
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.bid-submit-note {
+  font-size: 13px;
+  color: var(--color-text-tertiary);
+  line-height: 1.4;
+}
+
+/* ---- THANK-YOU PAGE ---- */
+.bid-thanks {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 2.5rem 0;
+}
+.bid-thanks-heading {
+  font-family: var(--font-serif);
+  font-size: clamp(32px, 5vw, 44px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--color-text-primary);
+  margin-bottom: 1rem;
+}
+.bid-thanks-heading em {
+  font-style: italic;
+  color: var(--color-text-secondary);
+}
+.bid-thanks-sub {
+  font-size: 17px;
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+  margin-bottom: 2.5rem;
+}
+
+.bid-slick-card {
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+.bid-slick-card h2 {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-primary);
+}
+.bid-slick-card p {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.bid-contact-card {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 0.5px solid var(--color-border-light);
+}
+.bid-contact-card p {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin-bottom: 6px;
+  line-height: 1.6;
+}
+.bid-contact-card .bid-contact-name {
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 768px) {
+  .bid-wrap { padding: 1.5rem var(--page-padding) 3rem; }
+  .bid-hero { margin-bottom: 2rem; }
+  .bid-hero h1 { font-size: clamp(26px, 5vw, 36px); }
+  .bid-hero .lead { font-size: 15px; }
+  .bid-form { gap: 2rem; }
+  .bid-step legend { font-size: 20px; }
+  .bid-field-row { flex-direction: column; }
+  .bid-submit-row { flex-direction: column; align-items: flex-start; }
+  .bid-thanks-heading { font-size: clamp(26px, 5vw, 36px); }
+  .bid-slick-card { padding: 1.5rem; }
+  .bid-slick-card h2 { font-size: 20px; }
+}
