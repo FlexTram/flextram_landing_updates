@@ -72,5 +72,25 @@
 
   </main>
 
+  <script>
+    // CTA click tracking on thank-you page (Calendly, slick, email)
+    document.addEventListener('click', function(e) {
+      var link = e.target.closest('a[href*="calendly.com"], a[href*="flextram-flyer"], a[href^="mailto:"]');
+      if (link && typeof gtag === 'function') {
+        var dest = link.getAttribute('href') || '';
+        var cta_type = 'other';
+        if (dest.indexOf('calendly.com') > -1) cta_type = 'calendly';
+        else if (dest.indexOf('flextram-flyer') > -1) cta_type = 'slick';
+        else if (dest.indexOf('mailto:') === 0) cta_type = 'email';
+        gtag('event', 'cta_click', {
+          cta_text: link.textContent.trim(),
+          cta_location: 'bid_thanks_page',
+          cta_type: cta_type,
+          cta_destination: dest
+        });
+      }
+    });
+  </script>
+
 </body>
 </html>

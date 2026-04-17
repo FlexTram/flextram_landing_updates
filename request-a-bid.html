@@ -285,6 +285,21 @@
           }
         });
       }
+
+      // CTA click tracking (Calendly, homepage contact-form link)
+      document.addEventListener('click', function(e) {
+        var link = e.target.closest('a[href*="calendly.com"], a[href*="contact-form"]');
+        if (link && typeof gtag === 'function') {
+          var dest = link.getAttribute('href') || '';
+          var cta_type = dest.indexOf('calendly.com') > -1 ? 'calendly' : 'contact_form';
+          gtag('event', 'cta_click', {
+            cta_text: link.textContent.trim(),
+            cta_location: 'bid_form_page',
+            cta_type: cta_type,
+            cta_destination: dest
+          });
+        }
+      });
     })();
   </script>
 

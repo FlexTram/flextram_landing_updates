@@ -367,11 +367,17 @@
 
     // CTA click tracking
     document.addEventListener('click', function(e) {
-      var link = e.target.closest('a[href*="contact-form"], .nav-cta');
+      var link = e.target.closest('a[href*="contact-form"], a[href*="/request-a-bid"], a[href*="calendly.com"], .nav-cta');
       if (link) {
+        var dest = link.getAttribute('href') || '';
+        var cta_type = 'contact_form';
+        if (dest.indexOf('calendly.com') > -1) cta_type = 'calendly';
+        else if (dest.indexOf('request-a-bid') > -1) cta_type = 'bid_form';
         gtag('event', 'cta_click', {
           cta_text: link.textContent.trim(),
-          cta_location: link.closest('nav') ? 'nav' : 'body'
+          cta_location: link.closest('nav') ? 'nav' : 'body',
+          cta_type: cta_type,
+          cta_destination: dest
         });
       }
     });
