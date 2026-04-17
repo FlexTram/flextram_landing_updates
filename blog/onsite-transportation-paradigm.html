@@ -3,12 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZYK6B5M9QT"></script>
   <script>
+    // GA4 — dataLayer stub loaded immediately; script deferred until user
+    // interaction or 2.5s idle timeout (whichever first). Reduces LCP/TBT on
+    // first paint without losing analytics coverage (events buffer in dataLayer
+    // and flush when gtag.js loads).
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-ZYK6B5M9QT');
+    (function() {
+      var loaded = false;
+      function loadGA() {
+        if (loaded) return; loaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-ZYK6B5M9QT';
+        document.head.appendChild(s);
+      }
+      ['scroll','mousemove','touchstart','keydown','click','pointerdown'].forEach(function(e) {
+        window.addEventListener(e, loadGA, { once: true, passive: true });
+      });
+      setTimeout(loadGA, 2500);
+    })();
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Onsite Transportation Paradigm Is Changing | FlexTram</title>
