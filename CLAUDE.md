@@ -315,6 +315,26 @@ Note: `gh` CLI installed at `/usr/local/bin/gh`, authenticated as FlexTram accou
 
 ---
 
+## Fact-check audit (2026-04-17)
+
+Ran a systematic audit across all 15 published blog posts + 3 drafts to catch any hallucinated factual claims. **91 claims flagged for review — 27 CRITICAL, 44 IMPORTANT, 20 MINOR.** Web-verified 20 of 27 CRITICAL claims against live source URLs.
+
+**Results:**
+- **20 CRITICAL claims verified accurate** — real people, real quotes, real regulations, exact matches against source URLs. Named-person quotes (Ryan Ogle/PGA, Jonathan Berk/The National, Matt Sebek/CITY SC, Jason Soucy/PGA, Brad Chambers/JLL, Carrie Walton Penner/Broncos, Andrew Elmer/Populous, Bill Cahill/HNTB) all check out. Regulations (FMCSA IFR Sept 2025, DOT 2010 cruise ADA, Carnival 2015 settlement, ABA 48-hour rule) all real and correctly characterized. Source claims (Hard Rock A-Z guide, Echo Park Speedway, Ticket Fairy, HOK pillars, Burns & McDonnell, Boldyn 55% stat, THE PLAYERS parking warning) all exact matches.
+- **2 attribution drifts fixed** (commit `d7fb874`):
+  1. `shuttle-bus-vs-flextram.html` — "9.5% bus driver shortage" was mis-attributed to "federal legislation introduced in 2026." Real source is the Economic Policy Institute. Fixed: re-attributed to EPI, separated real 2026 legislation (Driving Forward Act) reference, added specific FMCSA IFR date (Sept 29, 2025) + Feb 2026 final rule note.
+  2. `world-cup-fan-first-mobility.html` — NACFE reference described their piece as general "operational analysis of what it'll take to move fans." Real piece is the "AV Game Day Playbook" about autonomous vehicles at mega-events. Tightened to match the AV framing.
+- **3 unverified claims left as-is per low-risk assessment:**
+  1. Sander van't Noordende (Randstad CEO) quote in data-center-crew-retention.html — CEO is real, thesis verified as his documented position, exact quote's specific CNBC source couldn't be located but paraphrase holds.
+  2. National Bus Sales "wait an hour or more" quote in shuttle-bus-vs-flextram.html — cited URL returned 404 (link rot, not fabrication).
+  3. Bonnaroo accessibility claims in shuttle-bus-vs-flextram.html — support URL returned 403 (blocked by WAF, not confirmed wrong). Bonnaroo is a FlexTram client per context.
+
+**Pattern observed:** Named-person quotes were all real and accurate. Risk concentrated in stat-to-source attribution (which number came from which report) — that's now caught. No hallucinated people, no fabricated regulations, no invented client deployments.
+
+**Client deployment "8 FlexTrams replaced 300 carts / 1,300 total carts at Southern California site":** Confirmed accurate by client. Both phrasings (across 5+ posts) describe the same real deployment from different angles.
+
+---
+
 ## TODOs for next session
 
 ### High priority
