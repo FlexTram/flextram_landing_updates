@@ -313,6 +313,108 @@ Note: `gh` CLI installed at `/usr/local/bin/gh`, authenticated as FlexTram accou
 - AI-search advanced operator query (`-site:reddit.com -site:twitter.com...`) surfaced data center post at position 6
 - New query discovery: "flex tram" at position 4.5 (page 1), "distribution center inurl:blog" at position 25
 
+### Session 10 (2026-04-16 to 2026-04-17) — Content expansion, conversion funnel, performance overhaul, repo cleanup
+
+Two-day mega-sprint. Covered in three themes: new content + tone fix, full conversion funnel build-out, and a deep performance pass that lifted every ranking-critical page into the 75-90+ Lighthouse mobile range.
+
+**Content (3 new published blog posts + 1 major solution-page rewrite):**
+- Published "Shuttle Bus vs. FlexTram: The Real Cost of Moving People Inside Your Event" (`/blog/shuttle-bus-vs-flextram`, ~2,400 words, Operations & Economics)
+  - Close-proximity scope protection in title, callout, opening, and SEO metadata
+  - Named examples: Hard Rock Stadium (25-min rideshare walk), Bonnaroo (45-60 min campsite walks), Echo Park Speedway (hour-long cart hold), PGA Valhalla (Ryan Ogle quote), THE PLAYERS Championship
+  - Target keyword cluster proven by PVGP inbound: "shuttle bus alternative"
+- Published "Your Event Isn't at a Stadium. It's at a Park, a Beach, or a Street." (`/blog/venue-isnt-a-stadium`, ~2,400 words, NEW "Venue Planning" category)
+  - Opens the "temporary venue mobility" category
+  - X Games hero photo (Huntington Beach vert ramps)
+  - Named examples: US Open of Surfing, AVP Long Beach, Grand Prix of Long Beach (1.97mi/180K spectators), Baltimore GP (cautionary tale, permits pulled 2013)
+  - PVGP hinted at as "450-acre urban park motorsport festival" — not named pending usage rights
+- Published "Curb to Gate: Why the Fan Journey Became the Product at Live Events" (`/blog/curb-to-gate-fan-journey`, ~2,000 words, Industry Analysis)
+  - Parking-industry positioning piece targeting LAZ, Propark Mobility, Metropolis, ParkHub, Hollywood Park
+  - Opens partnership conversation with parking operators (new GTM angle)
+  - All cited companies + $ figures + quotes have source URLs for verification
+- Rewrote `solutions/airport-fbo.html` hero + first H2 + pain cards
+  - Root cause of 3s engagement: tone was accusatory ("your FBO is failing"), not a performance issue (Lighthouse confirmed: worse-performing stadiums page kept 10s engagement with same template)
+  - Mirror stadiums-arenas pattern: solution-first H1, observational hero, investigative H2 ("What ramp transport is really costing you"), situational pain card titles
+  - Kept Gulfstream hero photo, all specs/comparison tables/FAQ unchanged
+
+**Conversion funnel (full build):**
+- Blog post CTA surface (sticky + mid-article + bottom) across all 14 content posts + hub
+  - Solves measured problem: yesterday 167 blog views drove 0 CTA clicks (homepage's 14.3% CTA rate was carrying entire site)
+  - Sticky floating button always visible
+  - Mid-article CTA with topic-specific copy per post (13 unique variants)
+- Unified "Request Info" CTAs to orange pill site-wide via CSS descendant selectors (54 buttons across nav, sticky, blog hub, blog post bottoms, solution page heroes, solution mid-page blocks)
+  - Kept black `.btn-primary` for form SUBMIT buttons and secondary actions (thank-you cards, inline tier-2 CTAs, related-solution cards)
+  - Zero HTML edits — pure CSS consolidation
+- Built `/request-a-bid` (4-step procurement form) + `/request-a-bid-received` (thank-you)
+  - 15 structured fields (event, scope, contact, extras) vs. homepage's 3
+  - Service model routing: Rental / Turnkey / Advise us
+  - Reuses existing Formspree endpoint with `source=bid_request` hidden tag
+  - Thank-you page embeds product slick (flextram.github.io/flextram-flyer/v1/), Calendly, and direct email as 3 conversion paths
+- Integrated Calendly (https://calendly.com/jb-flextram/30min) as third conversion path site-wide
+  - Homepage: subtle link below contact form
+  - Bid form intro: "if your timeline is tight, book a 30-min call and we'll accelerate"
+  - Bid thank-you: featured option
+- Updated homepage contact section with buyer-language (based on Hinterland/Coachella/Canada inquiry diction analysis)
+  - Service-area statement: "Deploying at events across the United States. Rentals, leases, and turnkey plans available."
+  - Changed submit button "Send" → "Request Quote"
+  - Subtle procurement link to `/request-a-bid`
+- Updated slick repo (flextram-flyer/v1/): SEND → REQUEST QUOTE, added FLEXTRAM.COM back-link, fixed truncated footer HTML (file had ended mid-tag `<div st`), added "SOURCING A LARGE DEPLOYMENT? REQUEST A BID →" link back to main site
+- Buyer-language SEO push (added rental keywords to 7 event-type solution pages + solutions hub meta/OG/Twitter descriptions)
+
+**Analytics (GA4 event coverage):**
+- `cta_click` tracking across bid funnel with `cta_type` + `cta_location` parameters (homepage, bid_form_page, bid_thanks_page — sliceable by type: contact_form / bid_form / calendly / slick / email)
+- `bid_request_submit` fires on form submission
+- `bid_request_received` fires on thank-you page load (conversion event)
+- Existing `form_visible`, `form_start`, `form_submit` preserved
+
+**Fact-check audit (2026-04-17):** See dedicated section below. 20/27 CRITICAL claims verified, 2 attribution drifts fixed (EPI 9.5% stat, NACFE framing), 3 left as-is per low-risk call.
+
+**Performance deep dive (site-wide):**
+- Lighthouse mobile improvements:
+  - `solutions/airport-fbo`: **47 → 88** (median of 3 runs)
+  - `solutions/stadiums-arenas`: **30 → 90**
+  - `blog/stadium-districts`: **39 → 76**
+  - `/request-a-bid`: **50 → 76**
+  - `/request-a-bid-received`: already 72
+  - Homepage: 32 → ~45 (variable, still video-bound; ranking-critical pages are the wins)
+- **All pages now pass CLS <0.1** — the Google ranking penalty metric is resolved site-wide
+- Optimizations shipped:
+  1. Non-blocking Google Fonts (preload-as-style + noscript fallback pattern, 45 pages)
+  2. Hero image preload hints with imagesrcset/imagesizes (35 solution + blog pages)
+  3. Explicit width/height attrs on all 35 hero images (CLS regression fixed: 0.23-0.30 → <0.01)
+  4. Client logo compression — 1.8MB → 545KB (Python PIL for WebP, sips for JPG/PNG, target 240px max width)
+  5. Homepage event photo compression — 1MB → 454KB
+  6. Homepage hero video re-encoded via ffmpeg (CRF 28, 960×540, no audio) — 4.0MB → 2.3MB
+  7. Favicon shrink 500×500 → 192×192 (30KB → 5KB)
+  8. Hero poster shrink 1280×720 → 1024×576 (89KB → 41KB)
+  9. GA4 (gtag.js) deferred loading across 45 pages
+     - dataLayer + gtag() stub fire immediately (pageview queued)
+     - Real script loads on first user interaction (scroll, click, touchstart, mousemove, keydown, pointerdown) OR 2.5s timeout
+     - Zero analytics loss; major TBT improvement on blog/form pages
+- **Cumulative bandwidth reduction: ~3.6MB per cold visit**
+
+**Code review + repo cleanup:**
+- Audited 45+ files: verified no duplicate CSS, no debug code, no broken internal links, all hero images have explicit dimensions, all alt text present, all forms properly labeled
+- Fixed `landing-page.html` double-H1 (demoted second to H2)
+- Removed stale TODO comment in `solutions/airport-fbo.html` (specs long since verified with client)
+- Executed Tier 1 repo cleanup queued from Session 9 — 3.6MB / 101 files removed:
+  - `paper-kit.min.css` (227KB), `paper-kit.min.js` (11KB)
+  - `bootstrap.min.css.map` (626KB), `paper-kit.css.map` (666KB)
+  - `assets/demo/` (64KB), `assets/scss/` (588KB, 90+ files)
+  - `assets/video/fireworks.mp4` (1.58MB)
+  - 3 tracked `.DS_Store` files
+
+**Inbound leads logged during this session:**
+- **Hinterland Music Festival** — Ross's dept contact, Saint Charles, IA, July 28–Aug 3, requested bid on **16–32 trams** for staff/BOH movement. Biggest single-deal inbound of the month. Joseph responded with discovery; awaiting reply.
+- **Coachella attendee** — "saw your trams at Coachella, are these for rent?" Warm warm-lead; responded.
+- **Live Nation Canada** (outdoor venue) — lost deal, but confirms Canadian market signal worth watching.
+- **Pittsburgh Vintage Grand Prix (Ross Miller, EVP Partnerships)** — Monday call scheduled. Email thread in good shape; pre-call one-pager and Calendly booking primed.
+
+**Key analytics snapshot entering next session:**
+- Users 91 → 106 (+16%) across the two days
+- 4 form submissions on a single day (~4.4% conversion rate — strong for B2B)
+- GSC queries maturing: "flextram" at position 1.08, "flex tram" at 4.5 (page 1), "flex shuttle" NEW appearance, AI operator queries (`inurl:blog` pattern) surfacing multiple blog posts
+- AI referrals continuing: gemini.google.com, with DuckDuckGo/organic also showing
+
 ---
 
 ## Fact-check audit (2026-04-17)
@@ -337,54 +439,29 @@ Ran a systematic audit across all 15 published blog posts + 3 drafts to catch an
 
 ## TODOs for next session
 
-### High priority
-- [ ] **Repo cleanup (Tier 1 + Tier 2) — ready to execute** -- Audit completed at end of Session 9. All items confirmed not referenced anywhere in the site. Safe to delete:
-  - **Tier 1 (~2.5MB, zero risk):**
-    - `assets/css/paper-kit.min.css` (227KB — only unminified paper-kit.css is used)
-    - `assets/js/paper-kit.min.js` (11KB — only paper-kit.js is used)
-    - `assets/css/bootstrap.min.css.map` (626KB — dev-only source map)
-    - `assets/css/paper-kit.css.map` (666KB — dev-only source map)
-    - `assets/demo/` directory (64KB — demo.css + vertical-nav.js, never referenced)
-    - `assets/scss/` directory (588KB — Sass source, never compiled/used, we ship pre-compiled CSS)
-    - `assets/video/fireworks.mp4` (1.58MB — never referenced, only hero.mp4 is used)
-  - **Tier 2 (~25KB, already in .gitignore):** Remove the 3 tracked .DS_Store files: `./.DS_Store`, `./assets/.DS_Store`, `./assets/img/.DS_Store`
-  - **Command to execute:** `git rm -r --cached .DS_Store assets/.DS_Store assets/img/.DS_Store assets/css/paper-kit.min.css assets/js/paper-kit.min.js assets/css/bootstrap.min.css.map assets/css/paper-kit.css.map assets/demo assets/scss assets/video/fireworks.mp4 && rm -rf assets/demo assets/scss assets/video/fireworks.mp4 assets/css/paper-kit.min.css assets/js/paper-kit.min.js assets/css/*.map && git add -A && git commit -m "..." && git push origin master && git push production master`
+### High priority — active leads + time-sensitive
+- [ ] **SEND the Pittsburgh Vintage Grand Prix one-pager email to Ross Miller (Monday)** — Email drafted + Calendly link ready. Ross is EVP Partnerships & Marketing at PVGP. Event: July 18–19, 2026 at Schenley Park, 450 acres, ~100K spectators, currently 7 buses (5 standard + 2 ADA). Opportunity: replace bus fleet + add Schenley Drive loop with 4–5 FlexTrams. Sponsorship angle works for his role specifically.
+- [ ] **Respond to Hinterland Music Festival bid request** — Saint Charles, IA, July 28–Aug 3, requested bid on 16–32 trams for staff/BOH movement. Biggest single-deal inbound of the month. Joseph's reply has gone out; tracking for follow-up.
+- [ ] **Follow up Coachella "saw your trams" lead** — short warm inquiry received; validated the on-tram branding opportunity.
+- [ ] **Monitor airport-FBO engagement 48–72 hrs** — tone rewrite (accusatory → investigative) + performance fix both shipped today. Goal: 3s engagement climbs toward 10s+ (matches stadiums-arenas template). If it moves, apply the same tone audit to other pages with low engagement.
+- [ ] **Verify April 18 auto-publish went live** — "The Hidden Cost of Making Fans Walk" scheduled for Apr 18. Workflow date bug was fixed in Session 9 so this should deploy correctly.
+- [ ] **Lock in FSU testimonial usage rights** — Testimonial from Kari Terezakis (EVP, Seminole Boosters). Still open from prior sessions. Email request: (1) permission to use quote with name/title on site + sales materials, (2) serve as reference for other athletics programs (P4 booster leverage), (3) short FSU case study. Quote: "FlexTram has been a tremendous partner in supporting our football gameday parking operations... data-driven solutions adaptable to our evolving needs..."
+- [ ] **Add real testimonials to site** — Held pending 2–3 client quotes in hand. FSU is first. Once 3 confirmed, add featured quote on homepage, vertical-specific quotes on matching solution pages, and consider `/case-studies` or `/clients` page.
 
-- [ ] **Repo cleanup (Tier 3) — OPTIONAL, decide before executing** -- `_source_files/` is 109MB of archived markdown sources + old hero images (already in .gitignore, never pushed). Three options:
-  - A) Leave it alone (safe, history preserved — recommended for now)
-  - B) Delete entirely (big Claude perf win on Glob/Grep, loses archive)
-  - C) Keep only last 30 days (compromise)
-  - Note: This doesn't affect the live site or repo size — only local Claude scan performance.
-
-- [ ] **DO NOT TOUCH during cleanup:**
-  - `assets/css/bootstrap.min.css` (used), `paper-kit.css` (used), `global.css`, `custom.css`, `use-case.css`, `solutions.css`, `blog.css`, `blog-post.css`
-  - `assets/js/core/jquery.min.js`, `bootstrap.min.js`, `popper.min.js`
-  - `assets/js/paper-kit.js` (used)
-  - `assets/fonts/nucleo-icons.*` (used by paper-kit.css)
-  - `assets/video/hero.mp4` (homepage hero video)
-  - All images in `assets/img/`, `assets/img/640/`, `assets/img/logos/`, `assets/img/solutions/` — audited, 100% referenced
-
-- [ ] **Follow up on Pittsburgh motorsport festival inbound** -- 100K-spectator July event in a Pittsburgh city park, currently using shuttle buses, wants to rent a tram system. Came in same day F1 post published. Respond with discovery questions (event dates, footprint, shuttle setup, parking, ADA) and propose a discovery call. Likely Pittsburgh Vintage Grand Prix / Schenley Park.
-- [ ] **Lock in FSU testimonial usage rights** -- Testimonial from Kari Terezakis, Executive VP of Seminole Boosters (FSU Athletics fundraising arm, ~$40M/year 501c3). Email her to:
-  1. Request permission to use the quote with name + title on website, sales materials
-  2. Ask if she'd serve as a reference for other athletics programs (huge leverage into P4 booster orgs - Texas, Tennessee, Georgia, Ohio State, etc.)
-  3. Pitch a short FSU case study (400-600 words with photos)
-  The quote itself: "FlexTram has been a tremendous partner in supporting our football gameday parking operations... data-driven solutions adaptable to our evolving needs... important role in enhancing the overall gameday experience for our patrons."
-- [ ] **Investigate airport-FBO + cruise engagement** -- Hero images swapped today (prop plane → Gulfstream on FBO ramp; aerial ships → passengers walking pier with zone signage). Monitor if engagement climbs over next 3-5 days on fresh traffic.
-- [ ] **Verify April 18 auto-publish went live** -- "The Hidden Cost of Making Fans Walk" scheduled for Apr 18. Workflow date comparison bug was fixed today so this should deploy correctly.
-- [ ] **Add real testimonials to site** -- Hold deployment until 2-3 client quotes in hand for balance. FSU is first. CLAUDE.md TODO still open from prior sessions. Once 3 quotes in hand, add featured quote to homepage below hero, vertical-specific quotes on matching solution pages, and consider a `/case-studies` or `/clients` page.
-- [ ] **Verify external quotes in blog posts** -- Posts cite Pam Kramer (SportsTravel), Matt Sebek (IAVM), Andrew Elmer/Populous, Bill Cahill/HNTB. Confirm attribution before sharing widely.
-
-### Medium priority
-- [ ] **Write "Shuttle Bus vs. Tram" comparison post** -- Pittsburgh inbound confirmed "shuttle bus alternative" is an underserved keyword cluster. Same treatment as golf cart comparison cards but for event operators already spending on bus fleets. Bigger audience / bigger budgets.
-- [ ] **Write "City Park / Urban Public Events" content** -- Pittsburgh lead surfaced a vertical we don't cover: motorsport/festival events in public city parks. Distinct from stadiums (permanent, purpose-built) and festivals (usually private ground). Examples: Pittsburgh Vintage GP, Grand Prix of Long Beach, Baltimore GP.
-- [ ] **Write "What Data-Driven Means for Your Gameday Shuttle" post** -- FSU's testimonial used "data-driven solutions adaptable to our evolving needs" unprompted. That's a differentiator vs. any golf cart rental co. Turn the jargon into concrete value (utilization rates, route optimization, peak-hour modeling, historical patterns). Good mid-funnel content for athletics ops buyers.
+### Medium priority — content expansion
+- [ ] **Write "What Data-Driven Means for Your Gameday Shuttle" post** — FSU's testimonial used "data-driven solutions adaptable to our evolving needs" unprompted. Differentiator vs. any golf cart rental co. Turn the jargon into concrete value (utilization rates, route optimization, peak-hour modeling, historical patterns). Good mid-funnel content for athletics ops buyers.
 - [ ] **Add "gameday parking operations" + "data-driven shuttle" keywords** -- Exact phrases FSU uses internally. Add to stadiums-arenas, football-stadiums, fifa-world-cup, raceways-motorsports solution pages. Quick SEO win.
 - [ ] **Consider an `/operations` or `/planning` page** -- Surface the ops planning layer (heat maps, route modeling, schedule integration) that FSU specifically called out as valuable. This is the "platform" story your original homepage hinted at, told through operational credibility instead of vague platform-speak.
 - [ ] **Custom OG images** -- 6+ pages still use generic pic3.JPG (solutions hub, blog hub, convention, golf, labor, planned communities).
 - [ ] **Write more blog articles** -- Continue weekly publishing cadence beyond April 29. Content is primary traffic driver (organic sessions +188% across session 8).
-- [ ] **Monitor GSC for key query movement** -- Watching: "flex tram" (holding position 4.5?), "flextrolley" (moved from position 80?), "shuttle bus alternative" / "tram rental" (new keywords added today - impressions?), new queries from manifesto/retention/F1/golf posts.
+- [ ] **Monitor GSC for key query movement** -- Watching: "flex tram" (holding position 4.5?), "flextrolley" (moved from position 80?), "flex shuttle" (new appearance April 17 — rising?), "shuttle bus alternative" / "tram rental" (new keywords added yesterday - impressions?), new queries from shuttle-bus / venue-isnt-stadium / curb-to-gate posts.
 - [ ] **Watch for more AI referrals** -- gemini.google.com + duckduckgo/organic already appearing. Expect more AI tool citations as content cluster grows.
+- [ ] **Consider LAZ / Propark / Metropolis outreach** — curb-to-gate post positions FlexTram as the onsite mobility layer parking operators need to complete the fan journey product. Opens partnership conversation. LAZ Live! at 100 venues (Truist Park / Battery Atlanta reference) is the prime target.
+- [ ] **Monitor bid form funnel** — /request-a-bid shipped today. Watch for first submissions, and which of the 3 conversion paths converts best (homepage contact form vs. bid form vs. Calendly). GA4 `cta_click` event has `cta_type` + `cta_location` parameters for slicing.
+- [ ] **Homepage performance overhaul (major)** — Homepage Lighthouse mobile stuck at 40–55 because of jQuery + Bootstrap + Paper Kit + Slick carousel. The ranking-critical solution pages are 88–90 because they don't carry this legacy JS. A real rebuild of homepage JS stack (drop jQuery dependency, replace Slick with vanilla JS carousel) could push it into the 70–80 range. Bigger project — don't tackle unless a week of runway.
+- [ ] **Build "Where We Operate" or service-area page** — inquiries keep asking "are you available in X?" (Canada, state). Simple page listing "continental US coverage, case-by-case for Canada/international" would head off the qualifying inquiry. Low effort.
+- [ ] **Consider "Back-of-House Staff Transportation" solution page or post** — Hinterland's 16–32 tram bid request was explicitly about staff movement, not fans. Back-of-house is a distinct vertical underserved by current front-of-house-heavy content. Festival-season-here blog post hits this briefly; could be its own solution page.
+- [ ] **Build "For Procurement Teams" resources page** — procurement buyers land on /request-a-bid ready to submit RFPs. A companion page with spec-sheet-grade info (insurance standards, deployment timeline, safety record, past deployment list, ADA standards) would accelerate the internal-pitch process. Low-risk — no proprietary engineering specs, just marketing-grade procurement collateral.
 
 ### Low priority
 - [ ] **Reach out to Power 4 booster orgs for outbound** -- With Kari's reference (once secured), FlexTram has a credible door-opener to: Texas Longhorn Foundation, Tennessee Fund, Iron Bowl/Tide Pride, Georgia Bulldog Club, Gator Boosters, Texas A&M 12th Man Foundation, Buckeye Club, Wolfpack Club. These orgs talk to each other.
@@ -393,6 +470,28 @@ Ran a systematic audit across all 15 published blog posts + 3 drafts to catch an
 - [ ] **Reach out to AMS Event Rentals** -- Only existing referral backlink. Ask about a dedicated FlexTram page with more content/linking. Relevant backlinks are #1 lever for non-branded rankings.
 - [ ] **LinkedIn share of the manifesto post** -- "Why Isn't Transportation on the List?" designed to be shareable, best top-of-funnel content.
 - [ ] **Coachella Weekend 2 content push** -- Consider homepage banner, festivals page callout, recap post.
+
+### Done in Session 10 (removed from list)
+- ✅ Published Shuttle Bus vs. FlexTram (Operations & Economics, ~2,400 words)
+- ✅ Published Your Event Isn't at a Stadium (new Venue Planning category, ~2,400 words)
+- ✅ Published Curb to Gate: Fan Journey Became the Product (Industry Analysis, ~2,000 words)
+- ✅ Airport-FBO solution page tone rewrite (accusatory → investigative, stadiums-arenas template)
+- ✅ Built blog CTA surface (sticky + mid-article + bottom) across 17 files
+- ✅ Unified Request Info CTAs to orange pill site-wide (54 buttons, pure CSS)
+- ✅ Built /request-a-bid form (4-step, 15 fields) + /request-a-bid-received thank-you page
+- ✅ Integrated Calendly as third conversion path (homepage + bid form + thank-you)
+- ✅ Updated slick repo (flextram-flyer) — SEND → REQUEST QUOTE, added FLEXTRAM.COM back-link, fixed truncated footer
+- ✅ Added GA4 event tracking across bid funnel (cta_click, bid_request_submit, bid_request_received)
+- ✅ Fact-check audit across 15 posts + 3 drafts (91 claims flagged, 20/27 critical verified, 2 attribution drifts fixed)
+- ✅ Performance deep dive — Lighthouse mobile scores climbed massively (airport-fbo 47→88, stadiums 30→90, blog 39→76, bid form 50→76, homepage 32→45)
+- ✅ All pages now pass CLS <0.1 Core Web Vitals threshold
+- ✅ Site-wide font preload, hero image preload, hero image dimensions, GA4 deferral
+- ✅ Homepage video re-encoded (4MB → 2.3MB via ffmpeg CRF 28 + 960p)
+- ✅ Homepage images optimized (logos 1.8MB→545KB, event photos 1MB→454KB, favicon 30KB→5KB, hero poster 89KB→41KB)
+- ✅ Executed Tier 1 repo cleanup (3.6MB / 101 files removed: paper-kit.min.*, .map files, demo/, scss/, fireworks.mp4, .DS_Stores)
+- ✅ Code review — verified no duplicate CSS, debug code, broken links; fixed landing-page double-H1 + stale TODO comment
+- ✅ Responded to PVGP (Ross Miller) — pre-call one-pager drafted as email
+- ✅ Buyer-language SEO push — added rental keywords to 8 meta descriptions; updated homepage contact section with service-area + quote button
 
 ### Done in Session 9 (removed from list)
 - ✅ Monitored blog hub engagement (27s → 54s — doubled)
