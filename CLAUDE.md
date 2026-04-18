@@ -438,6 +438,37 @@ Ran a systematic audit across all 15 published blog posts + 3 drafts to catch an
 
 ---
 
+### Session 11 (2026-04-18) — GA4 cleanup, contact UX redesign, workflow hardening, LAZ-facing content
+
+**Analytics hygiene:**
+- **Diagnosed form-bot activity.** 6 `form_submit` events in GA4 with 0 actual inbound emails. Root cause: GA4 Enhanced Measurement auto-fires `form_submit` on any browser submit event — our honeypot (`_gotcha`) catches them server-side at Formspree, but GA4 inflates the count client-side. Smoking-gun signal: `form_submit` (6) > `form_start` (5) — textbook bot pattern (bots skip focus events). Confirmed in Formspree spam log.
+- **Disabled GA4 Enhanced Measurement "Form interactions"** via Admin → Data streams → Enhanced measurement gear. Conversion signal is now clean: only custom events fire (`form_submit_success`, `bid_request_submit`, `bid_request_received`). `form_submit` and `form_start` will disappear from events list within 24–48 hrs of tomorrow's data.
+- **"Flex tram" position drop investigation.** GSC showed position 4.5 → 14 — flagged as potential ranking regression. Determined to be sample-composition noise at low impression count (8 impressions). User verified page 1 SERP placement directly. Not a real drop.
+
+**Homepage contact section UX redesign (shipped):**
+- Problem: "Request a formal bid" and "Book a 30-min call" CTAs were inline orange text links above the form, reading as afterthoughts (measured: lowest click-through in the CTA stack).
+- Researched B2B multi-path contact form best practices (Venture Harbour, VWO, Trajectory Web Design, Tiller Digital, Calendly Help). Pattern convergence: persona-matched alt CTAs with visual hierarchy subordinate to primary form.
+- Shipped: promoted both to structured outlined pill cards BELOW the form (no longer competing for attention above it). Each carries persona sub-label: "For RFPs and large deployments" / "Talk live with Joseph this week." Divider "OR, DEPENDING ON YOUR TIMELINE" reframes them as situational branches.
+- CSS scoped via `.contact-alt-*` classes inlined with critical CSS on [index.html](index.html). Ghost treatment (transparent fill, white border) preserves orange filled pill as primary. Mobile: stacks vertically. Hover: orange border + subtle tint + 2px lift + arrow nudge.
+
+**Auto-publish workflow hardening:**
+- Root cause of earlier divergence documented: workflow was installed on BOTH remotes (origin fork + production) and each ran on its own cron, creating divergent commit SHAs with identical content — forcing a cherry-pick pattern on any same-day manual push.
+- Shipped: `if: github.repository == 'blackbox-engineering/flextram_landing'` guard on the publish job. Production is now the single source of truth for auto-publishes. Fork can be synced on-demand with `git fetch production && git push origin production/master:master`.
+- Documented in "Blog system" section above + comment inline in the workflow file.
+- Today's pre-guard divergence persists permanently (origin and production had different auto-publish SHAs from this morning) — cosmetic, not functional. All future commits stay aligned.
+
+**Content published:**
+- **"The Parking Lot Is Becoming a Mobility Origin. Here's the Chapter That Completes the Story."** (`/blog/parking-lot-mobility-origin`, ~3,400 words, Industry Vision). LAZ-facing strategic piece — six transformations the parking lot has already absorbed (EV charging, micro-warehousing, vertiports, micromobility hubs, computer vision platforms, ghost kitchens) + the seventh unnamed transformation (human mobility). Frames FlexTram as the partner layer that completes the fan-journey product.
+- **Positioning discipline:** buried in the blog grid directly above `curb-to-gate-fan-journey` for thematic clustering. Sitemap priority 0.5 (vs manifesto's 0.8). Per client direction: "feel discovered if LAZ comes across it, not broadcast." Named LAZ / Lazowski / Charge Where You Park / LAZ Live! contextually to support discovery without pitching — reads as industry analysis.
+- Cited sources: 2021 LAZ/Perch Mobility press release (Mass Transit Mag), 2025 LAZ/Epic Charging investment (AI Journ), 2024 Metropolis/SP+ acquisition ($1.5B), December 2025 LAZ Live! 100-venue milestone (PRWeb, including Derek Schiller / Atlanta Braves CEO quote).
+- 5 FAQs, BreadcrumbList + BlogPosting + FAQPage + Organization JSON-LD, OG/Twitter meta, canonical, keywords, preload hints, 640px + 1200px hero variants.
+
+**Verified:**
+- April 18 auto-publish fired on both remotes — "The Hidden Cost of Making Fans Walk" is live on flextram.com. (Confirms the Session 9 date-bug fix is working.)
+- Homepage contact section, parking-mobility-origin post, and workflow guard all confirmed live on production.
+
+---
+
 ## TODOs for next session
 
 ### High priority — active leads + time-sensitive
@@ -470,6 +501,22 @@ Ran a systematic audit across all 15 published blog posts + 3 drafts to catch an
 - [ ] **Reach out to AMS Event Rentals** -- Only existing referral backlink. Ask about a dedicated FlexTram page with more content/linking. Relevant backlinks are #1 lever for non-branded rankings.
 - [ ] **LinkedIn share of the manifesto post** -- "Why Isn't Transportation on the List?" designed to be shareable, best top-of-funnel content.
 - [ ] **Coachella Weekend 2 content push** -- Consider homepage banner, festivals page callout, recap post.
+
+### New from Session 11 — monitor
+- [ ] **Monitor homepage contact CTA redesign** — bid + Calendly CTAs promoted from inline text to outlined pill cards with persona copy. Watch `cta_click` events segmented by `cta_type` (contact_form / bid_form / calendly). Question: do the alt paths now capture buyers who were previously bouncing past the inline links?
+- [ ] **Confirm GA4 `form_submit` / `form_start` events disappear** — Enhanced Measurement Form interactions disabled 2026-04-18 in GA4 UI. Verify tomorrow that only custom conversion events (`form_submit_success`, `bid_request_submit`, `bid_request_received`) appear.
+- [ ] **Monitor parking-lot-mobility-origin discovery** — post shipped buried (sitemap 0.5, mid-grid above curb-to-gate). Expect slow organic surfacing vs featured posts. Watch GSC for LAZ-related query impressions ("LAZ Parking mobility", "Charge Where You Park", "LAZ Live") over 7–14 day window.
+- [ ] **Cherry-pick pattern should no longer be needed** — workflow guard means production stops auto-publishing independently. Future `git push origin master && git push production master` should both fast-forward. If production ever rejects a push on an auto-publish day, the guard failed silently.
+
+### Done in Session 11 (removed from list)
+- ✅ Diagnosed form submissions as bots (GA4 `form_submit` via Enhanced Measurement catching browser submits; honeypot server-side filtering; `form_submit > form_start` inversion = textbook bot signature)
+- ✅ Disabled GA4 Enhanced Measurement "Form interactions" (keeping only custom conversion events)
+- ✅ Investigated "flex tram" GSC position drop — sample-composition noise, not a real regression
+- ✅ Homepage contact section CTA redesign (research-backed; shipped outlined pill cards with persona copy below form)
+- ✅ Gated auto-publish workflow to production repo only (`if: github.repository == 'blackbox-engineering/flextram_landing'`)
+- ✅ Documented workflow guard + recovery pattern in CLAUDE.md Blog system section
+- ✅ Verified April 18 "Hidden Cost of Making Fans Walk" auto-publish fired on both remotes
+- ✅ Published "The Parking Lot Is Becoming a Mobility Origin" (~3,400 words, Industry Vision, LAZ-facing, buried mid-grid above curb-to-gate for thematic clustering)
 
 ### Done in Session 10 (removed from list)
 - ✅ Published Shuttle Bus vs. FlexTram (Operations & Economics, ~2,400 words)
