@@ -8,6 +8,11 @@ on:
 
 jobs:
   publish:
+    # Only run on the production repo. Without this guard, the workflow fires
+    # independently on origin (fork) and production, creating divergent commit
+    # SHAs with identical content and forcing a cherry-pick pattern on any
+    # same-day manual push. See CLAUDE.md > Blog system.
+    if: github.repository == 'blackbox-engineering/flextram_landing'
     runs-on: ubuntu-latest
     permissions:
       contents: write
