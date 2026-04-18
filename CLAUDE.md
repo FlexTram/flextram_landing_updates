@@ -83,6 +83,7 @@ Static HTML site built on **Paper Kit 2 PRO v2.3.0** (Creative Tim). No build to
   - When date arrives: moves to `blog/`, updates sitemap, adds card to hub page
   - Drafts include `BLOG_META` comment block for hub card metadata
   - Can also trigger manually from GitHub Actions tab
+  - **Runs on production only** (guard added 2026-04-18): `if: github.repository == 'blackbox-engineering/flextram_landing'`. Before the guard, the workflow fired independently on origin (fork) and production, creating divergent commit SHAs with identical content and forcing a cherry-pick pattern on same-day manual pushes. If the fork ever falls behind after an auto-publish, sync with: `git fetch production && git push origin production/master:master`
 - **Scheduled articles:**
   - April 15: "The True Cost of the Golf Cart" (Operations)
   - April 22: "The Fan Experience Gap" (Fan Experience)
@@ -444,7 +445,6 @@ Ran a systematic audit across all 15 published blog posts + 3 drafts to catch an
 - [ ] **Respond to Hinterland Music Festival bid request** — Saint Charles, IA, July 28–Aug 3, requested bid on 16–32 trams for staff/BOH movement. Biggest single-deal inbound of the month. Joseph's reply has gone out; tracking for follow-up.
 - [ ] **Follow up Coachella "saw your trams" lead** — short warm inquiry received; validated the on-tram branding opportunity.
 - [ ] **Monitor airport-FBO engagement 48–72 hrs** — tone rewrite (accusatory → investigative) + performance fix both shipped today. Goal: 3s engagement climbs toward 10s+ (matches stadiums-arenas template). If it moves, apply the same tone audit to other pages with low engagement.
-- [ ] **Verify April 18 auto-publish went live** — "The Hidden Cost of Making Fans Walk" scheduled for Apr 18. Workflow date bug was fixed in Session 9 so this should deploy correctly.
 - [ ] **Lock in FSU testimonial usage rights** — Testimonial from Kari Terezakis (EVP, Seminole Boosters). Still open from prior sessions. Email request: (1) permission to use quote with name/title on site + sales materials, (2) serve as reference for other athletics programs (P4 booster leverage), (3) short FSU case study. Quote: "FlexTram has been a tremendous partner in supporting our football gameday parking operations... data-driven solutions adaptable to our evolving needs..."
 - [ ] **Add real testimonials to site** — Held pending 2–3 client quotes in hand. FSU is first. Once 3 confirmed, add featured quote on homepage, vertical-specific quotes on matching solution pages, and consider `/case-studies` or `/clients` page.
 
@@ -506,7 +506,7 @@ Ran a systematic audit across all 15 published blog posts + 3 drafts to catch an
 - ✅ Added shuttle bus alternative / tram rental keywords (4 pages)
 
 ### Scheduled blog posts (auto-publish via GitHub Actions)
-- [x] **April 15** -- "We Created the Category" (should be live — verify)
-- [ ] **April 18** -- "The Hidden Cost of Making Fans Walk" (blog/_drafts/2026-04-18_hidden-cost-of-making-fans-walk.html)
+- [x] **April 15** -- "We Created the Category" (live)
+- [x] **April 18** -- "The Hidden Cost of Making Fans Walk" (live — auto-published 2026-04-18)
 - [ ] **April 22** -- "The Fan Experience Gap" (blog/_drafts/2026-04-22_fan-experience-gap.html) -- broken link fixed in session 8
 - [ ] **April 29** -- "Sponsorship's Untapped Frontier" (blog/_drafts/2026-04-29_sponsorship-untapped-frontier.html)
