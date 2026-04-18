@@ -61,6 +61,16 @@
   <!-- Critical CSS: inlined for above-the-fold rendering -->
   <style>
     *,::after,::before{box-sizing:border-box}body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:14px;color:#66615b;background:#fff}img{vertical-align:middle;max-width:100%}a{color:#51cbce;text-decoration:none}.container{width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto;max-width:1140px}.container-fluid{width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}.row{display:flex;flex-wrap:wrap;margin-right:-15px;margin-left:-15px}.col-md-4,.col-md-6,.col-md-8{position:relative;width:100%;padding-right:15px;padding-left:15px}@media(min-width:768px){.col-md-4{flex:0 0 33.333%;max-width:33.333%}.col-md-6{flex:0 0 50%;max-width:50%}.col-md-8{flex:0 0 66.667%;max-width:66.667%}}.ml-auto{margin-left:auto}.mr-auto{margin-right:auto}.text-center{text-align:center}.navbar{position:relative;display:flex;flex-wrap:wrap;align-items:center;padding:.5rem 1rem}.navbar-absolute{position:absolute;width:100%;z-index:1031}.navbar-transparent{background:0 0!important;border-bottom:1px solid transparent}.navbar-brand img{max-width:100%}.page-header{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}.page-header .filter::after{content:"";position:absolute;width:100%;height:100%;top:0;left:0;z-index:1}.video-background{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:0}.video-background video{position:absolute;top:50%;left:50%;min-width:100%;min-height:100%;width:auto;height:auto;transform:translate(-50%,-50%);object-fit:cover}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .contact-alt-divider{display:flex;align-items:center;gap:1rem;margin:2.75rem auto 1.5rem;max-width:520px;color:rgba(255,255,255,0.5);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;font-weight:500}
+    .contact-alt-divider::before,.contact-alt-divider::after{content:"";flex:1;height:1px;background:rgba(255,255,255,0.18)}
+    .contact-alt-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:640px;margin:0 auto}
+    .contact-alt-card{display:flex;flex-direction:column;gap:0.35rem;padding:1.1rem 1.4rem;border:1px solid rgba(255,255,255,0.3);border-radius:50px;text-decoration:none !important;text-align:center;transition:border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;background:transparent}
+    .contact-alt-card:hover,.contact-alt-card:focus{border-color:#f5593d;background:rgba(245,89,61,0.08);transform:translateY(-2px);text-decoration:none;outline:none}
+    .contact-alt-label{color:#fff;font-size:15px;font-weight:600;letter-spacing:0.01em}
+    .contact-alt-arrow{display:inline-block;transition:transform 0.2s ease;margin-left:2px}
+    .contact-alt-card:hover .contact-alt-arrow{transform:translateX(3px)}
+    .contact-alt-sub{color:rgba(255,255,255,0.6);font-size:12px;font-weight:400}
+    @media(max-width:576px){.contact-alt-grid{grid-template-columns:1fr}.contact-alt-card{padding:0.95rem 1.1rem;border-radius:30px}}
   </style>
   <!-- Deferred CSS Files -->
   <link rel="preload" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -261,9 +271,7 @@
         <div class="row">
           <div class="col-md-8 ml-auto mr-auto">
             <h2 class="text-center title" style="color:white;">Tell us about your venue.</h2>
-            <p class="text-center" style="color:rgba(255,255,255,0.75);font-size:14px;margin-top:-0.5rem;margin-bottom:0.75rem;">Deploying at events across the United States. Rentals, leases, and turnkey plans available.</p>
-            <p class="text-center" style="color:rgba(255,255,255,0.65);font-size:13px;margin-bottom:0.5rem;">Sourcing a large deployment or submitting an RFP? <a href="/request-a-bid" style="color:#f5593d;text-decoration:underline;font-weight:500;">Request a formal bid &rarr;</a></p>
-            <p class="text-center" style="color:rgba(255,255,255,0.65);font-size:13px;margin-bottom:2rem;">Prefer to talk live? <a href="https://calendly.com/jb-flextram/30min" target="_blank" rel="noopener" style="color:#f5593d;text-decoration:underline;font-weight:500;">Book a 30-min call &rarr;</a></p>
+            <p class="text-center" style="color:rgba(255,255,255,0.75);font-size:14px;margin-top:-0.5rem;margin-bottom:2rem;">Deploying at events across the United States. Rentals, leases, and turnkey plans available.</p>
             <form id="contact-form" action="https://formspree.io/f/mvzzoarr" method="POST" accept-charset="UTF-8" name="contact">
               <input type="hidden" name="_next" value="/?success=true">
               <input hidden="true" name="source" value="flextram"></input>
@@ -288,6 +296,19 @@
                 </div>
               </div>
             </form>
+
+            <div class="contact-alt-divider"><span>or, depending on your timeline</span></div>
+
+            <div class="contact-alt-grid">
+              <a href="/request-a-bid" class="contact-alt-card">
+                <span class="contact-alt-label">Request a formal bid <span class="contact-alt-arrow">&rarr;</span></span>
+                <span class="contact-alt-sub">For RFPs and large deployments</span>
+              </a>
+              <a href="https://calendly.com/jb-flextram/30min" target="_blank" rel="noopener" class="contact-alt-card">
+                <span class="contact-alt-label">Book a 30-min call <span class="contact-alt-arrow">&rarr;</span></span>
+                <span class="contact-alt-sub">Talk live with Joseph this week</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
