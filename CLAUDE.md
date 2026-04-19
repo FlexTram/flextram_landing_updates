@@ -488,6 +488,8 @@ Ran a systematic audit across all 15 published blog posts + 3 drafts to catch an
   - CTA block: "right-size your ramp fleet," asks for based vs. transient mix + crew car count + ramp layout
 - Hypothesis: engagement climbs from 3s toward 10s+ because buyers now pattern-match "this is for me" in the first three seconds. Monitor 48-72 hrs.
 
+**Published "Your Courtesy Shuttle Is Doing More Work Than Your Org Chart Admits"** (`/blog/courtesy-shuttle-load-bearing`, ~1,900 words, Stadiums & Arenas). Stadium-ops piece reframing the courtesy shuttle as load-bearing infrastructure rather than a procurement line item. Opens with an AT&T Stadium scene-setting anecdote, uses an Arlington/Globe Life Field pedicab cautionary tale (NBC 5 DFW sourced), names the four operational levers that move when a shuttle becomes a system (throughput forecastability, liability/training consolidation, vehicle as brand/wayfinding/sponsorship, flexibility inside a standard), and closes with the SoCal 300-carts-to-8-trams case study. Buried mid-grid directly above `stadium-districts-mixed-use-transportation` for thematic clustering with the other stadium-ops posts. Sitemap priority 0.5 (discoverable-not-broadcast treatment, same as parking-mobility-origin). Full SEO + 5 FAQs + related-reading cluster linking to stadiums-arenas, football-stadiums, football-parking blog, stadium-districts blog.
+
 **Blog mid-article CTA fix:**
 - User-spotted regression on `/blog/data-center-crew-retention`: the mid-article `.post-cta-inline` Request Info button was rendering as dark-background + teal-underlined text instead of the expected clean black pill or orange pill.
 - Root cause: Session 10's orange-pill unification covered `.blog-cta-strip`, `.post-cta`, `.cta-block`, `.hero-ctas` but missed `.post-cta-inline`. The "tier-2 black pill" fallback was supposed to preserve visual variety for mid-article CTAs, but in practice `.post-content a { color: teal; text-decoration: underline; }` cascaded into the button, producing a broken-looking hybrid on 15+ blog posts.
@@ -550,6 +552,7 @@ Ran a systematic audit across all 15 published blog posts + 3 drafts to catch an
 - ✅ Airport-FBO page vocabulary rewrite — extracted FBO-industry language from AeroCenters + Universal Aviation service descriptions, applied across title/meta/OG/hero/pain cards/solution block/use-case pills/FAQ/CTA; claims "crew car" + "quick turn" + "Part 135" + "transient" + "based" + "FOD" vocabulary the buyer actually searches and uses
 - ✅ Blog mid-article CTA fix — promoted `.post-cta-inline .btn-primary` into orange pill family in `global.css`; resolved teal-cascade rendering bug across all 15+ blog posts using the mid-article CTA pattern
 - ✅ Full-site CTA audit — confirmed no remaining orphan Request Info buttons; bid thank-you page's 3 black-pill buttons are legitimate tier-2 design, not bugs
+- ✅ Published "Your Courtesy Shuttle Is Doing More Work Than Your Org Chart Admits" (~1,900 words, Stadiums & Arenas, buried mid-grid above stadium-districts for thematic cluster, AT&T Stadium + Arlington pedicab context, 300-to-8 carts case study)
 
 ### Done in Session 10 (removed from list)
 - ✅ Published Shuttle Bus vs. FlexTram (Operations & Economics, ~2,400 words)
