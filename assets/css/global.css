@@ -208,10 +208,16 @@ a { color: inherit; text-decoration: none; }
    treatment to stay visually consistent with .nav-cta and .sticky-cta.
    Rule: one brand color for the one primary conversion action across
    the site. Keeps black .btn-primary for form SUBMIT buttons (which
-   ARE the conversion, not a link to it) and for tier-2 inline mid-
-   article CTAs (.post-cta-inline) where visual variety is intentional. */
+   ARE the conversion, not a link to it) and for related-card CTAs.
+   Note: mid-article CTAs (.post-cta-inline) were initially designed
+   as "tier-2 black pill" for variety, but in practice the blog post
+   inline-link styling (.post-content a) cascaded into the button and
+   rendered it as dark-background + teal-underlined text — reading as
+   broken rather than deliberate. Unified to the orange pill family
+   2026-04-19 for consistency across every "Request Info" CTA. */
 .blog-cta-strip .btn-primary,
 .post-cta .btn-primary,
+.post-cta-inline .btn-primary,
 .cta-block .btn-primary,
 .hero-ctas .btn-primary {
   font-family: var(--font-sans);
@@ -228,6 +234,7 @@ a { color: inherit; text-decoration: none; }
 }
 .blog-cta-strip .btn-primary:hover,
 .post-cta .btn-primary:hover,
+.post-cta-inline .btn-primary:hover,
 .cta-block .btn-primary:hover,
 .hero-ctas .btn-primary:hover {
   transform: scale(1.05);
@@ -239,6 +246,7 @@ a { color: inherit; text-decoration: none; }
 }
 .blog-cta-strip .btn-primary:focus-visible,
 .post-cta .btn-primary:focus-visible,
+.post-cta-inline .btn-primary:focus-visible,
 .cta-block .btn-primary:focus-visible,
 .hero-ctas .btn-primary:focus-visible {
   outline: 2px solid #fff;
@@ -248,10 +256,12 @@ a { color: inherit; text-decoration: none; }
 @media (prefers-reduced-motion: reduce) {
   .blog-cta-strip .btn-primary,
   .post-cta .btn-primary,
+  .post-cta-inline .btn-primary,
   .cta-block .btn-primary,
   .hero-ctas .btn-primary,
   .blog-cta-strip .btn-primary:hover,
   .post-cta .btn-primary:hover,
+  .post-cta-inline .btn-primary:hover,
   .cta-block .btn-primary:hover,
   .hero-ctas .btn-primary:hover {
     transition: none;
