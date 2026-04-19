@@ -83,7 +83,7 @@ Static HTML site built on **Paper Kit 2 PRO v2.3.0** (Creative Tim). No build to
   - When date arrives: moves to `blog/`, updates sitemap, adds card to hub page
   - Drafts include `BLOG_META` comment block for hub card metadata
   - Can also trigger manually from GitHub Actions tab
-  - **Runs on production only** (guard added 2026-04-18): `if: github.repository == 'blackbox-engineering/flextram_landing'`. Before the guard, the workflow fired independently on origin (fork) and production, creating divergent commit SHAs with identical content and forcing a cherry-pick pattern on same-day manual pushes. If the fork ever falls behind after an auto-publish, sync with: `git fetch production && git push origin production/master:master`
+  - **Runs on production only** (guard added 2026-04-18): `if: github.repository == 'blackbox-engineering/flextram_landing'`. Before the guard, the workflow fired independently on origin (fork) and production, creating divergent commit SHAs with identical content and forcing a cherry-pick pattern on same-day manual pushes. On 2026-04-19 the two remotes were reconciled via `git reset --hard production/master` locally + `git push origin master --force-with-lease` — both remotes now track a single linear history. If the fork ever falls behind after an auto-publish, sync with: `git fetch production && git push origin production/master:master` (non-destructive, fork fast-forwards to production).
 - **Scheduled articles:**
   - April 15: "The True Cost of the Golf Cart" (Operations)
   - April 22: "The Fan Experience Gap" (Fan Experience)
@@ -438,7 +438,7 @@ Ran a systematic audit across all 15 published blog posts + 3 drafts to catch an
 
 ---
 
-### Session 11 (2026-04-18) — GA4 cleanup, contact UX redesign, workflow hardening, LAZ-facing content
+### Session 11 (2026-04-18 to 2026-04-19) — GA4 cleanup, contact UX redesign, workflow hardening, LAZ-facing content, OG image, remote reconciliation
 
 **Analytics hygiene:**
 - **Diagnosed form-bot activity.** 6 `form_submit` events in GA4 with 0 actual inbound emails. Root cause: GA4 Enhanced Measurement auto-fires `form_submit` on any browser submit event — our honeypot (`_gotcha`) catches them server-side at Formspree, but GA4 inflates the count client-side. Smoking-gun signal: `form_submit` (6) > `form_start` (5) — textbook bot pattern (bots skip focus events). Confirmed in Formspree spam log.
@@ -466,6 +466,11 @@ Ran a systematic audit across all 15 published blog posts + 3 drafts to catch an
 **Verified:**
 - April 18 auto-publish fired on both remotes — "The Hidden Cost of Making Fans Walk" is live on flextram.com. (Confirms the Session 9 date-bug fix is working.)
 - Homepage contact section, parking-mobility-origin post, and workflow guard all confirmed live on production.
+
+**Day 2 (2026-04-19):**
+- **Homepage OG image swapped** to branded 1200×630 "Built to Move" fleet shot (`assets/img/og-flextram-v1.jpg`). Replaces generic Paper Kit placeholder `pic3.JPG` (400×399). Updates both `og:image` and `twitter:image`; adds explicit `og:image:width`/`og:image:height`/`og:image:alt` for platform rendering and accessibility. Versioned filename (`-v1`) so future swaps bypass iMessage's aggressive cache. Solution hub + blog hub + convention/golf/labor/planned-communities pages still use `pic3.JPG` — flagged for follow-up.
+- **Remote SHA reconciliation.** The pre-guard divergence from 2026-04-18 had persisted: origin and production were forever offset by one SHA (same content, different commits), forcing cherry-picks on every push. Verified identical content (`git diff origin/master production/master --stat` → empty), then `git reset --hard production/master` locally and `git push origin master --force-with-lease`. Both remotes + local now at single SHA (`3c8e55d` at time of reconciliation). Cherry-pick pattern retired.
+- **Safety check during reconciliation:** preserved uncommitted `.claude/settings.local.json` changes via stash, confirmed only three clones exist (origin, production, local), confirmed no external services reference pre-reconciliation origin SHAs.
 
 ---
 
@@ -506,7 +511,7 @@ Ran a systematic audit across all 15 published blog posts + 3 drafts to catch an
 - [ ] **Monitor homepage contact CTA redesign** — bid + Calendly CTAs promoted from inline text to outlined pill cards with persona copy. Watch `cta_click` events segmented by `cta_type` (contact_form / bid_form / calendly). Question: do the alt paths now capture buyers who were previously bouncing past the inline links?
 - [ ] **Confirm GA4 `form_submit` / `form_start` events disappear** — Enhanced Measurement Form interactions disabled 2026-04-18 in GA4 UI. Verify tomorrow that only custom conversion events (`form_submit_success`, `bid_request_submit`, `bid_request_received`) appear.
 - [ ] **Monitor parking-lot-mobility-origin discovery** — post shipped buried (sitemap 0.5, mid-grid above curb-to-gate). Expect slow organic surfacing vs featured posts. Watch GSC for LAZ-related query impressions ("LAZ Parking mobility", "Charge Where You Park", "LAZ Live") over 7–14 day window.
-- [ ] **Cherry-pick pattern should no longer be needed** — workflow guard means production stops auto-publishing independently. Future `git push origin master && git push production master` should both fast-forward. If production ever rejects a push on an auto-publish day, the guard failed silently.
+- [ ] **If `git push production master` ever rejects again** — the guard failed silently or something new diverged the remotes. Investigate before reaching for cherry-pick; prefer `git fetch production && git push origin production/master:master` to re-sync the fork non-destructively.
 
 ### Done in Session 11 (removed from list)
 - ✅ Diagnosed form submissions as bots (GA4 `form_submit` via Enhanced Measurement catching browser submits; honeypot server-side filtering; `form_submit > form_start` inversion = textbook bot signature)
@@ -517,6 +522,8 @@ Ran a systematic audit across all 15 published blog posts + 3 drafts to catch an
 - ✅ Documented workflow guard + recovery pattern in CLAUDE.md Blog system section
 - ✅ Verified April 18 "Hidden Cost of Making Fans Walk" auto-publish fired on both remotes
 - ✅ Published "The Parking Lot Is Becoming a Mobility Origin" (~3,400 words, Industry Vision, LAZ-facing, buried mid-grid above curb-to-gate for thematic clustering)
+- ✅ Homepage OG image swapped to branded 1200×630 "Built to Move" fleet shot (`og-flextram-v1.jpg`)
+- ✅ Remote SHA reconciliation — force-pushed origin to match production; all three locations (origin, production, local) aligned on single linear history; cherry-pick pattern retired
 
 ### Done in Session 10 (removed from list)
 - ✅ Published Shuttle Bus vs. FlexTram (Operations & Economics, ~2,400 words)
