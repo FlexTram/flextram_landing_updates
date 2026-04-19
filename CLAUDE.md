@@ -473,6 +473,27 @@ Ran a systematic audit across all 15 published blog posts + 3 drafts to catch an
 - **Remote SHA reconciliation.** The pre-guard divergence from 2026-04-18 had persisted: origin and production were forever offset by one SHA (same content, different commits), forcing cherry-picks on every push. Verified identical content (`git diff origin/master production/master --stat` → empty), then `git reset --hard production/master` locally and `git push origin master --force-with-lease`. Both remotes + local now at single SHA (`3c8e55d` at time of reconciliation). Cherry-pick pattern retired.
 - **Safety check during reconciliation:** preserved uncommitted `.claude/settings.local.json` changes via stash, confirmed only three clones exist (origin, production, local), confirmed no external services reference pre-reconciliation origin SHAs.
 
+**Airport-FBO page — vocabulary rewrite (second attempt):**
+- Session 10 fixed tone (accusatory → investigative), but engagement stayed at ~3s. Diagnosed on re-visit: tone was addressed, but page still used venue-mobility language retargeted at FBOs. FBO buyers search for "crew car," "ramp transport," "quick turn," "transient," "Part 135" — not "parking" or "fans." Buyers pattern-match "this isn't for me" within 3 seconds.
+- Researched FBO industry vocabulary by extracting service language from AeroCenters (FBO definition / service categories) + Universal Aviation (FBO ground support services). Key finding: **"Crew Car"** is a named service category FBO buyers already have a mental bucket for; FlexTram needed to claim it explicitly.
+- Rewrote across the page with FBO-native vocabulary (same structural bones, all edits vocabulary-only):
+  - Title/meta/OG/Twitter: "FBO Crew Transport & Ramp Coordination"
+  - Hero H1: "Crew transport. Passenger handling. Built for the quick turn."
+  - Hero subtitle: names flight crew / charter passengers / transient principals
+  - Pain cards: crew car capacity gap, FOD/wingtip/prop-wash risk, transient-volume seasonality, based-vs-transient client psychology
+  - Solution block: line services, FOD risk, block-in to line-service-start timing
+  - Use-case pills: flight crew transport, VIP & principal arrivals, hangar-to-FBO shuttle, quick-turn ramp movement, Part 135 operations
+  - FAQ: 4 new FBO-native questions (crew car comparison, quick-turn integration, Part 135 fit, VIP/principal transport) + updated 2 existing
+  - Keywords meta: expanded with FBO search terms
+  - CTA block: "right-size your ramp fleet," asks for based vs. transient mix + crew car count + ramp layout
+- Hypothesis: engagement climbs from 3s toward 10s+ because buyers now pattern-match "this is for me" in the first three seconds. Monitor 48-72 hrs.
+
+**Blog mid-article CTA fix:**
+- User-spotted regression on `/blog/data-center-crew-retention`: the mid-article `.post-cta-inline` Request Info button was rendering as dark-background + teal-underlined text instead of the expected clean black pill or orange pill.
+- Root cause: Session 10's orange-pill unification covered `.blog-cta-strip`, `.post-cta`, `.cta-block`, `.hero-ctas` but missed `.post-cta-inline`. The "tier-2 black pill" fallback was supposed to preserve visual variety for mid-article CTAs, but in practice `.post-content a { color: teal; text-decoration: underline; }` cascaded into the button, producing a broken-looking hybrid on 15+ blog posts.
+- Fix: promoted `.post-cta-inline .btn-primary` into the orange pill selector family (one CSS edit in `assets/css/global.css`). Every mid-article CTA across all blog posts now renders consistent with the primary CTA treatment. Updated the inline comment above the selector block to record the decision.
+- Full-site CTA audit confirmed no other orphans: bid thank-you page's three black-pill buttons render cleanly (outside `.post-content`, no cascade collision) and are legitimate tier-2 next-step options on a post-conversion page.
+
 ---
 
 ## TODOs for next session
@@ -481,7 +502,7 @@ Ran a systematic audit across all 15 published blog posts + 3 drafts to catch an
 - [ ] **SEND the Pittsburgh Vintage Grand Prix one-pager email to Ross Miller (Monday)** — Email drafted + Calendly link ready. Ross is EVP Partnerships & Marketing at PVGP. Event: July 18–19, 2026 at Schenley Park, 450 acres, ~100K spectators, currently 7 buses (5 standard + 2 ADA). Opportunity: replace bus fleet + add Schenley Drive loop with 4–5 FlexTrams. Sponsorship angle works for his role specifically.
 - [ ] **Respond to Hinterland Music Festival bid request** — Saint Charles, IA, July 28–Aug 3, requested bid on 16–32 trams for staff/BOH movement. Biggest single-deal inbound of the month. Joseph's reply has gone out; tracking for follow-up.
 - [ ] **Follow up Coachella "saw your trams" lead** — short warm inquiry received; validated the on-tram branding opportunity.
-- [ ] **Monitor airport-FBO engagement 48–72 hrs** — tone rewrite (accusatory → investigative) + performance fix both shipped today. Goal: 3s engagement climbs toward 10s+ (matches stadiums-arenas template). If it moves, apply the same tone audit to other pages with low engagement.
+- [ ] **Monitor airport-FBO engagement 48–72 hrs after the vocabulary rewrite (shipped 2026-04-19)** — Session 10's tone rewrite (accusatory → investigative) got engagement from undetermined to 3s, but didn't move further. Today's fix injected FBO-native vocabulary (crew car, quick turn, Part 135, transient, based, FOD) across hero/pain cards/pills/FAQ/CTA. Hypothesis: buyers now pattern-match "this is for me" in the first 3 seconds. Goal: 3s → 10s+ (matches stadiums-arenas baseline). If it moves, audit healthcare-hospitals and senior-living for similar vocabulary-match gaps (medical/clinical and senior-living ops teams both have distinct terminology).
 - [ ] **Lock in FSU testimonial usage rights** — Testimonial from Kari Terezakis (EVP, Seminole Boosters). Still open from prior sessions. Email request: (1) permission to use quote with name/title on site + sales materials, (2) serve as reference for other athletics programs (P4 booster leverage), (3) short FSU case study. Quote: "FlexTram has been a tremendous partner in supporting our football gameday parking operations... data-driven solutions adaptable to our evolving needs..."
 - [ ] **Add real testimonials to site** — Held pending 2–3 client quotes in hand. FSU is first. Once 3 confirmed, add featured quote on homepage, vertical-specific quotes on matching solution pages, and consider `/case-studies` or `/clients` page.
 
@@ -526,6 +547,9 @@ Ran a systematic audit across all 15 published blog posts + 3 drafts to catch an
 - ✅ Homepage OG image swapped to branded 1200×630 "Built to Move" fleet shot (`og-flextram-v1.jpg`)
 - ✅ Site-wide OG image sweep — same branded image now on landing-page, solutions hub, blog hub, labor-companies, convention-centers, golf-courses, planned-communities (7 additional pages)
 - ✅ Remote SHA reconciliation — force-pushed origin to match production; all three locations (origin, production, local) aligned on single linear history; cherry-pick pattern retired
+- ✅ Airport-FBO page vocabulary rewrite — extracted FBO-industry language from AeroCenters + Universal Aviation service descriptions, applied across title/meta/OG/hero/pain cards/solution block/use-case pills/FAQ/CTA; claims "crew car" + "quick turn" + "Part 135" + "transient" + "based" + "FOD" vocabulary the buyer actually searches and uses
+- ✅ Blog mid-article CTA fix — promoted `.post-cta-inline .btn-primary` into orange pill family in `global.css`; resolved teal-cascade rendering bug across all 15+ blog posts using the mid-article CTA pattern
+- ✅ Full-site CTA audit — confirmed no remaining orphan Request Info buttons; bid thank-you page's 3 black-pill buttons are legitimate tier-2 design, not bugs
 
 ### Done in Session 10 (removed from list)
 - ✅ Published Shuttle Bus vs. FlexTram (Operations & Economics, ~2,400 words)
