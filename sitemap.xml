@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.flextram.com/</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/og-flextram-v1.jpg</image:loc>
+      <image:caption>FlexTram fleet lined up at a Las Vegas venue at sunset with the tagline 'Built to Move'</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/</loc>
@@ -17,114 +22,190 @@
     <lastmod>2026-04-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-airport-fbo.jpg</image:loc>
+      <image:caption>Gulfstream private jet parked on an FBO ramp at sunset with airstairs deployed</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/resort-hotel</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-resort.jpg</image:loc>
+      <image:caption>Lush bamboo-lined resort pathway ideal for FlexTram guest shuttle service</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/festivals-events</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-festivals.jpg</image:loc>
+      <image:caption>FlexTram fleet staged under tent at Bonnaroo music festival</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/stadiums-arenas</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-stadiums.jpg</image:loc>
+      <image:caption>FlexTram tram at Las Vegas event venue with stage truss</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/cruise-terminals</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-cruise.jpg</image:loc>
+      <image:caption>Aerial view of cruise terminal port with ships docked for passenger transport</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/healthcare-hospitals</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-healthcare.jpg</image:loc>
+      <image:caption>Aerial view of large hospital campus with multiple buildings connected by pathways</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/university-campus</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-university.jpg</image:loc>
+      <image:caption>FlexTram tram full of passengers at university stadium on game day</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/warehouse-logistics</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-warehouse.jpg</image:loc>
+      <image:caption>FlexTram tram at Ingredion industrial facility for worker transport</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/senior-living</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-senior-living.jpg</image:loc>
+      <image:caption>Senior couple walking along boardwalk pathway at retirement community</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/attractions-theme-parks</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-theme-parks.jpg</image:loc>
+      <image:caption>FlexTram fleet at Queen Mary attraction venue transporting guests</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/raceways-motorsports</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-raceways.jpg</image:loc>
+      <image:caption>FlexTram fleet lined up at sunset at large motorsports venue</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/air-shows</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-airshows.jpg</image:loc>
+      <image:caption>FlexTram tram directional signage at large outdoor event venue</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/factory-tours</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-factory.jpg</image:loc>
+      <image:caption>FlexTram guided tour tram at Tesla factory facility</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/convention-centers</loc>
     <lastmod>2026-04-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-convention.jpg</image:loc>
+      <image:caption>FlexTram tram staged on urban street for event transportation</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/labor-companies</loc>
     <lastmod>2026-04-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-labor.jpg</image:loc>
+      <image:caption>Crew in safety vests riding FlexTram shuttle to job site</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/golf-courses</loc>
     <lastmod>2026-04-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-golf.jpg</image:loc>
+      <image:caption>Golf tournament venue with spectators gathered around green and sand traps</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/planned-communities</loc>
     <lastmod>2026-04-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-planned-community.jpg</image:loc>
+      <image:caption>Aerial view of planned community with homes, golf courses, and amenity centers</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/blog/</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-transportation-assumed.jpg</image:loc>
+      <image:caption>Massive crowd at an outdoor event with thousands of attendees</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/blog/onsite-transportation-paradigm</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/coachella_stagecoach.jpg</image:loc>
+      <image:caption>FlexTram tram fleet at Coachella music festival transporting attendees</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/fifa-world-cup</loc>
@@ -155,36 +236,60 @@
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-stadium-district.jpg</image:loc>
+      <image:caption>FlexTram tram system operating at a major stadium venue</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/blog/festival-season-here</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-festival-season.jpg</image:loc>
+      <image:caption>Festival grounds with ferris wheel and palm trees during Coachella season</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/blog/data-center-construction-people-moving</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-data-center-construction.jpg</image:loc>
+      <image:caption>Construction workers climbing scaffolding at a data center build site</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/blog/factory-workers-walking-two-hours</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-factory-workers-walking.jpg</image:loc>
+      <image:caption>Server racks and equipment inside a large warehouse distribution center</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/blog/cruise-terminals-people-moving</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-cruise-terminals-people-moving.jpg</image:loc>
+      <image:caption>Cruise passengers walking along a pier between two docked cruise ships on turnaround day</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/blog/golf-tournament-spectator-experience</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-golf-tournaments.jpg</image:loc>
+      <image:caption>Golf tournament gallery around a green with spectators lining the fairway</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/blog/why-isnt-transportation-assumed</loc>
@@ -197,30 +302,50 @@
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-data-center-crew-retention.jpg</image:loc>
+      <image:caption>Construction crew in safety vests and hard hats standing on a job site with rebar and concrete work in the background</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/blog/we-created-the-category</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-we-created-category.jpg</image:loc>
+      <image:caption>Neon sign reading What Is Your Story in a storefront window at night</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/blog/f1-fan-transportation</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-f1-transportation.jpg</image:loc>
+      <image:caption>Red Bull Formula 1 car on a street circuit with a massive crowd of fans in the background</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/blog/shuttle-bus-vs-flextram</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-shuttle-bus-vs-flextram.jpg</image:loc>
+      <image:caption>Fleet of parked shuttle buses lined up in a transit yard</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/blog/venue-isnt-a-stadium</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-venue-isnt-a-stadium.jpg</image:loc>
+      <image:caption>Crowd of spectators at an X Games action sports event with vert ramps and temporary grandstands at a coastal California venue</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/request-a-bid</loc>
@@ -233,41 +358,69 @@
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-curb-to-gate.jpg</image:loc>
+      <image:caption>Aerial overhead view of a large event parking lot packed with cars in organized rows</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/blog/parking-lot-mobility-origin</loc>
     <lastmod>2026-04-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-parking-mobility-origin.jpg</image:loc>
+      <image:caption>Wooden directional sign reading 'Future' with an arrow right and 'Past' with an arrow left, on a coastal landscape with tall grass</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/blog/courtesy-shuttle-load-bearing</loc>
     <lastmod>2026-04-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-courtesy-shuttle.jpg</image:loc>
+      <image:caption>Large stadium parking lot packed with cars at sunset, with ADA-accessible parking spaces marked by blue signs in the foreground and palm trees framing the view</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/blog/hidden-cost-of-making-fans-walk</loc>
     <lastmod>2026-04-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-hidden-cost-walking.jpg</image:loc>
+      <image:caption>Festival crowd walking through outdoor event grounds at night</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/blog/cities-solved-this</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-cities-solved-this.jpg</image:loc>
+      <image:caption>Paris Metro Pigalle station entrance with Art Nouveau ironwork and tourists studying a subway map in the foreground</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/blog/systems-over-units</loc>
     <lastmod>2026-04-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-systems-over-units.jpg</image:loc>
+      <image:caption>Large futuristic stadium with spire-like roof supports and a vast empty plaza in the foreground, with a few scattered pedestrians and e-scooter riders dispersed across the wide open space</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.flextram.com/blog/fbo-ground-transportation</loc>
     <lastmod>2026-04-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-fbo-ground-transportation.jpg</image:loc>
+      <image:caption>Nose-on view of a white business jet parked on a wet airport ramp with pine forest in the background and reflective markings on the pavement</image:caption>
+    </image:image>
   </url>
 </urlset>

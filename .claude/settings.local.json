@@ -138,7 +138,9 @@
       "Bash(sips -Z 640 /Users/josephbradley/Downloads/city_planner_blog_post.jpg --out assets/img/640/hero-cities-solved-this.jpg)",
       "Bash(grep -v \"^$\")",
       "Bash(sips -Z 1200 /Users/josephbradley/Downloads/stadium_her_micromobility.jpg --out assets/img/hero-systems-over-units.jpg)",
-      "Bash(sips -Z 640 /Users/josephbradley/Downloads/stadium_her_micromobility.jpg --out assets/img/640/hero-systems-over-units.jpg)"
+      "Bash(sips -Z 640 /Users/josephbradley/Downloads/stadium_her_micromobility.jpg --out assets/img/640/hero-systems-over-units.jpg)",
+      "Bash(sips -Z 1200 /Users/josephbradley/Downloads/fbo_ground_transportation_article.jpg --out assets/img/hero-fbo-ground-transportation.jpg)",
+      "Bash(sips -Z 640 /Users/josephbradley/Downloads/fbo_ground_transportation_article.jpg --out assets/img/640/hero-fbo-ground-transportation.jpg)"
     ]
   }
 }
