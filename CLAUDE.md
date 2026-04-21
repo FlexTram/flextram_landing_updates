@@ -498,6 +498,66 @@ Ran a systematic audit across all 15 published blog posts + 3 drafts to catch an
 
 ---
 
+### Session 12 (2026-04-19 continued) — GA4 instrumentation completion + GSC indexing triage
+
+**GA4 custom dimensions registered (Admin → Custom definitions):** Forward CTA-funnel measurement was being collected but invisible because GA4 requires custom event parameters to be registered as custom dimensions before they appear in any report or Explore. The 14 historical `cta_click` events fired before this session are stuck as "(not set)" — that data is permanently lost for slicing, but every event from 2026-04-19 forward is fully sliceable. Registered (all Event scope):
+- `CTA Type` → parameter `cta_type` (values: contact_form / bid_form / calendly / slick / email / other)
+- `CTA Location` → parameter `cta_location` (values: nav / body / bid_form_page / bid_thanks_page)
+- `Service Model` → parameter `service_model` (bid form routing: rental / turnkey / advise)
+- `Source Tag` → parameter `source` (distinguishes bid_request vs contact)
+
+**Note on GA4 dropdown UX trap:** when registering `cta_type` the dropdown only suggested `cta_text` and `cta_location` (it autocompletes from recently-indexed parameter names). The Event parameter field accepts free-typed values — `cta_type` was typed manually and registered correctly. This is GA4's biggest stumbling block for first-time custom-dimension setup; document so next session doesn't waste time.
+
+**Key Events marked (Admin → Events → Recent events tab → star icon):**
+- `bid_request_received` (hard conversion — landed on /request-a-bid-received)
+- `form_submit_success` (hard conversion — homepage contact form actually submitted)
+- `bid_request_submit` (intent signal — submit clicked, fires before redirect)
+- `cta_click` (funnel signal — every meaningful CTA click)
+
+The 3 GA4 default key-event templates (`close_convert_lead`, `purchase`, `qualify_lead`) were left unstarred and untouched — they don't fire on this site, are noise.
+
+**GSC indexing triage (Page indexing report):**
+- "Crawled — currently not indexed" (1 page, validation Failed) and "Alternate page with proper canonical tag" (1 page) were both flagging the same URL: `/blog/cruise-terminals-people-moving.html`. Verified the canonical pretty URL `/blog/cruise-terminals-people-moving` IS indexed via URL Inspection. Both flags are working-as-designed: GitHub Pages serves both `.html` and pretty URL, the canonical tag tells Google to prefer the pretty URL, Google complies and shelves the `.html`. The "Failed" validation just means Google won't index the duplicate — exactly what the canonical is designed to prevent. **No action needed; ignore both flags permanently.**
+- "Discovered — currently not indexed" (22 pages, validation Started): Google knows about them via sitemap but hasn't crawled. Normal for a young domain with growing content library. Long-term levers: backlinks (AMS Event Rentals outreach in TODO), internal linking depth (already strong post-Session 8/10), time, and manual indexing requests via URL Inspection (~10/day per property limit). Priority URLs to manually request: `/solutions/airport-fbo` (just rewrote with FBO vocab — needs recrawl), `/request-a-bid` (conversion page), `/blog/courtesy-shuttle-load-bearing` + `/blog/parking-lot-mobility-origin` (newly published, accelerate discovery), `/solutions/stadiums-arenas`, `/solutions/raceways-motorsports` (PVGP relevance), `/solutions/festivals-events` (Hinterland relevance).
+
+**Snapshot of GA4 state at session end (last 28 days):**
+- Total: 1,747 events / 167 users / 246 sessions / 21s avg engagement
+- Channels: Direct 76.83% (189 sess / 13s) | Organic 19.92% (49 sess / 49s / 77.55% engagement rate — excellent quality) | Unassigned 4.47% | Referral 2.44% (49s engagement)
+- `cta_click`: 14 events / 8 users (parameter slicing starts fresh today)
+- `form_visible` 33 → `form_start` 6 → `form_submit_success` (need to confirm count post-Enhanced-Measurement-toggle)
+- `form_submit` ghost events (the GA4 auto-event from Enhanced Measurement) confirmed dropped out of top 10 — Session 11's toggle fix worked
+- Top pages by views: `/` (254), `/blog/` (93, 46s), `/solutions/` (56, 36s), `/solutions/airport-fbo.html` (19, **3s** — vocabulary rewrite shipped 2026-04-19, this snapshot likely predates the data window), `/request-a-bid` (9 views, 23s engagement — first real traffic to bid funnel since launch)
+
+**GSC organic queries (28-day):** `flextram` position 1.06 / 23.53% CTR (4 clicks / 17 imps — branded search locked in). `flex tram` position 14 (was 4.5 — small-sample noise, 8 imps). `flextrolley` and `flex trolley` still at positions 65–80 despite SEO push (need backlinks not body text). AI-operator queries continuing: "data center construction -site:reddit..." surfacing the data-center post at position 6.
+
+**What changes for next session:**
+- The CTA Type / CTA Location custom dimensions now exist. Build the Explore (Variables: add CTA Type dim + Event count metric; Settings: rows=CTA Type, values=Event count, filter Event name=`cta_click`) on or after 2026-04-22 (3 days of forward data minimum) to verify the homepage CTA redesign is catching bid_form / Calendly clicks vs only contact_form. That's the verdict on Session 11's UX work.
+- Conversion events are now first-class. Looker Studio dashboards or GA4 native Funnel explorations will work properly.
+
+---
+
+### Session 13 (2026-04-20) — New post + canonical/sitemap hygiene sweep
+
+**Content:**
+- Published "Cities Solved This 100 Years Ago. Why Haven't Venues?" (`/blog/cities-solved-this`, ~2,100 words, Industry). Manifesto-style piece reframing venue transportation in urban transit terms — fixed routes, posted schedules, high-capacity shared vehicles, accessibility built-in. Inverts the urbanist's "last mile" problem into the venue "first mile." Hero: Paris Métro Pigalle (Art Nouveau station entrance with tourists studying a subway map). Buried position 1 in "More articles" grid (high-quality industry think-piece, but not displacing the featured "why isn't transportation on the list" manifesto). Sitemap priority 0.7. Full SEO: BlogPosting + FAQPage + BreadcrumbList + Organization JSON-LD, OG/Twitter, canonical, 5 FAQs, related-reading cluster (why-isnt-transportation-assumed, onsite-transportation-paradigm, stadiums-arenas, festivals-events).
+
+**SEO consistency audit + fixes:**
+- **Diagnosed link-equity split on solution pages from GA4.** GA4 Pages report showed `/solutions/airport-fbo.html` (19 views, 3s) AND `/solutions/airport-fbo` (11 views, 1s) both receiving live traffic — same page, two URLs, splitting metrics. Root cause: solutions hub `ItemList` JSON-LD pointed all 19 entries to `.html` URLs while canonical tags + sitemap pointed to pretty URLs. Google was crawling/serving both, splitting link equity 19 ways across the entire solutions catalog. Fixed: dropped `.html` from all 19 ItemList URLs in `solutions/index.html`. ItemList → canonical → sitemap now agree on the pretty-URL form.
+- **Bulk-refreshed sitemap lastmod dates.** Audit found 37 of 43 sitemap entries had stale `lastmod` (mostly stuck at 2026-04-14 despite edits through 4/19). Stale lastmod actively discourages Google from recrawling — telling Google "nothing changed" when in fact the airport-fbo vocab rewrite, ItemList .html fix, and other recent work were all sitting unannounced. Wrote a Python script that pulls each URL's actual most-recent git commit date and updates `lastmod` accordingly. 37 entries updated to true last-edit dates; 6 already-fresh entries left alone.
+- **Noindexed `landing-page.html`.** Audit found it's a Paper Kit 2 PRO template artifact that overlaps ~95% with the homepage on title, meta description, H1, and value prop — but had no `noindex` tag and was missing from sitemap (indexing limbo). Adding to sitemap would create a near-duplicate competing with `/` for the brand keyword cluster (`flextram` currently at position 1.06 — adding a duplicate risks splitting that ranking). Better fix: explicit `noindex,follow` so Google stops competing it against `/`, while the URL stays accessible if any pre-existing direct links resolve there. Inline HTML comment documents the reasoning. Future option: rebuild as a substantively distinct landing page (e.g., `/event-trams` or `/for-festivals`) with its own keyword cluster, not as a clone of `/`.
+- **Other audits clean.** Canonical vs OG URL match across all pages. No duplicate title tags. No duplicate meta descriptions. No `.html` self-references in BreadcrumbList JSON-LD. `request-a-bid-received` correctly excluded (noindex,follow + missing canonical/og/sitemap is standard thank-you-page pattern). `system.html` correctly excluded (noindex,nofollow easter egg).
+
+**AMS Event Rentals backlink upgrade (asks defined, not yet sent — Joseph knows them personally and is sending direct):**
+- Tier 1 asks: dedicated `/flextram` page on amseventrentals.com (vs current logo-row link) with 300–500 words; varied anchor text using "event tram rental," "festival shuttle service," "stadium parking shuttle," "FlexTrolley" (the position-65–80 term that body-text alone hasn't moved); deep-link to solution pages not just homepage.
+- Tier 2: internal links to that page from their main rentals + footer; co-authored neutral blog post; add FlexTram to their service catalog as a named offering ("Event Trams powered by FlexTram").
+- Tier 3 non-SEO: formalize lead-share, joint quote, LinkedIn cross-posts.
+
+**Followups for next session:**
+- **Submit GSC reindex on `https://www.flextram.com/solutions/`** — the corrected ItemList structured data propagates fastest if the hub URL is manually requested (Google rebuilds the structured-data graph for all 19 child URLs from there).
+- **Re-check `/solutions/airport-fbo` engagement on or after 2026-04-24** — current 3s/1s data is pre-recrawl (visitors arrived via OLD search snippets). Need to wait for Google to recrawl + serve new vocab snippets + new visitors to land before validating the FBO-vocabulary rewrite hypothesis.
+
+---
+
 ## TODOs for next session
 
 ### High priority — active leads + time-sensitive
@@ -517,7 +577,7 @@ Ran a systematic audit across all 15 published blog posts + 3 drafts to catch an
 - [ ] **Monitor GSC for key query movement** -- Watching: "flex tram" (holding position 4.5?), "flextrolley" (moved from position 80?), "flex shuttle" (new appearance April 17 — rising?), "shuttle bus alternative" / "tram rental" (new keywords added yesterday - impressions?), new queries from shuttle-bus / venue-isnt-stadium / curb-to-gate posts.
 - [ ] **Watch for more AI referrals** -- gemini.google.com + duckduckgo/organic already appearing. Expect more AI tool citations as content cluster grows.
 - [ ] **Consider LAZ / Propark / Metropolis outreach** — curb-to-gate post positions FlexTram as the onsite mobility layer parking operators need to complete the fan journey product. Opens partnership conversation. LAZ Live! at 100 venues (Truist Park / Battery Atlanta reference) is the prime target.
-- [ ] **Monitor bid form funnel** — /request-a-bid shipped today. Watch for first submissions, and which of the 3 conversion paths converts best (homepage contact form vs. bid form vs. Calendly). GA4 `cta_click` event has `cta_type` + `cta_location` parameters for slicing.
+- [ ] **Monitor bid form funnel** — /request-a-bid shipped today. Watch for first submissions, and which of the 3 conversion paths converts best (homepage contact form vs. bid form vs. Calendly). GA4 `cta_click` event has `cta_type` + `cta_location` parameters for slicing. **(As of Session 12: custom dimensions registered, conversion events starred. Build the slicing Explore on or after 2026-04-22 — needs 3+ days of forward data because historical 14 cta_click events are stuck as "(not set)".)**
 - [ ] **Homepage performance overhaul (major)** — Homepage Lighthouse mobile stuck at 40–55 because of jQuery + Bootstrap + Paper Kit + Slick carousel. The ranking-critical solution pages are 88–90 because they don't carry this legacy JS. A real rebuild of homepage JS stack (drop jQuery dependency, replace Slick with vanilla JS carousel) could push it into the 70–80 range. Bigger project — don't tackle unless a week of runway.
 - [ ] **Build "Where We Operate" or service-area page** — inquiries keep asking "are you available in X?" (Canada, state). Simple page listing "continental US coverage, case-by-case for Canada/international" would head off the qualifying inquiry. Low effort.
 - [ ] **Consider "Back-of-House Staff Transportation" solution page or post** — Hinterland's 16–32 tram bid request was explicitly about staff movement, not fans. Back-of-house is a distinct vertical underserved by current front-of-house-heavy content. Festival-season-here blog post hits this briefly; could be its own solution page.
@@ -532,10 +592,24 @@ Ran a systematic audit across all 15 published blog posts + 3 drafts to catch an
 - [ ] **Coachella Weekend 2 content push** -- Consider homepage banner, festivals page callout, recap post.
 
 ### New from Session 11 — monitor
-- [ ] **Monitor homepage contact CTA redesign** — bid + Calendly CTAs promoted from inline text to outlined pill cards with persona copy. Watch `cta_click` events segmented by `cta_type` (contact_form / bid_form / calendly). Question: do the alt paths now capture buyers who were previously bouncing past the inline links?
-- [ ] **Confirm GA4 `form_submit` / `form_start` events disappear** — Enhanced Measurement Form interactions disabled 2026-04-18 in GA4 UI. Verify tomorrow that only custom conversion events (`form_submit_success`, `bid_request_submit`, `bid_request_received`) appear.
+- [ ] **Monitor homepage contact CTA redesign** — bid + Calendly CTAs promoted from inline text to outlined pill cards with persona copy. Watch `cta_click` events segmented by `cta_type` (contact_form / bid_form / calendly). Question: do the alt paths now capture buyers who were previously bouncing past the inline links? **(Session 12: custom dimensions now registered. Build Explore on/after 2026-04-22 for first meaningful slice.)**
 - [ ] **Monitor parking-lot-mobility-origin discovery** — post shipped buried (sitemap 0.5, mid-grid above curb-to-gate). Expect slow organic surfacing vs featured posts. Watch GSC for LAZ-related query impressions ("LAZ Parking mobility", "Charge Where You Park", "LAZ Live") over 7–14 day window.
 - [ ] **If `git push production master` ever rejects again** — the guard failed silently or something new diverged the remotes. Investigate before reaching for cherry-pick; prefer `git fetch production && git push origin production/master:master` to re-sync the fork non-destructively.
+
+### New from Session 12 — action + monitor
+- [ ] **Build the CTA Type slicing Explore (on or after 2026-04-22)** — Go to GA4 → Explore → Blank. Variables panel: add dimensions `CTA Type`, `CTA Location`, `Event name`; add metric `Event count`. Settings panel: rows = `CTA Type`, values = `Event count`, filter `Event name` exactly matches `cta_click`. This is the verdict on Session 11's homepage CTA redesign — is bid_form/Calendly capturing clicks or is everything still contact_form?
+- [ ] **Manual indexing requests for priority URLs** — 22 pages stuck in "Discovered — currently not indexed" in GSC. Request via URL Inspection → Request Indexing (~10/day limit per property). Priority order: `/solutions/airport-fbo` (just rewritten, needs recrawl), `/request-a-bid`, `/blog/courtesy-shuttle-load-bearing`, `/blog/parking-lot-mobility-origin`, `/solutions/stadiums-arenas`, `/solutions/raceways-motorsports`, `/solutions/festivals-events`.
+- [ ] **Explore historical GSC "Discovered — not indexed" crawl inventory** — 22 pages is a lot. If the issue persists after manual indexing, consider tightening sitemap priorities on lower-value pages (drops /landing-page, consolidates older blog posts) to focus crawl budget.
+- [ ] **Ignore cruise-terminals indexing flags permanently** — both "Crawled — currently not indexed" (Failed) and "Alternate page with proper canonical tag" flags for `/blog/cruise-terminals-people-moving.html` are working as designed (GitHub Pages serves both URLs, canonical correctly points to pretty URL, Google shelves the .html). The canonical pretty URL IS indexed. Don't click Validate again — it will keep "failing" because Google is correctly refusing to index the duplicate.
+- [ ] **DebugView sanity check (optional)** — Admin → DebugView. Append `?debug_mode=1` to any flextram.com URL, click a CTA, confirm `cta_type` / `cta_location` params show up in real-time. Useful if the Explore (after 3 days) shows unexpected gaps.
+
+### Done in Session 12 (removed from list)
+- ✅ Registered 4 GA4 custom dimensions (CTA Type, CTA Location, Service Model, Source Tag) — all Event scope
+- ✅ Marked key events: `bid_request_received`, `form_submit_success`, `bid_request_submit`, `cta_click`
+- ✅ Verified Session 11's Enhanced Measurement toggle worked — `form_submit` ghost events dropped out of top 10 in GA4
+- ✅ Investigated GSC Page Indexing — cruise-terminals dual-flag diagnosed as working-as-designed (canonical doing its job); 22 "Discovered — not indexed" identified as the real SEO lever (needs manual indexing requests + backlinks + time)
+- ✅ Verified canonical pretty URL `/blog/cruise-terminals-people-moving` IS indexed via URL Inspection
+- ✅ Documented CLAUDE.md with GA4 dimension setup + GSC triage for next-session continuity
 
 ### Done in Session 11 (removed from list)
 - ✅ Diagnosed form submissions as bots (GA4 `form_submit` via Enhanced Measurement catching browser submits; honeypot server-side filtering; `form_submit > form_start` inversion = textbook bot signature)
