@@ -565,12 +565,57 @@ The 3 GA4 default key-event templates (`close_convert_lead`, `purchase`, `qualif
 
 ---
 
+### Session 14 (2026-04-21) — Second manifesto post, cross-link cluster, GSC breakthrough response, 31-page meta description sweep
+
+Morning session. Clean output-to-leverage ratio — shipped new content, closed the deferred long-tail TODO from Session 13, and caught two separate data signals (one inbound traffic breakthrough, one stale-capacity straggler from 2026-04).
+
+**Content published:**
+- **"Systems Over Units: Why Smaller Vehicles Don't Solve Bigger Crowd Problems"** (`/blog/systems-over-units`, ~2,000 words, Industry). Introduces the predictable-flow vs. unpredictable-flow decision framework. Thesis: micro-mobility succeeds in cities because urban flow is unpredictable (units serve individuals); it fails at venues because venue flow is predictable (systems serve corridors). Extends the argument forward to autonomous vehicles — even self-driving pods inside a venue repeat the same mistake as golf carts when the corridor is bottlenecked.
+- **Structurally pairs with Session 13's "Cities Solved This"** as a two-part argument. Cities established THAT urban transit principles apply at venue scale; Systems-Over-Units establishes the decision rule FOR applying them. Reading them in order is a genuine foundation-plus-framework sequence.
+- Hero: empty-plaza stadium (Gazprom Arena) with scattered e-scooter riders — visual metaphor for the units-in-a-large-venue failure mode. Buried position 1 in "More articles" grid (the two-post cluster occupies the top).
+- Full SEO stack: BlogPosting + FAQPage + BreadcrumbList + Organization JSON-LD, OG/Twitter, canonical, 5 FAQs, related-reading cluster (cities-solved-this, why-isnt-transportation-assumed, onsite-transportation-paradigm, stadiums-arenas). Sitemap priority 0.7.
+
+**Reciprocal cross-links between cities-solved-this ↔ systems-over-units:**
+- Yesterday's post linked forward only one direction (systems → cities via "transit planners arrived at a century ago" inline anchor). Today added the reverse:
+  - **Inline anchor** in cities-solved-this: "There's no coordination, no consolidation, <a>no system</a>" — "no system" becomes the anchor text pointing to the destination article's core concept. Contextual inline anchor text passes more link authority than grid cards.
+  - **Related Reading card** added as the first card in the cities-solved-this grid.
+- Net: both posts now point to each other through two link surfaces each. Google/AI crawlers will see them as a tightly clustered pair on the same topic — which builds topical authority faster than a single isolated post on the same subject.
+
+**GSC breakthrough signal + fast response:**
+- **`/blog/stadium-districts-mixed-use-transportation.html` went 3 → 152 impressions in a single week** (50x). Queries driving the spike:
+  - "stadium mobility infrastructure" (9 imps, up from 0)
+  - "stadium transportation hub connectivity" (3 imps, up from 0)
+  - "denver broncos inurl:blog" (0 imps this week, 2 last week — AI-operator query pattern; same signature as the Session 8 `-site:reddit.com` data-center surface)
+- **Key insight:** these aren't fan queries — they're B2B research vocabulary (consultant / architect / venue-planner terminology). The post is ranking because its body references Carrie Walton Penner (Broncos), HOK, Burns & McDonnell, JLL, Brad Chambers — professional research context, not casual content. Google is sending the post to the audience whose vocabulary it shares.
+- **`.html` version is the one ranking, not the canonical pretty URL.** Historical indexing signals and backlinks anchor the `.html` version. The Session 13 canonical fix (ItemList → pretty URL) applies here too; expect consolidation to the pretty URL over 2–3 weeks as Google re-processes the structured-data graph.
+- **Action shipped:** added "stadium mobility infrastructure" and "stadium transportation hub connectivity" to meta keywords on 5 adjacent stadium-cluster pages to try to pull the same research-query traffic across solution pages (the conversion surface) not just blog posts (the discovery surface):
+  - `solutions/stadiums-arenas`, `solutions/football-stadiums`
+  - `blog/courtesy-shuttle-load-bearing`, `blog/football-parking-lot-weakest-link`, `blog/hidden-cost-of-making-fans-walk`
+- **Honest caveat documented in the commit:** Google deprecated `<meta name="keywords">` as a ranking signal in 2009. Bing still uses it lightly, and AI crawlers (Gemini/Perplexity/ChatGPT) scrape it as retrieval context. Real signal needs body-copy presence of these phrases, not just meta — but meta is the free free-keywords declaration. Watch over 2–4 weeks: if only the blog post still ranks for these queries and the 5 tagged pages don't surface, the fix is body-copy edits on the solution pages, not another meta pass.
+
+**Meta description long-tail sweep — 31 pages tightened to SERP-safe lengths (the Session 13 deferred TODO, closed):**
+- Every page's meta description was ≤160 chars before the sweep for 4 highest-traffic pages (Session 13). This session closed out the remaining 31 pages: 11 blog posts + 17 solution pages + 3 others (request-a-bid, landing-page, plus a couple of blog hub-level pages).
+- Was: descriptions running 161–244 chars. Now: 134–158 chars. All under the ~155–160 char SERP truncation boundary.
+- **Also synced og:description + twitter:description + JSON-LD BlogPosting.description** on 7 files where those fields had drifted into their own long wording. All four snippet-signal layers now agree per page → Google sees one consistent signal, not three different lengths.
+- Voice preserved: blog posts keep their ranking hook as the opening sentence; solution pages keep their template rhythm ("FlexTram [does X] for [vertical]. One driver, up to 27 passengers. [Trait].")
+- **Data consistency bonus find during the scan:** `solutions/healthcare-hospitals.html` meta description said "up to 25 patients" — stale from before the 25→27 capacity standardization in Session 2. Corrected. Two `25 total seats` body references verified as legitimate golf-cart comparison math (5 carts × 5 seats) and left intact.
+
+**Three inbound leads closed (removed from TODOs):**
+- **Pittsburgh Vintage Grand Prix (Ross Miller / EVP Partnerships)** — closed. Schenley Park event July 18–19, 2026. Opportunity: replace their 7-bus fleet (5 standard + 2 ADA) and add a Schenley Drive loop.
+- **Hinterland Music Festival** (Saint Charles, IA, July 28–Aug 3) — closed. 16–32 trams for staff/BOH movement. Biggest single-deal inbound of the month.
+- **Coachella "saw your trams" lead** — closed. Validated the on-tram branding opportunity that today's GSC research-query signal corroborates (sophisticated buyers noticing FlexTram at events and researching it afterwards).
+- **All three removed from the high-priority TODO block.** Keeping them in Session 10/11 context for historical attribution (useful when trying to trace back which piece of content / campaign drove which deal 6 months from now).
+
+**Followups for next session:**
+- **`/blog/systems-over-units` + reciprocal-link cities-solved-this** — both should get a GSC URL Inspection → Request Indexing so the cross-link graph propagates cleanly.
+- **Watch the 5 keyword-tagged stadium pages in GSC queries report** (2–4 week horizon) — are they starting to pull the "stadium mobility infrastructure" / "stadium transportation hub connectivity" traffic, or is only the stadium-districts post still ranking? If the latter, next move is body-copy edits on the solution pages (not another meta pass).
+- **Watch if the stadium-districts .html → pretty-URL consolidation happens** over the next 2–3 weeks post-canonical-fix. Healthy signal: the pretty URL starts appearing in SERPs and the .html version drops. Unhealthy: both URLs persist (means Google is still seeing mixed signals somewhere).
+
+---
+
 ## TODOs for next session
 
 ### High priority — active leads + time-sensitive
-- [ ] **SEND the Pittsburgh Vintage Grand Prix one-pager email to Ross Miller (Monday)** — Email drafted + Calendly link ready. Ross is EVP Partnerships & Marketing at PVGP. Event: July 18–19, 2026 at Schenley Park, 450 acres, ~100K spectators, currently 7 buses (5 standard + 2 ADA). Opportunity: replace bus fleet + add Schenley Drive loop with 4–5 FlexTrams. Sponsorship angle works for his role specifically.
-- [ ] **Respond to Hinterland Music Festival bid request** — Saint Charles, IA, July 28–Aug 3, requested bid on 16–32 trams for staff/BOH movement. Biggest single-deal inbound of the month. Joseph's reply has gone out; tracking for follow-up.
-- [ ] **Follow up Coachella "saw your trams" lead** — short warm inquiry received; validated the on-tram branding opportunity.
 - [ ] **Monitor airport-FBO engagement 48–72 hrs after the vocabulary rewrite (shipped 2026-04-19)** — Session 10's tone rewrite (accusatory → investigative) got engagement from undetermined to 3s, but didn't move further. Today's fix injected FBO-native vocabulary (crew car, quick turn, Part 135, transient, based, FOD) across hero/pain cards/pills/FAQ/CTA. Hypothesis: buyers now pattern-match "this is for me" in the first 3 seconds. Goal: 3s → 10s+ (matches stadiums-arenas baseline). If it moves, audit healthcare-hospitals and senior-living for similar vocabulary-match gaps (medical/clinical and senior-living ops teams both have distinct terminology).
 - [ ] **Lock in FSU testimonial usage rights** — Testimonial from Kari Terezakis (EVP, Seminole Boosters). Still open from prior sessions. Email request: (1) permission to use quote with name/title on site + sales materials, (2) serve as reference for other athletics programs (P4 booster leverage), (3) short FSU case study. Quote: "FlexTram has been a tremendous partner in supporting our football gameday parking operations... data-driven solutions adaptable to our evolving needs..."
 - [ ] **Add real testimonials to site** — Held pending 2–3 client quotes in hand. FSU is first. Once 3 confirmed, add featured quote on homepage, vertical-specific quotes on matching solution pages, and consider `/case-studies` or `/clients` page.
@@ -610,8 +655,24 @@ The 3 GA4 default key-event templates (`close_convert_lead`, `purchase`, `qualif
 - [ ] **Ignore cruise-terminals indexing flags permanently** — both "Crawled — currently not indexed" (Failed) and "Alternate page with proper canonical tag" flags for `/blog/cruise-terminals-people-moving.html` are working as designed (GitHub Pages serves both URLs, canonical correctly points to pretty URL, Google shelves the .html). The canonical pretty URL IS indexed. Don't click Validate again — it will keep "failing" because Google is correctly refusing to index the duplicate.
 - [ ] **DebugView sanity check (optional)** — Admin → DebugView. Append `?debug_mode=1` to any flextram.com URL, click a CTA, confirm `cta_type` / `cta_location` params show up in real-time. Useful if the Explore (after 3 days) shows unexpected gaps.
 
-### New from Session 13 — meta description sweep (deferred, do tomorrow)
-- [ ] **Tighten ~30 overlong meta descriptions across solution + blog pages.** Today's audit fixed the 4 highest-traffic pages (homepage, solutions hub, blog hub, today's new post). The long tail of ~30 pages have descriptions in the 160–245 char range (Google truncates at ~155–160 chars and appends "..."). Each is editorial — read the page intent, distill to one tight sentence under 155 chars, preserve the keyword cluster. Pages flagged: all 17 solution sub-pages (most are 161–215 chars), 9 blog posts (164–244 chars), and `landing-page.html` (now noindex, can skip). Run the audit script in `python3 << EOF` block (search Session 13 entry for the regex used) to refresh the list before starting. Estimated effort: 30–60 minutes for the full sweep, ~2 minutes per page. **Why it matters:** truncated descriptions in SERPs lose click-through rate. Estimated 10–20% CTR uplift on the long-tail pages where snippets currently cut off mid-thought. Not urgent (no broken behavior), but high-leverage editorial polish — best done in one batch session for consistency of voice.
+### Done in Session 14 (removed from list)
+- ✅ Published "Systems Over Units: Why Smaller Vehicles Don't Solve Bigger Crowd Problems" (~2,000 words, Industry, structurally pairs with cities-solved-this as a two-post decision framework argument)
+- ✅ Added reciprocal cross-links between cities-solved-this ↔ systems-over-units (inline "no system" anchor + related-reading card both directions)
+- ✅ Diagnosed stadium-districts GSC breakthrough (3 → 152 weekly impressions on B2B research queries) — identified vocabulary pattern and shipped adjacent-page keyword expansion
+- ✅ Added "stadium mobility infrastructure" + "stadium transportation hub connectivity" to meta keywords on 5 stadium-cluster pages (stadiums-arenas, football-stadiums solution pages; courtesy-shuttle, football-parking, hidden-cost blog posts)
+- ✅ **Meta description long-tail sweep — 31 pages closed.** The Session 13 deferred TODO is done. All pages now have descriptions ≤160 chars, with og/twitter/JSON-LD description fields synced per page for consistent SERP signal.
+- ✅ Caught and fixed stale capacity reference: `solutions/healthcare-hospitals.html` meta description said "up to 25 patients" (pre-Session-2 value) — corrected to 27
+- ✅ Closed three inbound leads off the high-priority TODO block: PVGP (Ross Miller), Hinterland Music Festival, Coachella warm lead
+- ✅ Honest caveat documented in commit + session log: Google deprecated meta keywords as ranking signal in 2009. Real lever for research-query ranking is body copy + backlinks — meta keywords are the free declaration layer only.
+
+### Done in Session 13 (removed from list)
+- ✅ Published "Cities Solved This 100 Years Ago. Why Haven't Venues?" (~2,100 words, Industry, urban-transit-applied-to-venues manifesto)
+- ✅ Fixed link-equity split on solutions hub — dropped `.html` from all 19 ItemList JSON-LD URLs so ItemList agrees with canonical + sitemap
+- ✅ Bulk-refreshed sitemap lastmod dates on 37 stale entries (pulled true most-recent git commit date per file)
+- ✅ Noindexed `landing-page.html` (Paper Kit template artifact that was ~95% duplicate of homepage)
+- ✅ Ran "anything else like this" structural audit — found and fixed 11 `target="_blank"` missing `rel="noopener"`, 3 wildly-wrong wordCount values in BlogPosting JSON-LD, tightened 4 highest-traffic page meta descriptions (homepage, solutions hub, blog hub, cities-solved-this)
+- ✅ Lifted blog hub title from 23 → 65 chars ("FlexTram Blog | Onsite Transportation & Venue Operations Insights")
+- ✅ Defined AMS Event Rentals backlink-upgrade asks for Joseph to send direct (dedicated /flextram page, varied anchor text with target keywords, deep-links to solution pages, internal links from their high-traffic pages)
 
 ### Done in Session 12 (removed from list)
 - ✅ Registered 4 GA4 custom dimensions (CTA Type, CTA Location, Service Model, Source Tag) — all Event scope
