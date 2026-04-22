@@ -80,10 +80,11 @@ Static HTML site built on **Paper Kit 2 PRO v2.3.0** (Creative Tim). No build to
 - Article template uses `blog-post.css` (based on use-case.css patterns)
 - **Auto-publish workflow:** GitHub Actions runs daily at 9 AM UTC
   - Drafts in `blog/_drafts/` with filename `YYYY-MM-DD_slug.html`
-  - When date arrives: moves to `blog/`, updates sitemap, adds card to hub page
-  - Drafts include `BLOG_META` comment block for hub card metadata
+  - When date arrives: moves to `blog/`, updates sitemap (with `<image:image>` block sourced from BLOG_META), adds card to hub page
+  - Drafts include `BLOG_META` comment block for hub card metadata + sitemap image entry
   - Can also trigger manually from GitHub Actions tab
   - **Runs on production only** (guard added 2026-04-18): `if: github.repository == 'blackbox-engineering/flextram_landing'`. Before the guard, the workflow fired independently on origin (fork) and production, creating divergent commit SHAs with identical content and forcing a cherry-pick pattern on same-day manual pushes. On 2026-04-19 the two remotes were reconciled via `git reset --hard production/master` locally + `git push origin master --force-with-lease` — both remotes now track a single linear history. If the fork ever falls behind after an auto-publish, sync with: `git fetch production && git push origin production/master:master` (non-destructive, fork fast-forwards to production).
+  - **Image-sitemap support added 2026-04-22:** workflow now emits `<image:image>` blocks in the sitemap entry by transforming BLOG_META `image:` and `image_alt:` fields (relative `../assets/img/foo.jpg` → absolute URL, `&` chars XML-escaped). Falls back gracefully (no image:image block) if BLOG_META lacks image fields. Backstory: when fan-experience-gap auto-published on 2026-04-22, its sitemap entry shipped without an image declaration since the image-sitemap extension was added 2026-04-21 (a day after the workflow was last touched). Patched same-day so future auto-publishes inherit the structural-SEO work automatically.
 - **Scheduled articles:**
   - April 15: "The True Cost of the Golf Cart" (Operations)
   - April 22: "The Fan Experience Gap" (Fan Experience)
