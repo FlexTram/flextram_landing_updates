@@ -614,6 +614,58 @@ Morning session. Clean output-to-leverage ratio — shipped new content, closed 
 
 ---
 
+### Session 15 (2026-04-22) — GA4 conversion funnel verdict, FBO post #2, workflow hardening, campus-asset positioning pattern
+
+Full day. Three major threads.
+
+**GA4 verdict on Session 11 CTA redesign + full conversion picture:**
+- Built the CTA Type Explore (finally — data window opened today, 3 days post-custom-dimension-registration). Result: 3 cta_click events over 3 days, all on alt CTAs (2 bid_form + 1 calendly), all from body location. Translation: the Session 11 homepage redesign (outlined pill cards below the form) IS capturing alt-CTA clicks — hypothesis validated at the margin. Pattern right, volume modest (~1 click/day).
+- Built CTA Location Explore — confirmed all 3 events came from `body` (most likely the homepage outlined pill cards specifically).
+- Events report full pull exposed the actual conversion picture:
+  - **3 form_submit_success / 3 users** (primary homepage contact form)
+  - **1 bid_request_submit / 2 bid_request_received** (first bid funnel conversion since 4/17 launch; received > submit is likely thank-you-page refresh, not instrumentation bug)
+  - **17 cta_click / 8 users** (alt-CTA interactions)
+  - **form_visible 53 → form_submit_success 3 = 5.7% form conversion rate** (~2× B2B benchmark of 1–3%)
+  - **4 documented conversions / 199 users / 28 days = 2% overall lead rate**
+  - **Verdict:** The form is doing the heavy lifting at above-benchmark rates. Alt CTAs are appropriately sized as supplementary. **Don't iterate on CTA layout** — grow the top of funnel.
+  - `form_submit` (6) and `form_field_focus` (2) are legacy Enhanced Measurement artifacts from pre-4/19 that'll fade as the 28-day window rolls past the disable date. Not bot signals.
+
+**Traffic source diagnostic (new finding):**
+- GA4 Session source/medium over the 28-day window: `google 59 / linkedin.com 7 / amseventrentals.com 6 / duckduckgo 1 / gemini.google.com 1`
+- **LinkedIn at 7 attributed sessions** — real signal. Caveat: LinkedIn mobile-app shares strip referrer and land as `(direct) / (none)`, so actual LinkedIn-driven traffic is likely 2–3× this (~15–25 real sessions). Under-counted until UTM tagging starts.
+- **AMS Event Rentals at 6 sessions from ONE existing backlink.** This is the bonus insight of the day — a single referral backlink is driving nearly as much traffic as the entire LinkedIn presence. Validates why the AMS backlink-upgrade asks matter so much; if Joseph lands the dedicated `/flextram` page + deep-links + varied anchor text, the 6 could become 20–50+.
+- AI referrals (gemini.google.com) continuing — tiny (1 session) but the pattern is consistent since Session 8.
+
+**UTM tagging adopted for future LinkedIn shares:**
+- Joseph will now tag every LinkedIn share going forward with `?utm_source=linkedin&utm_medium=social&utm_campaign=POST_SLUG`. This captures mobile-app clicks that currently land as direct — expected to surface the hidden 2–3× LinkedIn traffic within 2–3 weeks of consistent tagging.
+- Pre-UTM LinkedIn clicks are lost to attribution permanently (they're stuck as `(direct)`). Going forward only.
+
+**Content published:**
+- **"You Don't Know Who's Driving on Your Property. Neither Does Your Insurance Company."** (`/blog/fleet-liability-insurance`, ~2,000 words, **Risk & Operations — new category**). CPSC NEISS injury data (15K ER visits/yr, 64% rise 2015–24, 300%+ claims rise, 75% of injuries are passengers), Florida "dangerous instrumentality" classification, pedicab liability under premises theory, City of Houston advisory, Arlington TX 2020 8-0 unanimous council vote to terminate program. Buried position 15 in grid, sitemap priority 0.5. Targets venue risk managers / event producers / insurance underwriters — a new buyer persona surface.
+
+**Auto-publish workflow hardened (image-sitemap extension):**
+- This morning's auto-publish of fan-experience-gap (April 22 scheduled post) fired on production before Joseph's manual fleet-liability-insurance push, causing the manual push to be rejected. Recovered via `git fetch production` → rebase → resolve sitemap.xml conflict → push both remotes (same pattern documented in Session 11's workflow-divergence recovery).
+- **Caught during recovery:** the auto-publish workflow was adding sitemap entries WITHOUT `<image:image>` blocks, because the image-sitemap extension (shipped 2026-04-21) post-dated the workflow's last touch. Fixed same-day: workflow now transforms BLOG_META `image:` and `image_alt:` fields into absolute URLs + XML-escaped captions and emits the image:image block. Falls back gracefully (no block) if BLOG_META lacks image fields.
+- Verified via Python-simulated sed output that the XML is well-formed. Next scheduled auto-publish (April 29 — Sponsorship's Untapped Frontier) will exercise the updated code path. If it succeeds, no further workflow touch required. If it fails, fallback is the manual sitemap patch in the same shape as today's fan-experience-gap fix (30 seconds).
+- Also retroactively added image:image to fan-experience-gap's sitemap entry during the merge-conflict resolution so it doesn't ship with a structural regression.
+
+**"Campus-resident asset" positioning pattern — 4-page rollout:**
+- Inspired by a client prompt to look at TransLoc's on-demand-shuttle phrasing for the healthcare-hospitals page. Landed on a broader pattern: 4 solution pages (healthcare-hospitals, senior-living, planned-communities, resort-hotel) share a buyer mental model of *owning and operating campus assets* (hospital wing, retirement campus, community pool, hotel grounds). Re-framed FlexTram as "another asset that lives on your property and runs whatever pattern your team designs" instead of a contracted vendor service.
+- **healthcare-hospitals (5 edits, yesterday)** — hero "lives on your campus" + new solution paragraph about peak/on-demand flexibility + pain card rewrite (contracted shuttles aren't there when you need them) + new "how is FlexTram operated" FAQ + fixed truncated existing FAQ.
+- **senior-living (3 edits, today, MEDIUM intensity)** — hero tweak + new solution paragraph (meal-time loops, medical appointment runs, family visitor pickups, weather sweeps) + new operations FAQ. Deliberately preserved "predictable schedule" framing (resident consistency anxiety).
+- **planned-communities (3 edits, today, MEDIUM intensity)** — hero "community-owned asset" framing + new solution paragraph (HOA as operating-model owner; weekend amenity loops, evening commerce loops, event mode, model home tours) + new operations FAQ.
+- **resort-hotel (2 edits, today, LIGHT intensity)** — solution-block sentence add + new "special events / charters / off-loop pickups" FAQ. Preserved "continuous guest loop" as primary mode; positioned flex use cases as secondary.
+- **Strategic tension preserved site-wide:** this change does NOT contradict the broader manifesto posts (cities-solved-this, systems-over-units) which argue fixed-route + posted-schedule is the right answer for predictable flow. Campus-resident-asset pages are legitimate hybrid contexts — predictable peaks + unpredictable off-peak — and the edits lean into "you choose the operating pattern" rather than "on-demand replaces fixed-route."
+- Sitemap lastmod refreshed for all 4 pages to 2026-04-22 (were all stale at 2026-04-17 / 04-19). Joseph requested GSC indexing on all 4 URLs.
+
+**What changes for next session:**
+- **Rerun CTA Type Explore on or after 2026-04-29** (7+ days of forward data) for cleaner sample. 3-event baseline is real but small; 21+ events would tell us whether the redesign holds at higher traffic or if we're seeing a flukey first week.
+- **April 29 auto-publish is the test case for the workflow image-sitemap patch.** If it emits an `<image:image>` block in the Sponsorship's Untapped Frontier sitemap entry on first try, celebrate and move on. If not, fall back to 30-sec manual patch.
+- **Watch engagement time on the 4 "campus-resident asset" pages over 2–4 weeks.** If the new positioning resonates, engagement time rises on healthcare-hospitals, senior-living, planned-communities, resort-hotel. If no change, the positioning is invisible to traffic — which is also useful data (means top-of-funnel growth is the actual lever, not copy optimization).
+- **Watch for new GSC query patterns from fleet-liability-insurance post.** Target B2B research vocabulary: "golf cart liability venue," "event premises liability," "dangerous instrumentality," "pedicab insurance requirements," "venue fleet risk management." Same pattern as stadium-districts breakthrough — different audience persona (risk managers, underwriters, event insurance brokers).
+
+---
+
 ## TODOs for next session
 
 ### High priority — active leads + time-sensitive
@@ -644,17 +696,36 @@ Morning session. Clean output-to-leverage ratio — shipped new content, closed 
 - [ ] **LinkedIn share of the manifesto post** -- "Why Isn't Transportation on the List?" designed to be shareable, best top-of-funnel content.
 - [ ] **Coachella Weekend 2 content push** -- Consider homepage banner, festivals page callout, recap post.
 
-### New from Session 11 — monitor
-- [ ] **Monitor homepage contact CTA redesign** — bid + Calendly CTAs promoted from inline text to outlined pill cards with persona copy. Watch `cta_click` events segmented by `cta_type` (contact_form / bid_form / calendly). Question: do the alt paths now capture buyers who were previously bouncing past the inline links? **(Session 12: custom dimensions now registered. Build Explore on/after 2026-04-22 for first meaningful slice.)**
+### New from Session 11 — monitor (most items now resolved in Session 15)
 - [ ] **Monitor parking-lot-mobility-origin discovery** — post shipped buried (sitemap 0.5, mid-grid above curb-to-gate). Expect slow organic surfacing vs featured posts. Watch GSC for LAZ-related query impressions ("LAZ Parking mobility", "Charge Where You Park", "LAZ Live") over 7–14 day window.
-- [ ] **If `git push production master` ever rejects again** — the guard failed silently or something new diverged the remotes. Investigate before reaching for cherry-pick; prefer `git fetch production && git push origin production/master:master` to re-sync the fork non-destructively.
+- [ ] **If `git push production master` ever rejects again** — the guard failed silently or a scheduled auto-publish landed ahead of a manual push (as happened 2026-04-22). Recovery pattern: `git fetch production && git pull --rebase production master`, resolve any sitemap.xml / blog/index.html conflicts, `git push production master && git push origin master --force-with-lease`. Alternative non-destructive fast-forward if fork lags: `git fetch production && git push origin production/master:master`.
 
-### New from Session 12 — action + monitor
-- [ ] **Build the CTA Type slicing Explore (on or after 2026-04-22)** — Go to GA4 → Explore → Blank. Variables panel: add dimensions `CTA Type`, `CTA Location`, `Event name`; add metric `Event count`. Settings panel: rows = `CTA Type`, values = `Event count`, filter `Event name` exactly matches `cta_click`. This is the verdict on Session 11's homepage CTA redesign — is bid_form/Calendly capturing clicks or is everything still contact_form?
-- [ ] **Manual indexing requests for priority URLs** — 22 pages stuck in "Discovered — currently not indexed" in GSC. Request via URL Inspection → Request Indexing (~10/day limit per property). Priority order: `/solutions/airport-fbo` (just rewritten, needs recrawl), `/request-a-bid`, `/blog/courtesy-shuttle-load-bearing`, `/blog/parking-lot-mobility-origin`, `/solutions/stadiums-arenas`, `/solutions/raceways-motorsports`, `/solutions/festivals-events`.
+### New from Session 15 — action + monitor
+- [ ] **Rerun CTA Type Explore on or after 2026-04-29** — today's 3-event baseline is real but small. 7+ days of forward data will tell us whether the pattern (100% alt-CTA, 0% contact_form on cta_click) holds or reverts. Same Explore setup as today; date range April 19 → whenever.
+- [ ] **April 29 scheduled auto-publish is the test case for the workflow image-sitemap patch.** Draft: "Sponsorship's Untapped Frontier" in `blog/_drafts/2026-04-29_sponsorship-untapped-frontier.html`. When it publishes, verify the sitemap entry includes an `<image:image>` block. If yes → workflow patch validated, no further action. If no → fall back to manual sitemap patch in same shape as 2026-04-22 fan-experience-gap fix (30 sec).
+- [ ] **Watch engagement time on the 4 "campus-resident asset" solution pages** — healthcare-hospitals (rewritten 4/21), senior-living + planned-communities + resort-hotel (rewritten 4/22). 2–4 week horizon. If the "vehicle lives on your property, operated as needed" positioning resonates, engagement time rises. If flat, the rewrite is invisible to traffic (= content velocity / top-of-funnel growth is the real lever, not copy).
+- [ ] **Watch for new GSC queries from `/blog/fleet-liability-insurance`** — target B2B research vocabulary: "golf cart liability venue," "event premises liability," "dangerous instrumentality," "pedicab insurance requirements," "venue fleet risk management." Same breakthrough-pattern as stadium-districts (3→152 imps on research vocab); different audience persona (risk managers, event insurance brokers, underwriters).
+- [ ] **Monitor LinkedIn UTM attribution** — Joseph started tagging LinkedIn shares with `?utm_source=linkedin&utm_medium=social&utm_campaign=POST_SLUG` from today forward. Expect hidden LinkedIn mobile-app traffic (currently landing as `(direct)`) to start surfacing as proper linkedin/social sessions within 2–3 weeks of consistent tagging. Check GA4 Traffic Acquisition 28-day over the coming weeks — LinkedIn's current 7-session attribution should rise to ~15–25.
+
+### New from Session 12 — mostly resolved; remaining monitoring items
 - [ ] **Explore historical GSC "Discovered — not indexed" crawl inventory** — 22 pages is a lot. If the issue persists after manual indexing, consider tightening sitemap priorities on lower-value pages (drops /landing-page, consolidates older blog posts) to focus crawl budget.
 - [ ] **Ignore cruise-terminals indexing flags permanently** — both "Crawled — currently not indexed" (Failed) and "Alternate page with proper canonical tag" flags for `/blog/cruise-terminals-people-moving.html` are working as designed (GitHub Pages serves both URLs, canonical correctly points to pretty URL, Google shelves the .html). The canonical pretty URL IS indexed. Don't click Validate again — it will keep "failing" because Google is correctly refusing to index the duplicate.
 - [ ] **DebugView sanity check (optional)** — Admin → DebugView. Append `?debug_mode=1` to any flextram.com URL, click a CTA, confirm `cta_type` / `cta_location` params show up in real-time. Useful if the Explore (after 3 days) shows unexpected gaps.
+
+### Done in Session 15 (removed from list)
+- ✅ Built GA4 CTA Type slicing Explore and CTA Location Explore — verdict on Session 11 homepage redesign: alt-CTA paths are capturing clicks (100% of 3 events over 3 days went to bid_form + calendly, all from body/homepage). Redesign validated at the margin.
+- ✅ Pulled full Events report — found 3 form_submit_success / 1 bid_request_received = 4 documented conversions / 199 users / 28 days = 2% overall lead rate. Homepage form converts at 5.7% from form_visible to form_submit_success (~2× B2B benchmark).
+- ✅ Closed Session 11 TODO: "Monitor homepage contact CTA redesign" — verdict is in, no further iteration needed, grow top-of-funnel instead.
+- ✅ Closed Session 12 TODO: "Build the CTA Type slicing Explore" — done.
+- ✅ Closed Session 12 TODO: "Manual indexing requests for priority URLs" — Joseph submitted today's queue through GSC.
+- ✅ Discovered LinkedIn driving 7 attributed sessions + AMS Event Rentals driving 6 from a single existing backlink (validates AMS backlink-upgrade asks as high-leverage).
+- ✅ Gave Joseph UTM-tagging protocol for future LinkedIn shares (`?utm_source=linkedin&utm_medium=social&utm_campaign=POST_SLUG`) to capture the hidden 2–3× mobile-app traffic currently landing as `(direct)`.
+- ✅ Published "You Don't Know Who's Driving on Your Property. Neither Does Your Insurance Company." (~2,000 words, Risk & Operations — **new category**, buried position 15, sitemap priority 0.5). Targets venue risk managers, event insurance brokers, underwriters.
+- ✅ Recovered from auto-publish merge conflict when fan-experience-gap auto-published ahead of manual fleet-liability-insurance push — documented the recovery pattern for future self-reference.
+- ✅ Retroactively added `<image:image>` sitemap entry for fan-experience-gap during the merge-conflict resolution (auto-publish hadn't emitted one because the workflow predates the image-sitemap extension).
+- ✅ **Patched auto-publish workflow to emit `<image:image>` blocks** going forward — BLOG_META `image:` + `image_alt:` fields now feed the sitemap image extension. Falls back gracefully if a draft lacks image fields. Next auto-publish (April 29) is the validation test.
+- ✅ Extended "vehicle stays onsite, operated as needed" positioning across 3 additional solution pages (senior-living, planned-communities, resort-hotel) matching yesterday's healthcare-hospitals pattern. Vertical-specific intensity: medium/medium/light respectively. Preserved each page's core user-benefit framing (resident consistency / residential noise / continuous guest loop) while layering in the operator-side flex story.
+- ✅ Sitemap lastmod refreshed for the 4 edited solution pages to 2026-04-22 (were stale at 04-17/04-19). Joseph requested GSC indexing on all 4.
 
 ### Done in Session 14 (removed from list)
 - ✅ Published "Systems Over Units: Why Smaller Vehicles Don't Solve Bigger Crowd Problems" (~2,000 words, Industry, structurally pairs with cities-solved-this as a two-post decision framework argument)
