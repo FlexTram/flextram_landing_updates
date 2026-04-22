@@ -428,5 +428,19 @@
     <lastmod>2026-04-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero_lvfg.jpg</image:loc>
+      <image:caption>FlexTram fleet at Las Vegas Festival Grounds transporting event attendees</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.flextram.com/blog/fleet-liability-insurance</loc>
+    <lastmod>2026-04-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-fleet-liability-insurance.jpg</image:loc>
+      <image:caption>Insurance policy document beside a magnifying glass, vintage model car, and US currency on a desk — symbolizing scrutiny of fleet liability coverage</image:caption>
+    </image:image>
   </url>
 </urlset>
