@@ -60,8 +60,23 @@ jobs:
               # Move draft to live
               mv "$draft" "$DEST"
 
-              # Add to sitemap
-              sed -i "/<\/urlset>/i\\  <url>\n    <loc>https://www.flextram.com/blog/${SLUG_NO_EXT}</loc>\n    <lastmod>${TODAY}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>" sitemap.xml
+              # Build optional <image:image> block for sitemap (image-sitemap
+              # extension declared via xmlns:image in the urlset header).
+              # Transforms BLOG_META image path "../assets/img/foo.jpg" → absolute URL,
+              # and XML-escapes any & characters in the alt text.
+              # Falls back to no image block if BLOG_META lacks image fields.
+              if [ -n "$META_IMAGE" ] && [ -n "$META_IMAGE_ALT" ]; then
+                IMAGE_URL=$(echo "$META_IMAGE" | sed 's|^\.\./|https://www.flextram.com/|')
+                IMAGE_ALT_XML=$(echo "$META_IMAGE_ALT" | sed 's|&|\&amp;|g')
+                IMAGE_BLOCK="\n    <image:image>\n      <image:loc>${IMAGE_URL}</image:loc>\n      <image:caption>${IMAGE_ALT_XML}</image:caption>\n    </image:image>"
+                echo "  Including image-sitemap entry: $IMAGE_URL"
+              else
+                IMAGE_BLOCK=""
+                echo "  WARNING: No image in BLOG_META, sitemap entry will lack image:image block"
+              fi
+
+              # Add to sitemap (with image:image block if available)
+              sed -i "/<\/urlset>/i\\  <url>\n    <loc>https://www.flextram.com/blog/${SLUG_NO_EXT}</loc>\n    <lastmod>${TODAY}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>${IMAGE_BLOCK}\n  </url>" sitemap.xml
 
               # Add card to blog hub page (before the NEW-ARTICLES-ABOVE marker)
               if [ -n "$META_TITLE" ]; then
