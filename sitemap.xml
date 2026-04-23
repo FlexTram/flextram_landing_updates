@@ -443,4 +443,14 @@
       <image:caption>Insurance policy document beside a magnifying glass, vintage model car, and US currency on a desk — symbolizing scrutiny of fleet liability coverage</image:caption>
     </image:image>
   </url>
+  <url>
+    <loc>https://www.flextram.com/blog/turnkey-mass-transit</loc>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-turnkey-mass-transit.jpg</image:loc>
+      <image:caption>Two people in winter coats studying a Berlin transit system route map, one pointing at a specific station as they plan their trip</image:caption>
+    </image:image>
+  </url>
 </urlset>
