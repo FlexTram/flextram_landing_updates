@@ -134,6 +134,8 @@
               <option>Corporate event</option>
               <option>Air show / aviation event</option>
               <option>Cruise terminal</option>
+              <option>Retail / store opening</option>
+              <option>Construction + grand opening</option>
               <option>Other / mixed</option>
             </select>
           </div>
@@ -196,6 +198,7 @@
           <div class="bid-field">
             <label for="peak-headcount">Peak daily headcount (optional)</label>
             <input id="peak-headcount" type="text" name="peak_headcount" placeholder="e.g. 30,000 fans / 2,500 crew" inputmode="numeric">
+            <span class="bid-hint">Ballpark is fine — we'll refine on the call.</span>
           </div>
         </div>
 
@@ -274,6 +277,22 @@
       <!-- STEP 4 — ANYTHING ELSE -->
       <fieldset class="bid-step">
         <legend><span>Step 4</span>Anything else</legend>
+
+        <div class="bid-field">
+          <label for="referral-source">How did you find us? (optional)</label>
+          <select id="referral-source" name="referral_source">
+            <option value="">Select…</option>
+            <option>Google search</option>
+            <option>AI search (ChatGPT, Gemini, Perplexity, Claude, etc.)</option>
+            <option>Referral from another company</option>
+            <option>LinkedIn</option>
+            <option>Industry publication or article</option>
+            <option>Saw FlexTram at an event</option>
+            <option>Word of mouth</option>
+            <option>Other</option>
+          </select>
+          <span class="bid-hint">Helps us understand which channels actually reach our buyers.</span>
+        </div>
 
         <div class="bid-field">
           <label for="additional-details">Additional details, specific requirements, or context</label>
