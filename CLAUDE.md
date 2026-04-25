@@ -669,6 +669,23 @@ Full day. Three major threads.
 ## TODOs for next session
 
 ### High priority — active leads + time-sensitive
+- [ ] **Kim Kimball / Village Super Markets (PMO) — Wakefern / ShopRite East Orange grand opening — bid request inbound 2026-04-23.** First conversion the `/request-a-bid` funnel has produced since launch (4/17). Came in fully-structured: ShopRite East Orange NJ, May 27 – Aug 26 ("Build + event" three-month engagement), turnkey service model, Guests/fans transport scope, Under 10 trams, decision timeline within 30 days, required docs COI + W-9. Email `kimberly.kimball@wakefern.com` (Wakefern Food Corp domain — largest US retail co-op, ~$18B annual; Village Super Markets is a member-owner, NYSE:VLGEA, ~30 ShopRite stores in NJ/NY/MD/PA/VA).
+  - **Clock:** today (4/23) = bid received. Decision timeline 30 days = response by ~May 23.
+  - **Buyer profile:** Kim is PMO (Project Management Office), NOT the decision-maker. She's the procurement runner / gatekeeper. Real decision lives at VP of Construction or VP of Store Development level at Village Super Markets / Wakefern. Treating Kim with respect (fast, organized, document-ready) is how to clear the gate.
+  - **Move within 24 business hours:** Reply with COI + W-9 attached, brief acknowledgment of bid, Calendly link with 2–3 specific time options for a 20-min discovery call ("clarifying questions about build-phase vs event-phase split, easiest on a quick call"). Confidence not eagerness.
+  - **Strategic surface area:** Wakefern has ~360 ShopRite stores plus other banners (Fresh Grocer, Price Rite, Gourmet Garage). If FlexTram nails East Orange opening, future store openings become organic referrals. Village Super Markets alone is ~30 future opportunities. **Retail grand opening + construction zone is potentially a NEW vertical** — no `/solutions/retail-grand-openings` page currently exists.
+  - **Use case is hybrid:** construction-phase worker transport (data-center-construction analog) + grand opening event transport (festival/stadium analog). Same vehicle, two operating patterns over the engagement window. Use the `turnkey-mass-transit` post + `data-center-construction-people-moving` post as reference material.
+  - **Discovery call questions to prep:**
+    - New build, remodel, or reopening?
+    - Construction crew size + shift pattern? Where do they park vs. active site?
+    - Grand opening event scope — projected attendance, community VIPs, ribbon cutting, store tours?
+    - East Orange parking/access situation? Urban context — remote lot, street parking, neighborhood property?
+    - Who's the executive sponsor at Village / Wakefern? (Don't ask to talk to them — ask to know who they are, so you can mention them appropriately.)
+    - Beyond COI + W-9, other vendor onboarding requirements? Safety certs? Background checks? Bonding?
+    - Preferred contracting structure — single MSA covering both phases, or two SOWs?
+  - **Don't quote pricing on first contact.** Discover scope first. Three-month engagement with two distinct use phases needs scope-aware pricing.
+  - **After discovery call:** SOW within 48 hrs. PMO buyers move at the speed of paperwork.
+  - **Silent follow-up trigger:** If no reply to acknowledgment within 4 business days, single "did the COI come through cleanly?" check-in to ensure docs landed.
 - [ ] **Frank Kelleher / Daytona International Speedway (President, NASCAR Southeastern Region) — cold outreach hit, warm reply 2026-04-23.** Joseph sent cold email Monday 2026-04-20 with Racer X interview hook ("Going into the infield in Pocono Raceway and sitting on top of a pickup truck because we couldn't afford tickets for the grandstands — that kid is who FlexTram is for"). Frank replied personally same-day to confirm receipt: heading to Talladega this week, jumping into their Rock music festival on return, "I'll have my team look into this and we will circle back." Thanked Joseph for listening to the interview and the outreach. Joseph sent quick acknowledgment (no pressure) and is now in wait mode.
   - **Clock:** today (4/23) = Frank's reply. Expect team member contact 1–3 weeks post-Talladega + festival weekend.
   - **Silent follow-up trigger:** If nothing by **May 14** (3 weeks), single "checking in post-festival" note through Lyndsey (CC'd on Frank's reply), not Frank directly.
