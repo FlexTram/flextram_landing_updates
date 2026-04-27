@@ -453,4 +453,14 @@
       <image:caption>Two people in winter coats studying a Berlin transit system route map, one pointing at a specific station as they plan their trip</image:caption>
     </image:image>
   </url>
+  <url>
+    <loc>https://www.flextram.com/blog/grand-opening-transportation</loc>
+    <lastmod>2026-04-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-grand-opening-transportation.jpg</image:loc>
+      <image:caption>FlexTram fleet operating at Ingredion's Cedar Rapids facility for a corporate event, with industrial silos, event tents, and guests visible across the property</image:caption>
+    </image:image>
+  </url>
 </urlset>
