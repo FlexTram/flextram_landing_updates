@@ -71,6 +71,12 @@
     .contact-alt-card:hover .contact-alt-arrow{transform:translateX(3px)}
     .contact-alt-sub{color:rgba(255,255,255,0.6);font-size:12px;font-weight:400}
     @media(max-width:576px){.contact-alt-grid{grid-template-columns:1fr}.contact-alt-card{padding:0.95rem 1.1rem;border-radius:30px}}
+    .testimonial-block{max-width:820px;margin:80px auto;padding:56px 32px;text-align:center;border-top:1px solid rgba(0,0,0,0.08);border-bottom:1px solid rgba(0,0,0,0.08)}
+    .testimonial-block .testimonial-quote{font-size:1.5rem;line-height:1.55;font-style:italic;color:#1a1a18;margin:0 0 28px 0;font-weight:400;font-family:Inter,-apple-system,sans-serif}
+    .testimonial-block .testimonial-quote::before{content:"\201C";display:block;font-family:Georgia,"Times New Roman",serif;font-size:3.5rem;line-height:1;color:#c44323;margin:0 auto 12px auto;font-style:normal}
+    .testimonial-block .testimonial-attr{font-size:0.95rem;line-height:1.5;color:#5f5e5a;font-family:Inter,-apple-system,sans-serif}
+    .testimonial-block .testimonial-attr-name{font-weight:700;color:#1a1a18;display:block;margin-bottom:2px}
+    @media(max-width:640px){.testimonial-block{margin:56px auto;padding:40px 20px}.testimonial-block .testimonial-quote{font-size:1.15rem;margin-bottom:24px}.testimonial-block .testimonial-quote::before{font-size:2.75rem}}
   </style>
   <!-- Deferred CSS Files -->
   <link rel="preload" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -268,7 +274,15 @@
       <div class="slide vertical-center" style="display: flex;"><img src="assets/img/logos/za_queen_mary.jpg" alt="ZA Queen Mary - FlexTram event venue transportation client" loading="lazy"></div>
 
    </section>
-   <div style="height:150px;"></div>
+
+   <div class="testimonial-block">
+     <p class="testimonial-quote">FlexTram has been a tremendous partner in supporting our football gameday parking operations. They are reliable, professional, and consistently deliver a seamless shuttle experience for our guests. They are also easy to work with, provide data-driven solutions that are adaptable to our evolving needs, and play an important role in enhancing the overall gameday experience for our patrons. We truly value their partnership and the level of service they provide.</p>
+     <div class="testimonial-attr">
+       <span class="testimonial-attr-name">Kari Terezakis</span>
+       Executive Vice President, Seminole Boosters &middot; Florida State University
+     </div>
+   </div>
+
     <div class="section section-dark text-center landing-section">
       <div class="container">
         <div class="row">
