@@ -666,6 +666,68 @@ Full day. Three major threads.
 
 ---
 
+### Session 16 (2026-04-27) — Grand Openings vertical (blog + solution + cross-links), GA4 verdict on CTA redesign + airport-FBO vocab rewrite
+
+**Content shipped (new vertical, full surface coverage):**
+
+- **New blog post:** "You Spent $50 Million on the Facility. Spend Two Weeks on How Guests Move Through It." (`/blog/grand-opening-transportation`, ~2,000 words, **Grand Openings & Corporate Events — new category**). Hero photo from FlexTram's actual Ingredion Cedar Rapids deployment (real industrial site with trams visible in frame, Ingredion logo on silos in background). Source draft was reframed away from any implication that Ingredion's event had problems — Ingredion is positioned throughout as the positive proof point: "they extended the same operational thinking that goes into the facility itself to the experience of moving guests through it." Buried position 18 of 26 in More articles grid (sitemap priority 0.5, discovery-not-broadcast).
+- **New solution page:** `/solutions/grand-openings` — the 20th vertical. Targets the corporate event / facility tour buyer surface for manufacturing, data centers, distribution, healthcare, corporate campuses. Solutions hub card inserted at position 14 of 20, between Factory & facility tours and Convention centers (natural VIP-tour-of-industrial-property cluster). ItemList JSON-LD updated 19 → 20 verticals, positions 14–20 renumbered. 500×500 hub thumbnail (square crop of Ingredion event photo, trams visible). Sitemap priority 0.8.
+- **Reciprocal cross-links** between blog post and solution page — both surfaces now have first-position related-reading cards pointing to the other, so any visitor landing on either page has the most direct path to the conversion surface or the discovery surface (whichever they didn't enter on).
+- **One factual fix during draft prep:** original draft claimed data center construction spending was "$41 billion in annualized capital in 2025" with no source. Web-verified — actual number is closer to ~$45B annualized rate by late 2025, with full-year 2025 expected to exceed $60B (ConstructConnect's January 2026 Data Center Report). Updated with citation.
+
+**Structural + performance checks on the new pages (all clean):**
+- Sitemap XML well-formed (xmllint clean), 50 URLs total
+- All internal links resolve to real pages (no broken cross-links)
+- Hero images have explicit width/height (CLS-safe)
+- All images have alt text
+- Asset sizes within budget: hero 114KB (1200px) + 37KB (640px), thumbnail 36KB
+- Word counts healthy: blog 2,635 raw including markup (~2,000 visible), solution 1,172
+- Related-card thumbnails missing width/height attrs — **pre-existing site pattern, not a regression** (matches factory-tours and other solution pages; lazy-loaded below-fold images, low CLS impact)
+
+**GA4 mid-session pull — three verdicts in one snapshot (28-day window, Mar 30 – Apr 26):**
+
+1. **CTA Type Explore — Session 11 homepage redesign verdict (the deferred Session 15 TODO, closed):**
+   - 21 cta_click events, broken down: bid_form 3 (43% of post-4/19 data), calendly 2 (29%), contact_form 2 (29%), (not set) 14 (historical pre-4/19 data, permanently unsliceable)
+   - **Reading:** the Session 11 outlined-pill-card redesign **is working**. Across ~8 days of clean data, alt CTAs (bid_form + calendly) account for **71% of CTA clicks**; contact_form is at 29%. Pre-redesign, contact_form was carrying ~100%. Material redistribution achieved.
+   - **Slick = 0, email = 0** on the bid thank-you page — but that's because traffic isn't getting that deep yet, not a design problem. Need more bid submissions before drawing conclusions on tier-2 fallback CTAs.
+   - **Decision:** stop iterating on the CTA layout. Pattern is right. Grow top-of-funnel instead.
+
+2. **Airport-FBO vocabulary rewrite — hypothesis test (Session 11 work):**
+   - `/solutions/airport-fbo.html` (.html, pre-rewrite traffic): 19 views / 9 users / **3s engagement**
+   - `/solutions/airport-fbo` (canonical pretty URL, post-rewrite traffic): 15 views / 12 users / **8s engagement**
+   - **2.7× engagement improvement on the canonical URL** vs. the .html version. Not the 10s+ stretch target, but pattern matches hypothesis. .html is pulling traffic from old SERP snippets that still route there; pretty URL is getting new visitors landing on the rewritten copy.
+   - **Decision:** soft-positive. Don't iterate again. Wait 2–3 weeks for Google to fully consolidate the .html → pretty URL traffic (Session 13's canonical fix), then re-pull. The 3s number should fade and the 8s should be the only signal.
+
+3. **Conversion picture (28 days):**
+   - 392 sessions / 270 users / 9 key events
+   - **Lead rate: 3.33%** (up from Session 15's 2.0%) — well above 1–2% B2B benchmark
+   - 8 of 9 key events from homepage (88.89%); 1 from /request-a-bid (the Wakefern bid 4/23 — first bid-funnel conversion since 4/17 launch)
+   - 0 direct conversions from any solution or blog page (form_submit_success only fires on homepage form — by design)
+   - Form funnel: form_visible 82 → form_start 6 → form_submit_success 3 (3.7% form-to-conversion, ~2× B2B benchmark)
+
+**Traffic acquisition snapshot (28 days):**
+- Direct: 294 sessions (75%) / 28% engagement / 15s — inflated by LinkedIn mobile-app pre-UTM
+- Organic Search: 75 (19%) / **69% engagement / 47s** — highest quality channel by every metric
+- Organic Social: 14 (4%) / 86% engagement / 41s — tiny but excellent quality (this category is now appearing as a separate channel, was previously in unassigned/direct)
+- Referral: 8 (2%) / 63% / 51s — mostly AMS Event Rentals
+- Unassigned: 2 / 0% / 3s — bots/edge cases
+
+**The AMS Event Rentals signal is now provable as high-leverage:** 8 referral sessions converted 2 key events = 25% session-to-key-event ratio, the best of any channel. The Tier 1 backlink-upgrade asks (dedicated /flextram page, varied anchor text including FlexTrolley term, deep-links to solution pages) are now empirically high-ROI. Joseph sending direct.
+
+**Snapshot growth vs. Session 15:**
+- Sessions 246 → 392 (+59%)
+- Users 167 → 270 (+62%)
+- Key events 4 → 9 (+125%)
+- Lead rate 2.0% → 3.33% (improving as funnel matures)
+
+**What the data says about next-session priorities:**
+- **Top of funnel is the lever, not conversion-rate optimization.** The funnel works (3.33% lead rate is healthy). More content + more backlinks + more LinkedIn = more conversions.
+- **AMS backlink upgrade has highest expected ROI.** A single existing backlink is driving 25% conversion rate. Multiplying or improving that backlink is leverage.
+- **LinkedIn UTM tagging needs 2–3 more weeks** to surface hidden mobile-app traffic out of the (direct) bucket.
+- **Don't iterate the homepage.** The CTA redesign verdict is in. The form is converting at 2× B2B benchmark.
+
+---
+
 ## TODOs for next session
 
 ### High priority — active leads + time-sensitive
