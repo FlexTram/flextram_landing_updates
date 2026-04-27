@@ -188,11 +188,14 @@ a { color: inherit; text-decoration: none; }
   box-shadow: 0 0 0 4px #c44323;
 }
 @media (max-width: 768px) {
+  /* Hide sticky CTA on mobile. The in-flow .hero-ctas, .cta-block, and .post-cta
+     buttons already cover conversion paths at section breaks, and a fixed pill
+     at viewport bottom collides with the hero "Request Info →" on first paint
+     (two same-text buttons visible simultaneously = redundant UX).
+     Sticky CTA continues to render normally on tablet/desktop (>768px) where
+     it sits in the bottom-right corner away from in-flow CTAs. */
   .sticky-cta {
-    left: 1rem;
-    right: 1rem;
-    text-align: center;
-    padding: 12px 24px;
+    display: none;
   }
 }
 @media (prefers-reduced-motion: reduce) {
