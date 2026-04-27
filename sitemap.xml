@@ -148,6 +148,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.flextram.com/solutions/grand-openings</loc>
+    <lastmod>2026-04-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+      <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-grand-opening-transportation.jpg</image:loc>
+      <image:caption>FlexTram fleet operating at Ingredion's Cedar Rapids facility for a corporate event, with industrial silos, event tents, and guests visible across the property</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.flextram.com/solutions/convention-centers</loc>
     <lastmod>2026-04-19</lastmod>
     <changefreq>monthly</changefreq>
