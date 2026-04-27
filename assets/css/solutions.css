@@ -131,7 +131,7 @@
   padding: 10px 24px;
   border-radius: 50px;
   border: none;
-  background: #f5593d;
+  background: #c44323;
   color: #fff;
   cursor: pointer;
   white-space: nowrap;
@@ -140,7 +140,7 @@
 .cta-btn:hover {
   transform: scale(1.05);
   background: #f33816;
-  box-shadow: 0 4px 15px rgba(245, 89, 61, 0.25);
+  box-shadow: 0 4px 15px rgba(196, 67, 35, 0.25);
   color: #fff;
 }
 

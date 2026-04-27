@@ -83,9 +83,9 @@ a { color: inherit; text-decoration: none; }
 
 .nav-cta {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   color: #fff;
-  background: #f5593d;
+  background: #c44323;
   padding: 10px 24px;
   border-radius: 50px;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
@@ -93,7 +93,7 @@ a { color: inherit; text-decoration: none; }
 .nav-cta:hover {
   transform: scale(1.05);
   background: #f33816;
-  box-shadow: 0 4px 15px rgba(245, 89, 61, 0.25);
+  box-shadow: 0 4px 15px rgba(196, 67, 35, 0.25);
   color: #fff;
 }
 
@@ -164,13 +164,13 @@ a { color: inherit; text-decoration: none; }
   right: 1.5rem;
   font-family: var(--font-sans);
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   padding: 10px 24px;
   border-radius: 50px;
-  background: #f5593d;
+  background: #c44323;
   color: #fff;
   border: none;
-  box-shadow: 0 4px 15px rgba(245, 89, 61, 0.25);
+  box-shadow: 0 4px 15px rgba(196, 67, 35, 0.25);
   z-index: 100;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   text-decoration: none;
@@ -178,14 +178,14 @@ a { color: inherit; text-decoration: none; }
 .sticky-cta:hover {
   transform: scale(1.05);
   background: #f33816;
-  box-shadow: 0 6px 20px rgba(245, 89, 61, 0.35);
+  box-shadow: 0 6px 20px rgba(196, 67, 35, 0.35);
   color: #fff;
   text-decoration: none;
 }
 .sticky-cta:focus-visible {
   outline: 2px solid #fff;
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px #f5593d;
+  box-shadow: 0 0 0 4px #c44323;
 }
 @media (max-width: 768px) {
   .sticky-cta {
@@ -222,13 +222,13 @@ a { color: inherit; text-decoration: none; }
 .hero-ctas .btn-primary {
   font-family: var(--font-sans);
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   padding: 10px 24px;
   border-radius: 50px;
-  background: #f5593d;
+  background: #c44323;
   color: #fff;
   border: none;
-  box-shadow: 0 4px 15px rgba(245, 89, 61, 0.25);
+  box-shadow: 0 4px 15px rgba(196, 67, 35, 0.25);
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   text-decoration: none;
 }
@@ -239,7 +239,7 @@ a { color: inherit; text-decoration: none; }
 .hero-ctas .btn-primary:hover {
   transform: scale(1.05);
   background: #f33816;
-  box-shadow: 0 6px 20px rgba(245, 89, 61, 0.35);
+  box-shadow: 0 6px 20px rgba(196, 67, 35, 0.35);
   color: #fff;
   text-decoration: none;
   opacity: 1; /* override default .btn-primary:hover opacity */
@@ -251,7 +251,7 @@ a { color: inherit; text-decoration: none; }
 .hero-ctas .btn-primary:focus-visible {
   outline: 2px solid #fff;
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px #f5593d;
+  box-shadow: 0 0 0 4px #c44323;
 }
 @media (prefers-reduced-motion: reduce) {
   .blog-cta-strip .btn-primary,
