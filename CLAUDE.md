@@ -726,6 +726,19 @@ Full day. Three major threads.
 - **LinkedIn UTM tagging needs 2–3 more weeks** to surface hidden mobile-app traffic out of the (direct) bucket.
 - **Don't iterate the homepage.** The CTA redesign verdict is in. The form is converting at 2× B2B benchmark.
 
+**Tier 1 site audit (post-Grand Openings ship):**
+- **Sitemap reachability:** all 50 production URLs return 200. Clean.
+- **Broken-link audit:** 1,343 internal links across 62 HTML files → 0 broken in production (11 broken were all in `_source_files/` which doesn't deploy). Clean.
+- **Lighthouse mobile (median of multiple warm-cache runs):**
+  - `/blog/grand-opening-transportation` — Perf **~90**, LCP 2.5–3.0s, TBT 0–120ms, CLS <0.01, A11y 95, BP 100, SEO 100
+  - `/solutions/grand-openings` — Perf **~90**, LCP 2.5–3.0s, TBT 110–150ms, CLS 0.02, A11y 94, BP 100, SEO 100
+  - Both new pages match site baseline (87–93 perf range for ranking-critical pages). Hero preload + imagesrcset + width/height + fetchpriority="high" all present and correct.
+  - **Cold-cache run anomaly to remember:** first Lighthouse run of a session (cold http.server cache) can show wildly inflated TBT and Speed Index (saw Perf 31 / TBT 3,120ms / SI 29.6s on first blog run, then Perf 88–92 on warm runs of the exact same page). Always run a curl warmup pass first or run audits in pairs and use the second number. Discovered 2026-04-27.
+- **Pre-existing site-wide flags surfaced (not introduced by today's pages, queued as follow-ups):**
+  1. **Nav logo `<img>` missing explicit `width`/`height` attrs** site-wide. Inline `style="height: 30px"` sets visual height but Lighthouse wants HTML attributes. Pattern: `<img src="../assets/img/logo_black_new.png" alt="FlexTram" style="height: 30px;">` on ~45 pages. Minimal real-world CLS impact (height is fixed inline) but Lighthouse `unsized-images` audit fails. Fix: add `width="..." height="30"` (logo native dimensions).
+  2. **Color contrast failure on orange CTA buttons** site-wide (`.nav-cta`, `.btn-primary`, `.sticky-cta`). Orange-on-white doesn't meet WCAG AA 4.5:1 contrast for normal-size text. Fix: darken the orange a notch, or bump CTA font-size into the "large text" 3:1 threshold range.
+- **Toolchain note:** Node.js was reinstalled today via `brew install node` after a 2018-era manual install left two root-owned directories blocking Homebrew's symlinks (`/usr/local/include/node`, `/usr/local/share/doc/node`). Resolved with `sudo rm -rf` of the leftovers + `brew link --overwrite node` + `npm install -g lighthouse` + manual symlinks from `/usr/local/Cellar/node/25.9.0_2/bin/` into `/usr/local/bin/`. Node 25.9.0 + Lighthouse 13.1.0 now available for future audits.
+
 ---
 
 ## TODOs for next session
@@ -777,6 +790,10 @@ Full day. Three major threads.
 - [ ] **Build "Where We Operate" or service-area page** — inquiries keep asking "are you available in X?" (Canada, state). Simple page listing "continental US coverage, case-by-case for Canada/international" would head off the qualifying inquiry. Low effort.
 - [ ] **Consider "Back-of-House Staff Transportation" solution page or post** — Hinterland's 16–32 tram bid request was explicitly about staff movement, not fans. Back-of-house is a distinct vertical underserved by current front-of-house-heavy content. Festival-season-here blog post hits this briefly; could be its own solution page.
 - [ ] **Build "For Procurement Teams" resources page** — procurement buyers land on /request-a-bid ready to submit RFPs. A companion page with spec-sheet-grade info (insurance standards, deployment timeline, safety record, past deployment list, ADA standards) would accelerate the internal-pitch process. Low-risk — no proprietary engineering specs, just marketing-grade procurement collateral.
+
+### Site quality / a11y (surfaced by Session 16 Lighthouse audit, pre-existing site-wide)
+- [ ] **Add `width`/`height` HTML attrs to nav logo `<img>` site-wide** — `<img src="../assets/img/logo_black_new.png" alt="FlexTram" style="height: 30px;">` on ~45 pages. Lighthouse `unsized-images` audit fails because inline `style` doesn't satisfy the HTML-attribute-based check. Real-world CLS impact is ~0 (height fixed via inline style) but a clean fix lifts every page's a11y score one notch. Get the logo's native dimensions (it's the FlexTram black wordmark) and add `width="..." height="30"`. Single sed-style edit across all 45 files.
+- [ ] **Fix orange CTA color contrast for WCAG AA** — `.nav-cta`, `.btn-primary`, `.sticky-cta` all flag `color-contrast` because the orange-on-white doesn't meet 4.5:1 normal-text contrast. Two fixes: (a) darken the orange a notch (small visual change but cleanest), or (b) bump CTA `font-size` / `font-weight` into the "large text" 3:1 threshold (preserves the brand orange). Site-wide CSS edit in `global.css`. Affects every page's accessibility score.
 
 ### Low priority
 - [ ] **Reach out to Power 4 booster orgs for outbound** -- With Kari's reference (once secured), FlexTram has a credible door-opener to: Texas Longhorn Foundation, Tennessee Fund, Iron Bowl/Tide Pride, Georgia Bulldog Club, Gator Boosters, Texas A&M 12th Man Foundation, Buckeye Club, Wolfpack Club. These orgs talk to each other.
