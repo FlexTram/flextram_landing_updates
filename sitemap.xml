@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.flextram.com/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
       <image:image>
@@ -13,13 +13,13 @@
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/airport-fbo</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -29,7 +29,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/resort-hotel</loc>
-    <lastmod>2026-04-22</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -39,7 +39,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/festivals-events</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -49,7 +49,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/stadiums-arenas</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -59,7 +59,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/cruise-terminals</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -69,7 +69,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/healthcare-hospitals</loc>
-    <lastmod>2026-04-22</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -79,7 +79,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/university-campus</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -89,7 +89,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/warehouse-logistics</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -99,7 +99,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/senior-living</loc>
-    <lastmod>2026-04-22</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -109,7 +109,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/attractions-theme-parks</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -119,7 +119,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/raceways-motorsports</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -129,7 +129,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/air-shows</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -139,7 +139,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/factory-tours</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -159,7 +159,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/convention-centers</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -169,7 +169,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/labor-companies</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -179,7 +179,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/golf-courses</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -189,7 +189,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/planned-communities</loc>
-    <lastmod>2026-04-22</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -199,7 +199,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -209,7 +209,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/onsite-transportation-paradigm</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
       <image:image>
@@ -219,31 +219,31 @@
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/fifa-world-cup</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/football-stadiums</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.flextram.com/blog/world-cup-fan-first-mobility</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.flextram.com/blog/football-parking-lot-weakest-link</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.flextram.com/blog/stadium-districts-mixed-use-transportation</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
       <image:image>
@@ -253,7 +253,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/festival-season-here</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
       <image:image>
@@ -263,7 +263,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/data-center-construction-people-moving</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
       <image:image>
@@ -273,7 +273,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/factory-workers-walking-two-hours</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
       <image:image>
@@ -283,7 +283,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/cruise-terminals-people-moving</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
       <image:image>
@@ -293,7 +293,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/golf-tournament-spectator-experience</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
       <image:image>
@@ -303,13 +303,13 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/why-isnt-transportation-assumed</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.flextram.com/blog/data-center-crew-retention</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
       <image:image>
@@ -319,7 +319,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/we-created-the-category</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
       <image:image>
@@ -329,7 +329,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/f1-fan-transportation</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
       <image:image>
@@ -339,7 +339,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/shuttle-bus-vs-flextram</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
       <image:image>
@@ -349,7 +349,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/venue-isnt-a-stadium</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
       <image:image>
@@ -359,13 +359,13 @@
   </url>
   <url>
     <loc>https://www.flextram.com/request-a-bid</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.flextram.com/blog/curb-to-gate-fan-journey</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
       <image:image>
@@ -375,7 +375,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/parking-lot-mobility-origin</loc>
-    <lastmod>2026-04-18</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
       <image:image>
@@ -385,7 +385,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/courtesy-shuttle-load-bearing</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
       <image:image>
@@ -395,7 +395,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/hidden-cost-of-making-fans-walk</loc>
-    <lastmod>2026-04-18</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
       <image:image>
@@ -405,7 +405,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/cities-solved-this</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
       <image:image>
@@ -415,7 +415,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/systems-over-units</loc>
-    <lastmod>2026-04-21</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
       <image:image>
@@ -425,7 +425,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/fbo-ground-transportation</loc>
-    <lastmod>2026-04-21</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
       <image:image>
@@ -435,7 +435,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/fan-experience-gap</loc>
-    <lastmod>2026-04-22</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -445,7 +445,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/fleet-liability-insurance</loc>
-    <lastmod>2026-04-22</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
     <image:image>
@@ -455,7 +455,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/turnkey-mass-transit</loc>
-    <lastmod>2026-04-23</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
