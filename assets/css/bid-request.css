@@ -50,6 +50,18 @@
   line-height: 1.65;
   margin-bottom: 0;
 }
+.bid-hero .lead a {
+  color: #c44323;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+.bid-hero .lead a:hover,
+.bid-hero .lead a:focus {
+  color: #a3361d;
+  text-decoration-thickness: 2px;
+}
 
 /* ---- FORM ---- */
 .bid-form {
