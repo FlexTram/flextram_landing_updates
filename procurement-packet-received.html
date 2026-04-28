@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Google tag (gtag.js) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZYK6B5M9QT');
+    // Fire conversion event on arrival (buffered in dataLayer, flushed when gtag.js loads)
+    gtag('event', 'procurement_packet_received', { event_category: 'conversion', event_label: 'procurement_thanks_page' });
+    (function() {
+      var loaded = false;
+      function loadGA() {
+        if (loaded) return; loaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-ZYK6B5M9QT';
+        document.head.appendChild(s);
+      }
+      ['scroll','mousemove','touchstart','keydown','click','pointerdown'].forEach(function(e) {
+        window.addEventListener(e, loadGA, { once: true, passive: true });
+      });
+      setTimeout(loadGA, 2500);
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Procurement packet request received — FlexTram</title>
+  <meta name="description" content="Your FlexTram procurement packet request is in. Joseph will respond within one business day with the packet tailored to your project." />
+  <meta name="robots" content="noindex,follow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" /></noscript>
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <meta name="theme-color" content="#000000">
+  <link rel="stylesheet" href="assets/css/global.css" />
+  <link rel="stylesheet" href="assets/css/bid-request.css" />
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="/" class="nav-logo"><img src="assets/img/logo_black_new.png" alt="FlexTram" width="147" height="30" style="height: 30px;"></a>
+    <div class="nav-links">
+      <a href="/solutions" class="nav-link">Solutions</a>
+      <a href="/blog/" class="nav-link">Blog</a>
+      <a href="/#contact-form" class="nav-cta">Check Availability</a>
+    </div>
+  </nav>
+
+  <main class="bid-wrap">
+
+    <div class="bid-thanks">
+
+      <p class="eyebrow">Procurement packet request received</p>
+      <h1 class="bid-thanks-heading">We've got it.</h1>
+      <p class="bid-thanks-sub">Thanks for submitting. Joseph is reviewing your project now and will respond within <strong>one business day</strong> with the procurement packet — tailored to what's relevant for your engagement, not a generic one-size-fits-all download.</p>
+
+      <div class="bid-slick-card">
+        <h2>While you wait</h2>
+        <p>Here's our product overview. Share it with stakeholders, pair it with your internal sourcing docs, or just get a sense of how FlexTram fits your venue. Fast read.</p>
+        <a href="https://flextram.github.io/flextram-flyer/v1/" class="btn-primary" target="_blank" rel="noopener" style="display:inline-block;">View the FlexTram product overview &rarr;</a>
+      </div>
+
+      <div class="bid-slick-card">
+        <h2>Want to talk through it live?</h2>
+        <p>Book a 30-minute call with Joseph to walk your project, talk scope, and accelerate the procurement timeline. Useful for tight deadlines or complex evaluations.</p>
+        <a href="https://calendly.com/jb-flextram/30min" class="btn-primary" target="_blank" rel="noopener" style="display:inline-block;">Book a 30-min call &rarr;</a>
+      </div>
+
+      <div class="bid-slick-card">
+        <h2>Ready to formalize a bid?</h2>
+        <p>If you already have specs in hand and you're past the evaluation stage, the bid request form gives us what we need to scope and price the engagement.</p>
+        <a href="/request-a-bid" class="btn-primary" style="display:inline-block;">Submit a bid request &rarr;</a>
+      </div>
+
+      <div class="bid-contact-card">
+        <p>Questions in the meantime?</p>
+        <p class="bid-contact-name">Joseph Bradley</p>
+        <p>jb@flextram.com &middot; 865.300.4834</p>
+        <p style="margin-top:1rem;"><a href="/" class="bc-link">&larr; Back to FlexTram.com</a></p>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    // CTA click tracking on procurement thank-you page
+    document.addEventListener('click', function(e) {
+      var link = e.target.closest('a[href*="calendly.com"], a[href*="flextram-flyer"], a[href^="mailto:"], a[href="/request-a-bid"]');
+      if (link && typeof gtag === 'function') {
+        var dest = link.getAttribute('href') || '';
+        var cta_type = 'other';
+        if (dest.indexOf('calendly.com') > -1) cta_type = 'calendly';
+        else if (dest.indexOf('flextram-flyer') > -1) cta_type = 'slick';
+        else if (dest.indexOf('mailto:') === 0) cta_type = 'email';
+        else if (dest.indexOf('/request-a-bid') > -1) cta_type = 'bid_form';
+        gtag('event', 'cta_click', {
+          cta_text: link.textContent.trim(),
+          cta_location: 'procurement_thanks_page',
+          cta_type: cta_type,
+          cta_destination: dest
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
