@@ -473,4 +473,14 @@
       <image:caption>FlexTram fleet operating at Ingredion's Cedar Rapids facility for a corporate event, with industrial silos, event tents, and guests visible across the property</image:caption>
     </image:image>
   </url>
+  <url>
+    <loc>https://www.flextram.com/blog/cruise-destination-transit</loc>
+    <lastmod>2026-04-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-cruise-destination-transit.jpg</image:loc>
+      <image:caption>Celebrity Beyond cruise ship docked at a Caribbean port with turquoise water, market stalls, and colorful pavilions visible alongside the pier</image:caption>
+    </image:image>
+  </url>
 </urlset>
