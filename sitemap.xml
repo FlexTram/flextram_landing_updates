@@ -505,4 +505,14 @@
       <image:caption>FlexTram tram shuttle at outdoor live event venue at night</image:caption>
     </image:image>
   </url>
+  <url>
+    <loc>https://www.flextram.com/blog/the-pattern</loc>
+    <lastmod>2026-04-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-the-pattern.jpg</image:loc>
+      <image:caption>Massive crowd at an outdoor event with rows of seated festival-goers stretching into the distance</image:caption>
+    </image:image>
+  </url>
 </urlset>
