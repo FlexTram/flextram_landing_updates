@@ -59,7 +59,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/cruise-terminals</loc>
-    <lastmod>2026-04-27</lastmod>
+    <lastmod>2026-04-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -283,7 +283,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/cruise-terminals-people-moving</loc>
-    <lastmod>2026-04-27</lastmod>
+    <lastmod>2026-04-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
       <image:image>
@@ -487,7 +487,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/cruise-destination-transit</loc>
-    <lastmod>2026-04-28</lastmod>
+    <lastmod>2026-04-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -523,6 +523,16 @@
     <image:image>
       <image:loc>https://www.flextram.com/assets/img/hero-labor-problem.jpg</image:loc>
       <image:caption>A weathered red WRONG WAY traffic sign with palm trees and a blue sky in the background, suggesting an event venue parking area</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.flextram.com/blog/port-of-call-4-hour-window</loc>
+    <lastmod>2026-04-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-port-of-call.jpg</image:loc>
+      <image:caption>Cruise passengers walking along a pier alongside a docked cruise ship at a port of call, with a second ship visible in the background</image:caption>
     </image:image>
   </url>
 </urlset>
