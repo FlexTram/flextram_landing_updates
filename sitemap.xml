@@ -515,4 +515,14 @@
       <image:caption>Massive crowd at an outdoor event with rows of seated festival-goers stretching into the distance</image:caption>
     </image:image>
   </url>
+  <url>
+    <loc>https://www.flextram.com/blog/labor-problem-golf-cart-drivers</loc>
+    <lastmod>2026-04-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-labor-problem.jpg</image:loc>
+      <image:caption>A weathered red WRONG WAY traffic sign with palm trees and a blue sky in the background, suggesting an event venue parking area</image:caption>
+    </image:image>
+  </url>
 </urlset>
