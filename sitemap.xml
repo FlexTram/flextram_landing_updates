@@ -486,6 +486,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.flextram.com/blog/4000-workers-one-campus</loc>
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-4000-workers.jpg</image:loc>
+      <image:caption>Construction electrician in safety gear and blue hardhat working on an industrial control panel with multimeter and colorful wiring visible</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.flextram.com/blog/cruise-destination-transit</loc>
     <lastmod>2026-04-30</lastmod>
     <changefreq>monthly</changefreq>
