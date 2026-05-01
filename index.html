@@ -77,6 +77,12 @@
     .testimonial-block .testimonial-attr{font-size:0.95rem;line-height:1.5;color:#5f5e5a;font-family:Inter,-apple-system,sans-serif}
     .testimonial-block .testimonial-attr-name{font-weight:700;color:#1a1a18;display:block;margin-bottom:2px}
     @media(max-width:640px){.testimonial-block{margin:56px auto;padding:40px 20px}.testimonial-block .testimonial-quote{font-size:1.15rem;margin-bottom:24px}.testimonial-block .testimonial-quote::before{font-size:2.75rem}}
+    .features-2 .card[data-background="image"]{height:400px;background-size:cover;background-position:center;border-radius:12px;margin-bottom:20px;position:relative;overflow:hidden}
+    .features-2 .card[data-background="image"] .card-body{height:100%;padding:40px 20px;position:relative;z-index:2;box-sizing:border-box}
+    .features-2 .card[data-background="image"] .card-icon{padding:30px 0 10px;text-align:center}
+    .features-2 .card[data-background="image"] .card-icon i{display:inline-block;width:105px;height:105px;line-height:105px;border:2px solid #ccc;border-radius:50%;box-sizing:border-box}
+    @media(max-width:768px){.features-2 .card[data-background="image"]{height:380px}}
+    @media(max-width:576px){.features-2 .card[data-background="image"]{height:360px}}
   </style>
   <!-- Deferred CSS Files -->
   <link rel="preload" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -137,7 +143,7 @@
     <div class="container-fluid" style="padding-left: 30px;">
       <div class="navbar-translate">
         <a class="navbar-brand" href="/" rel="tooltip" title="FlexTram" data-placement="bottom">
-          <img src="assets/img/logo_white_new.png" alt="FlexTram - micro-mobility vehicles for live events and onsite transportation">
+          <img src="assets/img/logo_white_new.png" alt="FlexTram - micro-mobility vehicles for live events and onsite transportation" width="180" height="37">
         </a>
       </div>
       <div class="navbar-nav ml-auto" style="display:flex;gap:20px;align-items:center;padding-right:30px;">
@@ -216,7 +222,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-8 ml-auto mr-auto">
-            <img src="assets/img/logo_black_new.png" alt="FlexTrams" style="max-width: 300px; margin: 20px auto; display: block;">
+            <img src="assets/img/logo_black_new.png" alt="FlexTrams" width="300" height="61" style="max-width: 300px; margin: 20px auto; display: block;">
             <p style="font-weight:500;font-size:1.25em;line-height:1.6">FlexTram (also known as FlexTrolley) builds proprietary micro-mobility vehicles designed for the demands of live events, large venues, and high-volume operations. We offer rentals, turnkey transportation plans, long-term leases, and custom modifications for experiential marketing.</p>
             <br />
             <br />
@@ -237,19 +243,19 @@
         <div class="col-md-4" style="padding: 10px;">
           <picture>
           <source type="image/webp" srcset="assets/img/640/coachella_stagecoach.webp 640w, assets/img/coachella_stagecoach.webp 1200w" sizes="(max-width: 640px) 100vw, 400px">
-          <img src="assets/img/coachella_stagecoach.jpg" srcset="assets/img/640/coachella_stagecoach.jpg 640w, assets/img/coachella_stagecoach.jpg 1200w" sizes="(max-width: 640px) 100vw, 400px" alt="FlexTram at Coachella/Stagecoach" loading="lazy" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
+          <img src="assets/img/coachella_stagecoach.jpg" srcset="assets/img/640/coachella_stagecoach.jpg 640w, assets/img/coachella_stagecoach.jpg 1200w" sizes="(max-width: 640px) 100vw, 400px" alt="FlexTram at Coachella/Stagecoach" loading="lazy" width="800" height="600" style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
         </picture>
         </div>
         <div class="col-md-4" style="padding: 10px;">
           <picture>
           <source type="image/webp" srcset="assets/img/640/hero_lvfg.webp 640w, assets/img/hero_lvfg.webp 1200w" sizes="(max-width: 640px) 100vw, 400px">
-          <img src="assets/img/hero_lvfg.jpg" srcset="assets/img/640/hero_lvfg.jpg 640w, assets/img/hero_lvfg.jpg 1200w" sizes="(max-width: 640px) 100vw, 400px" alt="FlexTram at Las Vegas Festival Grounds" loading="lazy" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
+          <img src="assets/img/hero_lvfg.jpg" srcset="assets/img/640/hero_lvfg.jpg 640w, assets/img/hero_lvfg.jpg 1200w" sizes="(max-width: 640px) 100vw, 400px" alt="FlexTram at Las Vegas Festival Grounds" loading="lazy" width="800" height="600" style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
         </picture>
         </div>
         <div class="col-md-4" style="padding: 10px;">
           <picture>
           <source type="image/webp" srcset="assets/img/640/flextram_event3.webp 640w, assets/img/flextram_event3.webp 1200w" sizes="(max-width: 640px) 100vw, 400px">
-          <img src="assets/img/flextram_event3.jpg" srcset="assets/img/640/flextram_event3.jpg 640w, assets/img/flextram_event3.jpg 1200w" sizes="(max-width: 640px) 100vw, 400px" alt="FlexTram tram shuttle deployed at outdoor live event venue" loading="lazy" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
+          <img src="assets/img/flextram_event3.jpg" srcset="assets/img/640/flextram_event3.jpg 640w, assets/img/flextram_event3.jpg 1200w" sizes="(max-width: 640px) 100vw, 400px" alt="FlexTram tram shuttle deployed at outdoor live event venue" loading="lazy" width="800" height="600" style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
         </picture>
         </div>
       </div>
@@ -306,16 +312,16 @@
                 <div class="col-md-6">
                   <input type="hidden" name="_gotcha">
                   <label for="contact-name" style="color:white;">Name</label>
-                  <input id="contact-name" placeholder="Name" name="name" type="text" tabindex="1" class="form-control" required>
+                  <input id="contact-name" placeholder="Name" name="name" type="text" class="form-control" required>
                 </div>
                 <div class="col-md-6">
                   <label for="contact-email" style="color:white;">Email</label>
-                  <input id="contact-email" placeholder="Email" name="email" type="email" tabindex="2" class="form-control"  required>
+                  <input id="contact-email" placeholder="Email" name="email" type="email" class="form-control"  required>
                 </div>
               </div>
               <br />
                   <label for="contact-message" style="color:white;">Message</label>
-                  <textarea id="contact-message" class="form-control"  placeholder="How can we be helpful?" name="message" tabindex="4" required></textarea>
+                  <textarea id="contact-message" class="form-control"  placeholder="How can we be helpful?" name="message" required></textarea>
               <br />
               <div class="row">
                 <div class="col-md-4 offset-md-4">
@@ -345,10 +351,10 @@
     <div class="container">
       <div class="row">
         <nav class="footer-nav">
-          <a href="/solutions" style="color: #9A9A9A; font-size: 14px; text-decoration: none; letter-spacing: 0.03em;">Solutions</a>
+          <a href="/solutions" style="color: #595959; font-size: 14px; text-decoration: none; letter-spacing: 0.03em;">Solutions</a>
         </nav>
         <div class="credits ml-auto">
-          <span class="copyright">
+          <span class="copyright" style="color: #595959;">
             ©
             <script>
               document.write(new Date().getFullYear())
