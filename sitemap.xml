@@ -486,6 +486,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.flextram.com/blog/friction-is-eating-demand</loc>
+    <lastmod>2026-05-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-friction-eating-demand.jpg</image:loc>
+      <image:caption>Bright orange sparks scattering against a dark industrial background, evoking friction and lost energy</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.flextram.com/blog/properties-got-bigger</loc>
     <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>
