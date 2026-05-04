@@ -486,6 +486,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.flextram.com/blog/convention-center-transit</loc>
+    <lastmod>2026-05-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-convention-center-transit.jpg</image:loc>
+      <image:caption>Anaheim Convention Center exterior with curved glass facade, palm-lined pedestrian plaza, parking structure, and adjacent Hilton hotel tower in afternoon light</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.flextram.com/blog/friction-is-eating-demand</loc>
     <lastmod>2026-05-03</lastmod>
     <changefreq>monthly</changefreq>
