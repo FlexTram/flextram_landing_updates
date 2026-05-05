@@ -25,6 +25,9 @@ jobs:
         run: |
           TODAY=$(date -u +%Y-%m-%d)
           PUBLISHED=0
+          # Capture published URLs for IndexNow submission (one per line).
+          PUBLISHED_URLS_FILE=/tmp/published_urls.txt
+          : > "$PUBLISHED_URLS_FILE"
 
           echo "Today is $TODAY"
           echo "Checking blog/_drafts/ for publishable articles..."
@@ -59,6 +62,9 @@ jobs:
 
               # Move draft to live
               mv "$draft" "$DEST"
+
+              # Record URL for IndexNow submission step
+              echo "https://www.flextram.com/blog/${SLUG_NO_EXT}" >> "$PUBLISHED_URLS_FILE"
 
               # Build optional <image:image> block for sitemap (image-sitemap
               # extension declared via xmlns:image in the urlset header).
@@ -104,3 +110,54 @@ jobs:
           git add blog/ sitemap.xml
           git commit -m "Publish ${{ env.PUBLISHED }} scheduled blog post(s) [automated]"
           git push
+
+      - name: Notify IndexNow (Bing / DuckDuckGo / Yandex / Seznam)
+        if: env.PUBLISHED != '0'
+        # Submits each newly-published URL to IndexNow so Bing-family search
+        # engines (and DuckDuckGo, which uses Bing as primary index) recrawl
+        # within hours instead of waiting on organic discovery. Failures are
+        # non-fatal — the workflow still succeeds even if IndexNow rejects.
+        # Key file lives at /3b5dd366e4db30dd7e6249ecda05e4c4.txt (public by
+        # design — IndexNow keys are verification tokens, not credentials).
+        continue-on-error: true
+        run: |
+          KEY="3b5dd366e4db30dd7e6249ecda05e4c4"
+          KEY_LOCATION="https://www.flextram.com/${KEY}.txt"
+          PUBLISHED_URLS_FILE=/tmp/published_urls.txt
+
+          if [ ! -s "$PUBLISHED_URLS_FILE" ]; then
+            echo "No URLs captured for IndexNow submission, skipping."
+            exit 0
+          fi
+
+          echo "Submitting these URLs to IndexNow:"
+          cat "$PUBLISHED_URLS_FILE"
+
+          # Build JSON urlList array from the file using jq's -R/-s/-c.
+          URL_LIST_JSON=$(jq -R -s -c 'split("\n") | map(select(length > 0))' "$PUBLISHED_URLS_FILE")
+
+          BODY=$(jq -n \
+            --arg host "www.flextram.com" \
+            --arg key "$KEY" \
+            --arg keyLoc "$KEY_LOCATION" \
+            --argjson urls "$URL_LIST_JSON" \
+            '{host: $host, key: $key, keyLocation: $keyLoc, urlList: $urls}')
+
+          echo "Request body:"
+          echo "$BODY"
+
+          HTTP_CODE=$(curl -s -o /tmp/indexnow_resp.txt -w "%{http_code}" \
+            -X POST "https://api.indexnow.org/indexnow" \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -d "$BODY")
+
+          echo "IndexNow response: HTTP $HTTP_CODE"
+          cat /tmp/indexnow_resp.txt 2>/dev/null || true
+
+          # IndexNow success = 200 or 202; anything else is a soft failure
+          # (we don't want to fail the publish for a search-engine ping).
+          if [ "$HTTP_CODE" = "200" ] || [ "$HTTP_CODE" = "202" ]; then
+            echo "IndexNow accepted submission."
+          else
+            echo "IndexNow returned non-success status, but workflow continues."
+          fi
