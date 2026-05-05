@@ -1,0 +1,102 @@
+# FlexTram
+
+> FlexTram (also known as FlexTrolley) builds proprietary micro-mobility tram vehicles for onsite transportation at live events, festivals, stadiums, cruise terminals, data center campuses, hospitals, senior living communities, FBOs, and large industrial properties. Each vehicle carries up to 27 passengers with one driver, is ADA-accessible as standard, and operates on asphalt, dirt, grass, gravel, or sand. The company replaces fragmented golf cart fleets, charter shuttles, and truck-towed trailers with a single fixed-route, posted-schedule transit system — deployed for single events or as a permanent campus utility.
+
+Key facts:
+- Up to 27 passengers per vehicle, 1 driver
+- ADA-accessible standard (built in, not bolted on)
+- Independently turning axles for tight, unpredictable spaces
+- Deploys in hours, stores when not needed
+- Deployed at Coachella, Bonnaroo, Lollapalooza, EDC, Rolling Loud, NASCAR venues, NFL stadiums, FSU, Ingredion, and other large events and properties
+- Coverage: United States and Canada, with select international engagements
+- Founded 2019, commercial launch 2021–22
+
+## Solutions
+
+- [Solutions hub](https://www.flextram.com/solutions/): Index of all FlexTram verticals.
+- [Festivals & outdoor events](https://www.flextram.com/solutions/festivals-events): Front-of-house and back-of-house transit at music festivals and outdoor events.
+- [Stadiums & arenas](https://www.flextram.com/solutions/stadiums-arenas): Fixed-route gameday parking shuttle and courtesy transport.
+- [Football stadiums](https://www.flextram.com/solutions/football-stadiums): NFL and college football gameday parking operations.
+- [FIFA World Cup 2026](https://www.flextram.com/solutions/fifa-world-cup): Host-city campus mobility for the 2026 tournament.
+- [Cruise terminals](https://www.flextram.com/solutions/cruise-terminals): Homeport turnaround-day transit between parking, security, and gangway.
+- [Convention centers](https://www.flextram.com/solutions/convention-centers): Inter-building circulation and hotel-to-venue shuttle for trade shows.
+- [Healthcare & hospitals](https://www.flextram.com/solutions/healthcare-hospitals): Multi-building campus transit for patients, staff, and visitors.
+- [Senior living](https://www.flextram.com/solutions/senior-living): Resident transit between dining, activity centers, and amenities.
+- [Planned communities](https://www.flextram.com/solutions/planned-communities): HOA-owned community asset for amenity loops and event modes.
+- [Resort & hotel](https://www.flextram.com/solutions/resort-hotel): Continuous guest shuttle across resort properties.
+- [University & campus](https://www.flextram.com/solutions/university-campus): Collegiate athletics shuttle and campus circulation.
+- [Warehouse & logistics](https://www.flextram.com/solutions/warehouse-logistics): Shift-change and intra-site worker transit at distribution centers.
+- [Factory tours](https://www.flextram.com/solutions/factory-tours): Manufacturing facility tour transport.
+- [Grand openings](https://www.flextram.com/solutions/grand-openings): VIP and guest movement during corporate facility openings.
+- [Convention centers](https://www.flextram.com/solutions/convention-centers): Trade show and conference attendee transit.
+- [Labor companies](https://www.flextram.com/solutions/labor-companies): Crew transit for staffing companies operating at venues.
+- [Golf courses](https://www.flextram.com/solutions/golf-courses): Spectator transit for tournaments and championship events.
+- [Raceways & motorsports](https://www.flextram.com/solutions/raceways-motorsports): Race-day spectator transit at NASCAR, F1, and IndyCar venues.
+- [Air shows](https://www.flextram.com/solutions/air-shows): Spectator and back-of-house transit at aviation events.
+- [Attractions & theme parks](https://www.flextram.com/solutions/attractions-theme-parks): Park-wide guest transit between attractions and amenities.
+- [Airport & FBO](https://www.flextram.com/solutions/airport-fbo): Crew car, ramp transport, and quick-turn passenger handling for FBOs.
+
+## Industry analysis (flagship blog posts)
+
+- [Power. Water. Wifi. Why isn't transportation on the list?](https://www.flextram.com/blog/why-isnt-transportation-assumed): The discipline that doesn't exist in most venue operations manuals — and why the budget line item is the real reason the same transportation failure pattern repeats across festivals, stadiums, and major events.
+- [The Pattern: Coachella, Kentucky Derby, Super Bowl, F1 — they all fail the same way](https://www.flextram.com/blog/the-pattern): Five different events, five different industries, the same failure mode. Synthesizes 5 named-event case studies into a single thesis: the event was designed, but the transportation wasn't.
+- [Cities solved this 100 years ago. Why haven't venues?](https://www.flextram.com/blog/cities-solved-this): Boston opened the first U.S. subway in 1897 because individual vehicles couldn't handle the volume. The math hasn't changed; the application has just moved from cities to venues.
+- [Systems Over Units: Why smaller vehicles don't solve bigger crowd problems](https://www.flextram.com/blog/systems-over-units): The decision framework — predictable flow needs systems, unpredictable flow needs units. Extends the argument forward to autonomous vehicles inside a venue.
+- [The Properties Got Bigger. The Plan Didn't.](https://www.flextram.com/blog/properties-got-bigger): Hollywood Park is 300 acres. Nashville's East Bank is 338. DataBank's Red Oak is 292. Properties crossed the walking-doesn't-work threshold years ago.
+- [The Demand Is Already There. The Friction Is Eating It.](https://www.flextram.com/blog/friction-is-eating-demand): Cruise disembark rates dropped from 85% to 83%. Fans leave in the 8th inning. Residents stop walking to dinner. Workers skip the trip. Patients miss the third appointment. Same pattern, every property.
+- [You're Already Paying for Transportation. You're Just Calling It Something Else.](https://www.flextram.com/blog/already-paying-for-transportation): The forensic accounting on what venues already spend on onsite transportation, scattered across a dozen budget line items owned by a dozen departments. Direct costs run $200K–$700K per season at large venues.
+- [$14 Billion in Convention Center Construction. Zero Invested in How Attendees Move.](https://www.flextram.com/blog/convention-center-transit): Dallas, LA, Las Vegas, Houston, Austin, Fort Lauderdale — over $14B in convention center expansion making the buildings bigger. Almost none of it addresses how attendees move through them.
+
+## Operations & finance
+
+- [The labor problem nobody talks about: 50 golf cart drivers for one weekend](https://www.flextram.com/blog/labor-problem-golf-cart-drivers): The hidden staffing math behind golf cart fleets — recruit 115 to seat 100, with no formal labor channel.
+- [Shuttle bus vs. FlexTram: the real cost of moving people inside your event](https://www.flextram.com/blog/shuttle-bus-vs-flextram): Why charter buses fail at the last 500 yards and what a venue-purpose vehicle costs by comparison.
+- [You don't know who's driving on your property right now](https://www.flextram.com/blog/fleet-liability-insurance): Unmanaged golf cart fleets, CPSC injury data showing 300%+ claims rise, the Arlington pedicab case study, and what operational control looks like.
+- [Your courtesy shuttle is doing more work than your org chart admits](https://www.flextram.com/blog/courtesy-shuttle-load-bearing): The case for treating courtesy transport as load-bearing infrastructure, not a procurement line item.
+
+## Stadium operations
+
+- [Stadiums are becoming neighborhoods](https://www.flextram.com/blog/stadium-districts-mixed-use-transportation): Mixed-use stadium districts and the onsite transit implications nobody is planning for.
+- [Football season is 150 days out. Your parking lot is the weakest link.](https://www.flextram.com/blog/football-parking-lot-weakest-link): NFL and college football gameday parking shuttle operations.
+- [The hidden cost of making fans walk](https://www.flextram.com/blog/hidden-cost-of-making-fans-walk): Per-capita revenue loss from fan friction at stadiums.
+
+## Cruise & port operations
+
+- [You built the island. Who built the ride between them?](https://www.flextram.com/blog/cruise-destination-transit): Royal Caribbean and Carnival already run trams at CocoCay and Celebration Key. What a purpose-built island transit system looks like.
+- [Cruise terminals: 5,000 passengers, 4 hours, one terminal](https://www.flextram.com/blog/cruise-terminals-people-moving): Homeport turnaround-day people-moving between dock and door.
+- [Port of call: the 4-hour window nobody optimizes](https://www.flextram.com/blog/port-of-call-4-hour-window): Cruise passenger disembark rates and the destination-spend math.
+
+## Data center & construction
+
+- [The biggest construction boom in America has a people-moving problem](https://www.flextram.com/blog/data-center-construction-people-moving): 292-acre data center campuses with thousands of workers and zero internal transit.
+- [4,000 workers. One campus. Zero transit system.](https://www.flextram.com/blog/4000-workers-one-campus): DataBank's Red Oak campus and the $97.5M annual cost of internal site transit.
+- [Crew retention is the real cost](https://www.flextram.com/blog/data-center-crew-retention): Why daily worksite experience drives skilled-trades retention.
+- [Factory workers walking two hours](https://www.flextram.com/blog/factory-workers-walking-two-hours): Distribution center shift-change transit waste.
+
+## Festivals, motorsports, golf, FBOs
+
+- [F1 has revolutionized everything except how fans get there](https://www.flextram.com/blog/f1-fan-transportation): Race-day fan transit at COTA, Miami, and Las Vegas.
+- [Golf tournament spectator experience](https://www.flextram.com/blog/golf-tournament-spectator-experience): 200,000 spectators, zero on-site parking — the shuttle line as the experience.
+- [Festival season is here](https://www.flextram.com/blog/festival-season-here): Front-of-house and back-of-house transit at music festivals.
+- [Your FBO sells a seamless experience](https://www.flextram.com/blog/fbo-ground-transportation): Crew car, ramp transport, and Part 135 ground operations during peak weeks.
+- [The fan experience gap](https://www.flextram.com/blog/fan-experience-gap): The first-mile problem at major sporting events.
+- [The World Cup is 60 days out. Is your campus ready?](https://www.flextram.com/blog/world-cup-fan-first-mobility): Host-city campus mobility for the 2026 World Cup.
+
+## Risk, finance, vision
+
+- [The parking lot is becoming a mobility origin](https://www.flextram.com/blog/parking-lot-mobility-origin): Six transformations the parking lot has already absorbed and what's next.
+- [Curb to gate: the fan journey is the product](https://www.flextram.com/blog/curb-to-gate-fan-journey): Mercedes-Benz Stadium and Hollywood Park as parking-operator-aligned mobility platforms.
+- [Sponsorship's untapped frontier](https://www.flextram.com/blog/sponsorship-untapped-frontier): Tram fleets as sponsorship-eligible inventory.
+- [The onsite transportation paradigm is changing](https://www.flextram.com/blog/onsite-transportation-paradigm): Five core ideas — fans first, standardization, predictability, cost reduction, found revenue.
+- [We created the category](https://www.flextram.com/blog/we-created-the-category): How FlexTram defined onsite micro-mobility transit.
+- [Your event isn't at a stadium. It's at a park, a beach, or a street.](https://www.flextram.com/blog/venue-isnt-a-stadium): Temporary venue mobility for X Games, AVP, and street circuits.
+- [Grand opening transportation](https://www.flextram.com/blog/grand-opening-transportation): VIP and guest movement during corporate facility openings.
+- [Turnkey mass transit: you're two weeks away](https://www.flextram.com/blog/turnkey-mass-transit): Mass transit without the concrete — fixed routes, posted schedules, deployed in two weeks.
+
+## Get in touch
+
+- [Contact form](https://www.flextram.com/#contact-form): Casual or exploratory inquiries.
+- [Request a bid](https://www.flextram.com/request-a-bid): Structured procurement form for RFPs and large deployments.
+- [Procurement packet](https://www.flextram.com/procurement-packet): Vehicle specifications, ADA compliance, COI on request, deployment SOPs (gated lead capture).
+- [Calendly](https://calendly.com/jb-flextram/30min): 30-minute discovery call.
+- [Where we operate](https://www.flextram.com/where-we-operate): Service area (United States and Canada).
