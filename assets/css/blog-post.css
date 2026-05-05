@@ -280,6 +280,41 @@
   .post-hero { max-height: 300px; border-radius: 8px; }
 }
 
+/* In-post data tables (e.g. cost breakdowns). Wrapper scrolls on narrow screens. */
+.post-table-wrap {
+  margin: 2rem 0;
+  overflow-x: auto;
+  border: 1px solid #e5e5e0;
+  border-radius: 6px;
+}
+.post-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+.post-table thead th {
+  text-align: left;
+  font-weight: 500;
+  background: #f7f6f1;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid #e5e5e0;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #6b6a64;
+}
+.post-table tbody td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #f0efea;
+}
+.post-table tbody tr:last-child td { border-bottom: none; }
+.post-table tbody td:nth-child(2),
+.post-table tbody td:nth-child(3) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.post-table tbody tr:has(strong) td { background: #faf9f4; }
+
 @media (max-width: 576px) {
   .post-hero {
     max-height: 250px;
@@ -296,6 +331,8 @@
   .post-cta { flex-direction: column; }
   .post-cta-inline { flex-direction: column; align-items: flex-start; padding: 1.5rem; }
   .post-cta-inline h3 { font-size: 18px; }
+  .post-table { font-size: 13px; }
+  .post-table thead th, .post-table tbody td { padding: 0.6rem 0.75rem; }
 }
 
 @media (max-width: 375px) {
