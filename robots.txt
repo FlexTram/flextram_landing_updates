@@ -1,4 +1,61 @@
+# FlexTram robots.txt
+
+# Default: allow all compliant crawlers
 User-agent: *
+Allow: /
+
+# Explicit allows for AI / LLM crawlers (compliant ones honor robots.txt).
+# Listed individually to remove ambiguity. Allowing AI crawlers is intentional —
+# FlexTram wants to surface in AI-search and chatbot answers.
+
+# Anthropic
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-Web
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+
+# OpenAI
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+
+# Google (Gemini training; distinct from Googlebot which is for search)
+User-agent: Google-Extended
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# Common Crawl (used by many AI training pipelines)
+User-agent: CCBot
+Allow: /
+
+# Apple
+User-agent: Applebot-Extended
+Allow: /
+
+# ByteDance / Bytespider
+User-agent: Bytespider
+Allow: /
+
+# Cohere
+User-agent: cohere-ai
+Allow: /
+
+# Mistral
+User-agent: MistralAI-User
+Allow: /
+
+# Meta
+User-agent: Meta-ExternalAgent
+Allow: /
+User-agent: FacebookBot
 Allow: /
 
 Sitemap: https://www.flextram.com/sitemap.xml
