@@ -486,6 +486,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.flextram.com/blog/hospital-campus-transit</loc>
+    <lastmod>2026-05-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-hospital-campus-transit.jpg</image:loc>
+      <image:caption>Aerial view of Texas Medical Center in Houston with multiple hospital buildings, parking garages, and pedestrian corridors across a sprawling medical campus</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.flextram.com/blog/already-paying-for-transportation</loc>
     <lastmod>2026-05-05</lastmod>
     <changefreq>monthly</changefreq>
