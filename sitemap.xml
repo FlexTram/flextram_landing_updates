@@ -486,6 +486,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.flextram.com/blog/workforce-amenity</loc>
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-workforce-amenity.jpg</image:loc>
+      <image:caption>Construction workers in safety vests walking en masse along a construction corridor with #BUILD don't WALK and FlexTram branding overlaid</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.flextram.com/blog/cant-solve-egress</loc>
     <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
