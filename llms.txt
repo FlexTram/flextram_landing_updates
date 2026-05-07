@@ -47,6 +47,7 @@ Key facts:
 - [You're Already Paying for Transportation. You're Just Calling It Something Else.](https://www.flextram.com/blog/already-paying-for-transportation): The forensic accounting on what venues already spend on onsite transportation, scattered across a dozen budget line items owned by a dozen departments. Direct costs run $200K–$700K per season at large venues.
 - [$14 Billion in Convention Center Construction. Zero Invested in How Attendees Move.](https://www.flextram.com/blog/convention-center-transit): Dallas, LA, Las Vegas, Houston, Austin, Fort Lauderdale — over $14B in convention center expansion making the buildings bigger. Almost none of it addresses how attendees move through them.
 - [Your Hospital Campus Has 14 Buildings. Your Patients Have One Set of Knees.](https://www.flextram.com/blog/hospital-campus-transit): Why hospital campus transit is a clinical problem, not a convenience one — tied directly to HCAHPS scores and Medicare reimbursement. Includes the LAZ Healthcare Services partnership model.
+- [You Can't Solve Egress. But You Can Stop Ignoring It.](https://www.flextram.com/blog/cant-solve-egress): The honest argument on post-event egress — no transit system moves 70,000 people in 20 minutes, but the solvable parts (vulnerable populations, remote lots, staff at midnight, perceptual signal) are being ignored because the rest feels too big.
 
 ## Operations & finance
 

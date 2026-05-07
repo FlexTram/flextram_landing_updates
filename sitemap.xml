@@ -486,6 +486,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.flextram.com/blog/cant-solve-egress</loc>
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-cant-solve-egress.jpg</image:loc>
+      <image:caption>Crowds of fans streaming out of Emirates Stadium at dusk after a match, with the illuminated stadium facade visible above the moving crowd</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.flextram.com/blog/hospital-campus-transit</loc>
     <lastmod>2026-05-06</lastmod>
     <changefreq>monthly</changefreq>
