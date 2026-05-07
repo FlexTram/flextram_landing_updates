@@ -22,6 +22,14 @@
   display: block;
 }
 
+/* Opt-in for branded / letterboxed heroes that should show in full
+   (not cover-cropped). Preserves all overlay text and logo placement.
+   Apply with class="post-hero is-letterbox" on the <img>. */
+.post-hero.is-letterbox {
+  object-fit: contain;
+  background: #1a1a18;
+}
+
 /* ---- BREADCRUMB ---- */
 .post .breadcrumb {
   font-size: 12px;
