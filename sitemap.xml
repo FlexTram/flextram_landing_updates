@@ -486,6 +486,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.flextram.com/blog/mega-resort-transit</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-mega-resort-transit.jpg</image:loc>
+      <image:caption>Aerial view of a luxury beachfront resort at sunset with an infinity pool surrounded by palm-shaded villas leading to a sandy beach and ocean horizon</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.flextram.com/blog/workforce-amenity</loc>
     <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
