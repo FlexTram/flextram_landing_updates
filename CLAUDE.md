@@ -130,6 +130,13 @@ git push origin master && git push production master
 ```
 Note: `gh` CLI installed at `/usr/local/bin/gh`, authenticated as FlexTram account with `workflow` scope.
 
+**⚠ gh auth account-switching gotcha (Session 21, 2026-05-11):** Two GitHub accounts are logged into the `gh` CLI keychain — `jmbradley` (personal) and `FlexTram` (org). Git pushes to both `origin` and `production` rely on the **active** `gh` account's token. If `jmbradley` is the active account, both pushes return `403 Permission denied to jmbradley` — repos belong to FlexTram org and require the FlexTram token. Check + fix:
+```bash
+gh auth status                          # confirm which account is "Active account: true"
+gh auth switch --user FlexTram          # switch active account before pushing
+```
+Symptom is `remote: Permission to <repo> denied to jmbradley` on a push. Not a credentials cache issue — `git` uses gh's current active token. Worktree push pattern from Session 20 still applies once the account is correct: `git push origin HEAD:master && git push production HEAD:master`.
+
 ## Status
 
 ### Session 1 (2026-04-06) -- Foundation
@@ -909,6 +916,39 @@ Long multi-day session. Five major shipments + a process improvement.
 
 ---
 
+### Session 21 (2026-05-11) — Theme park backstage transit blog post + gh auth account-switching gotcha
+
+**Content shipped — "Your Cast Members Park a Mile Away. They Walk Underground to Clock In. There's a Better Way to Move Your Backstage."** (`/blog/theme-park-backstage-transit`, ~1,950 words, **Theme Parks & Attractions — new category surface**, sitemap priority 0.7, position 1 of "More articles" grid; commit `d8d952b`):
+- Disney utilidor anchor narrative: cowboy-in-Tomorrowland origin story + 9-acre, 392,000-sq-ft tunnel network specifics + cast-member "walk-time" (paid minutes for the commute from utilidor entrance to work post — financial acknowledgment that the backstage walk requires compensation).
+- 200,000-worker workforce framing across 9 operational departments (attractions, entertainment, F&B, merchandise, custodial, security, guest relations, maintenance, management). Named-property scale: Animal Kingdom 580 acres, Universal Epic Universe 750, Six Flags Great Adventure 510, Cedar Point 364.
+- "The backstage transit problem nobody writes about" catalog: distances (mile-plus on service roads), path constraints (narrow corridors that exclude full-size buses), unmanaged golf cart fleet (same problem as everywhere else — no routes, no schedules, no consolidated movement), and shift-change peak stress (bi-directional flow on narrow service roads). Even Disney's utilidors solved visibility but not the vehicle problem — internal transport is still battery golf carts.
+- Labor market angle via BuzzFeed News labor economist quote framing transportation as workforce amenity alongside housing and onsite childcare. Reinforces the Session 18 workforce-amenity thesis at the theme-park vertical.
+- "The guest never sees it. The guest always feels it." closing argument: backstage transit doesn't create magic but it creates the operational reliability that makes guest-facing magic possible. Pairs structurally with the friction-is-eating-demand thesis (different surface, same mechanism).
+- 5 FAQs (utilidor uniqueness, guest-tram vs backstage-tram distinction, why guests feel the result, why golf carts aren't enough, surge-capacity mechanics). 3 sourced citations (Disney Tips, Wikipedia utilidor system, IBISWorld/Wikipedia theme park careers, BuzzFeed News).
+
+**Hero image workflow — portrait-to-landscape crop pattern:**
+- Source: `theme_park_back_stage.jpg` (3600×5400 Disneyland Paris Sleeping Beauty Castle photograph, portrait orientation). Site convention is landscape heroes (1200×744). Cropped to a 3600×2232 landscape band (top y=200 to y=2432) centering the castle with dramatic sunset cloud-streaked sky; foreground brick and rail rails were below the crop line. PIL workflow: crop → resize to 1200×744 + 640×397 → save as JPG (quality 82) + WebP (quality 80, method 6). 4 final variants totaling 161KB. **Pattern documented for next time a portrait-orientation source is supplied:** decide focal point (castle, person, hero element), set crop top to position focal point in upper-third of frame, take ~half-image height as landscape band.
+
+**Cluster integration (Session 19 publish-workflow rule — inbound links in same commit):**
+- Inbound from `labor-problem-golf-cart-drivers.html`: added a "This isn't only a festival problem" paragraph extending the labor-market section. Inline anchor "theme parks" → new post. Frames the same unmanaged-cart-fleet dynamic across festival weekends (acute) and year-round theme park operations (chronic).
+- Inbound from `workforce-amenity.html`: added "Theme parks competing for hourly cast members" as a fifth vertical in the existing "this isn't just a construction problem" list (hospitals → stadiums → warehouses → conventions → **theme parks**). Inline anchor on the new post + explicit reference to Disney's paid "walk-time" as the on-record financial acknowledgment that backstage commute distance has labor-cost consequences.
+- Outbound from new post: `/blog/labor-problem-golf-cart-drivers` + `/blog/workforce-amenity` (in body); related-reading grid: workforce-amenity, labor-problem-golf-cart-drivers, friction-is-eating-demand, `/solutions/attractions-theme-parks` (the conversion surface for this vertical's buyers).
+- Net link-graph delta: 2 new inbound, 4 new outbound. Theme parks now reciprocally linked to the workforce-amenity / labor-problem-golf-cart-drivers cluster.
+
+**Source-MD fix during publish:**
+- Source markdown linked to `/blog/workforce-amenity-ride` (does not exist — actual slug is `/blog/workforce-amenity`). Caught during HTML build, corrected before push. Worth noting that source MDs occasionally contain stale/wrong internal anchors; verify outbound links against actual `blog/*.html` filenames before publishing.
+
+**gh auth account-switching gotcha (documented in Git workflow section above):**
+- First push attempt returned `403 Permission denied to jmbradley` on BOTH origin AND production. Diagnosis via `gh auth status` revealed two GitHub accounts logged in the keychain — `jmbradley` (personal, active) and `FlexTram` (org, required for these repos). The active account's token is what `git push` uses. Switched active account via `gh auth switch --user FlexTram`; pushes then succeeded on retry without any other changes.
+- Recovery cost was ~30 seconds once diagnosed. Documented in CLAUDE.md "Git workflow" section so the next time it happens (likely when someone runs personal `gh` commands and forgets to switch back), the fix is in plain sight.
+
+**Followups (next session):**
+- GSC manual indexing request for `/blog/theme-park-backstage-transit` (use a slot from the daily ~10-URL quota).
+- GA4 Realtime spot-check — visit in private window, confirm pageview + scroll/first_visit fire within 30s.
+- 2–4 week GSC monitoring for theme-park cluster vocabulary: `Disney utilidor`, `theme park backstage transit`, `cast member shuttle`, `theme park employee transportation`, `amusement park staff shuttle`, `Disney walk time`, `Universal Epic Universe shuttle`. New buyer persona surface: theme park ops directors / VP operations at Disney, Universal, Six Flags, Cedar Fair, SeaWorld, Merlin Entertainments.
+
+---
+
 ## TODOs for next session
 
 ### High priority — active leads + time-sensitive
@@ -928,8 +968,9 @@ Long multi-day session. Five major shipments + a process improvement.
 - [ ] **Collect 2 more real testimonials** — FSU is the first; the deployment pattern (`.testimonial-block` component) is now proven and ready to receive 2 more. Once 3 are on hand, consider rotating the homepage placement, adding vertical-specific quotes on matching solution pages, and a `/case-studies` or `/clients` page. Likely candidates to ask: an Ingredion site contact (factory-tours / grand-openings vertical), a festival ops contact (Bonnaroo / Coachella / EDC), a NASCAR-region operations contact.
 
 ### Medium priority — content expansion
-- [ ] **Submit GSC manual indexing for `/blog/mega-resort-transit`** (Session 20 publish, 2026-05-09). Use a slot from today's ~10/day GSC URL Inspection quota. Without manual request, the post sits in "Discovered — not indexed" for weeks.
-- [ ] **GA4 Realtime spot-check for `/blog/mega-resort-transit`** — visit the page in a private window, confirm pageview + scroll/first_visit events register within 30s. Cheap insurance that the deferred GA loader didn't break on this post specifically.
+- [ ] **Submit GSC manual indexing for `/blog/theme-park-backstage-transit`** (Session 21 publish, 2026-05-11). Use a slot from today's ~10/day GSC URL Inspection quota.
+- [ ] **GA4 Realtime spot-check for `/blog/theme-park-backstage-transit`** — visit in private window, confirm pageview + scroll/first_visit fire within 30s.
+- [ ] **Watch GSC for theme-park cluster vocabulary** (2–4 week horizon) — `Disney utilidor`, `theme park backstage transit`, `cast member shuttle`, `theme park employee transportation`, `amusement park staff shuttle`, `Disney walk time`, `Universal Epic Universe shuttle`. New buyer persona: theme park ops directors / VP operations at Disney, Universal, Six Flags, Cedar Fair, SeaWorld, Merlin Entertainments.
 - [ ] **Watch GSC for mega-resort cluster vocabulary** (2–4 week horizon) — `Gaylord Opryland transit`, `mega resort shuttle`, `Atlantis Paradise Island shuttle`, `hotel campus tram`, `convention hotel transportation`, `resort accessibility shuttle`. New buyer persona: hospitality directors / VP guest experience / resort GMs at branded portfolios (Ryman/Marriott/Hilton). Same breakthrough-pattern monitoring as stadium-districts (Session 14) and FSU gameday vocab (Session 17).
 - [ ] **Cold-outreach play to multi-property hospitality brands** — Session 20 mega-resort-transit post names Ryman Hospitality Properties (Gaylord Hotels) explicitly and frames standardized portfolio transit as a brand-level differentiator. Targets: Ryman corporate strategy / Gaylord Hotels brand team; Marriott Convention Hotels group; Hilton's large-footprint brands (Waldorf Astoria, Conrad). Approach: "you might find this interesting" intro email with the post link — the post does the positioning work. Pair with `/solutions/resort-hotel` for the conversion surface.
 - [ ] **Write "What Data-Driven Means for Your Gameday Shuttle" post** — FSU's testimonial used "data-driven solutions adaptable to our evolving needs" unprompted. Differentiator vs. any golf cart rental co. Turn the jargon into concrete value (utilization rates, route optimization, peak-hour modeling, historical patterns). Good mid-funnel content for athletics ops buyers.
