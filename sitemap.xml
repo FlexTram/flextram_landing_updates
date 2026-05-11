@@ -486,6 +486,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.flextram.com/blog/theme-park-backstage-transit</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-theme-park-backstage-transit.jpg</image:loc>
+      <image:caption>Disneyland Paris Sleeping Beauty Castle at sunset framed against a dramatic cloud-streaked sky, evoking the guest-facing magic that depends on invisible backstage logistics</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.flextram.com/blog/mega-resort-transit</loc>
     <lastmod>2026-05-09</lastmod>
     <changefreq>monthly</changefreq>
