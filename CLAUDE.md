@@ -866,6 +866,49 @@ Long multi-day session. Five major shipments + a process improvement.
 
 ---
 
+### Session 20 (2026-05-09 + 2026-05-10) — Mega-resort transit blog post, blog architecture strategy convo, worktree push pattern, Lighthouse audit
+
+**Architectural conversation parked (blog hub bloat):**
+- Joseph raised the question of whether to "remix" old posts or set up an archive to keep the hub from feeling bloated. Pushed back: at ~27 posts the bloat anxiety is real but the data doesn't show it — most blog traffic lands on individual posts via organic search, not the hub, so the hub-aesthetics problem is smaller than it feels. Also flagged the real risk: an "archive" section that hides posts from primary nav reduces link equity flowing to them from the hub, which would hurt exactly the kind of posts that quietly rank on B2B research vocabulary (e.g., stadium-districts 3 → 152 imps in Session 14). Suggested three lighter patterns in order of effort: (1) category/topic filters on the existing hub, (2) pillar pages at ~40 posts as evergreen topic hubs, (3) deliberate synthesis remixes (like the-pattern). Joseph parked the question. Revisit if/when post count approaches 40 or if hub-aesthetics anxiety returns.
+
+**Content shipped — "Your Resort Has 2,888 Rooms, 15 Restaurants, and a Waterpark. Nobody Planned How Guests Move Between Them."** (`/blog/mega-resort-transit`, ~2,200 words, **Resorts & Hospitality — new category**, sitemap priority 0.7, position 1 of "More articles" grid):
+- Anchor narrative: Gaylord Opryland 4-hour-walk anecdote + the $20/day wheelchair / $50/day scooter rental as a confession that the property is too large for unassisted walking.
+- Portfolio framing names the named-asset opportunity surface: Gaylord Hotels 6 properties (Opryland, Palms, Texan, National, Rockies, Pacific), Atlantis Paradise Island (154 acres), Dorado Beach Ritz-Carlton Reserve (1,400 acres), The Broadmoor (5,000 acres), Ritz-Carlton Kapalua (54 acres in a 23,000-acre community).
+- Reactive-solutions section: catalogs wheelchair/scooter rentals, golf-cart-on-request, bell-attendant escorts, courtesy shuttles to external destinations — each one a confession of the problem, none a system.
+- "The convention guest has it worst" angle hands the post a B2B buyer surface (convention planners, meeting & event sales teams at Ryman/Marriott/Hilton) that the leisure-only angle misses.
+- ADA section: 61M Americans / 1 in 7 mobility impaired / adults 65+ six times more likely framing. Argues the wheelchair rental addresses mobility but not experience — the missing layer is integrated transit that includes ADA service as standard, not parallel.
+- "Portfolio opportunity" pitch directly to Ryman/Marriott/Hilton: standardized onsite transit across a multi-property hospitality brand is a brand-level differentiator, the same logic that gave branded networks consistent breakfast, gym, wifi.
+- 6 sourced citations (PullOverAndLetMeOut blog, WBENC Gaylord Accessibility Guide, TakeTravelInfo, Wikipedia Atlantis, Rachel Harrison Communications x2, Booking.com Kapalua, Next Avenue/CDC, Rare Welsh Bit), all with `target="_blank" rel="noopener"`.
+- 5 FAQs with FAQPage JSON-LD; full BlogPosting + BreadcrumbList + Organization JSON-LD; OG/Twitter meta; canonical; meta description tightened to 137 chars.
+
+**Hero image generation workflow (Python PIL, repeatable pattern):**
+- Source: `resort_blog_transit.jpg` (5393×3345 luxury beachfront aerial). Generated 4 variants in one script: 1200px JPG (quality 82, progressive) + 1200px WebP (quality 80, method 6) + 640px JPG + 640px WebP. Final sizes: 205KB / 166KB / 65KB / 54KB. Aspect ratio 1200×744 (natural from source, no letterbox class needed). Pattern from Session 17 WebP rollout; documented here as the standard new-post hero workflow.
+
+**Cluster integration (Session 19 publish-workflow rule — inbound links in same commit):**
+- Inbound from `properties-got-bigger.html`: added "Hotels grew into self-contained resort campuses" paragraph to the "pattern of growth across categories" section (between convention centers and the closing summary). Names Gaylord Opryland / Atlantis / Dorado Beach / Broadmoor with the inline anchor on the new post.
+- Inbound from `friction-is-eating-demand.html`: added a mega-resort paragraph extending the "guest who turned back" sequence (between the cruise-destinations example and the "demand was there" close). Inline anchor on the new post.
+- Outbound from new post (in body): `/blog/convention-center-transit`, `/blog/friction-is-eating-demand`. Related-reading grid: hospital-campus-transit, convention-center-transit, properties-got-bigger, friction-is-eating-demand.
+- Net link-graph delta: 2 new inbound + 4 new outbound. Cluster: properties-got-bigger ↔ friction-is-eating-demand ↔ mega-resort-transit ↔ hospital-campus-transit (all four now reciprocally connected via at least one path).
+
+**Push pattern from worktree (documented for repeatability):**
+- Work was on `claude/keen-greider-534014` worktree branch, not master. Instead of switching branches in the main repo, pushed directly with `git push origin HEAD:master` and `git push production HEAD:master`. Both remotes were aligned at `e43dcf3` (Session 19 reconciliation holding), HEAD was a single-commit fast-forward to `6116ee7`, push to both remotes was clean.
+- **Worktree push command pattern going forward:** `git fetch origin master && git fetch production master` → verify remotes match + HEAD is FF → `git push origin HEAD:master && git push production HEAD:master`. Avoids the "switch to master in main repo, merge, push" dance.
+
+**Lighthouse audit (mobile, against live production URL post-push):**
+- `/blog/mega-resort-transit` — Perf **79**, A11y **100**, BP **100**, SEO **100** | FCP 1.7s ✓ | LCP 2.7s ~ | TBT **660ms ✗** | CLS **0.001 ✓** | SI 1.8s ✓
+- **Verdict: ship as-is, no fixes recommended.** A11y/BP/SEO at 100 is the structural-ship signal. Perf 79 is within site baseline (Session 17 audits 76–99 across blog posts).
+- **TBT 660ms is a Lighthouse measurement artifact, not a UX issue.** GA Tag Manager accounted for 758ms of attributed blocking. Per Session 10's deferred-loading pattern (gtag.js fires on first interaction OR 2.5s timeout), Lighthouse's ~5s measurement window catches the 2.5s fallback firing — but real users don't experience this because GA loads AFTER the page is already interactive. Removing the 2.5s fallback would help the score but lose analytics on ~2% of visitors who never interact. Not worth it.
+- **"Properly size images" (105KB savings on hero WebP) is Lighthouse's long-known DPR-blindness.** Test device is Moto G4 (DPR 2.6); a 412 CSS-px hero needs ~1071 physical px → correctly picks the 1200w WebP. Lighthouse compares CSS-px to image-px and flags it as oversized, but downgrading to the 640w variant would degrade quality on real high-DPR phones. Leave it.
+- **LCP TTFB 651ms (24% of LCP)** is GitHub Pages cold CDN response — outside our control.
+- **Cold-cache anomaly preempted** with a curl warmup before the Lighthouse run (Session 16 finding — first run of a session can show wildly inflated TBT/SI numbers).
+
+**Followups (next session):**
+- GSC manual indexing request for `/blog/mega-resort-transit` (use one of the daily ~10-URL quota slots).
+- GA4 Realtime spot-check — visit the page, confirm pageview fires + scroll/first_visit events register within 30s. Cheap insurance that the deferred GA loader didn't break on this post specifically.
+- 2–4 week GSC monitoring for cluster-vocabulary surfacing: `Gaylord Opryland transit`, `mega resort shuttle`, `Atlantis Paradise Island shuttle`, `hotel campus tram`, `convention hotel transportation`, `resort accessibility shuttle`. Same monitoring pattern as Session 14 (stadium-mobility-infrastructure breakthrough) and Session 17 (FSU gameday vocab). New buyer persona: hospitality directors / VP guest experience / resort GMs at branded portfolios.
+
+---
+
 ## TODOs for next session
 
 ### High priority — active leads + time-sensitive
@@ -885,6 +928,10 @@ Long multi-day session. Five major shipments + a process improvement.
 - [ ] **Collect 2 more real testimonials** — FSU is the first; the deployment pattern (`.testimonial-block` component) is now proven and ready to receive 2 more. Once 3 are on hand, consider rotating the homepage placement, adding vertical-specific quotes on matching solution pages, and a `/case-studies` or `/clients` page. Likely candidates to ask: an Ingredion site contact (factory-tours / grand-openings vertical), a festival ops contact (Bonnaroo / Coachella / EDC), a NASCAR-region operations contact.
 
 ### Medium priority — content expansion
+- [ ] **Submit GSC manual indexing for `/blog/mega-resort-transit`** (Session 20 publish, 2026-05-09). Use a slot from today's ~10/day GSC URL Inspection quota. Without manual request, the post sits in "Discovered — not indexed" for weeks.
+- [ ] **GA4 Realtime spot-check for `/blog/mega-resort-transit`** — visit the page in a private window, confirm pageview + scroll/first_visit events register within 30s. Cheap insurance that the deferred GA loader didn't break on this post specifically.
+- [ ] **Watch GSC for mega-resort cluster vocabulary** (2–4 week horizon) — `Gaylord Opryland transit`, `mega resort shuttle`, `Atlantis Paradise Island shuttle`, `hotel campus tram`, `convention hotel transportation`, `resort accessibility shuttle`. New buyer persona: hospitality directors / VP guest experience / resort GMs at branded portfolios (Ryman/Marriott/Hilton). Same breakthrough-pattern monitoring as stadium-districts (Session 14) and FSU gameday vocab (Session 17).
+- [ ] **Cold-outreach play to multi-property hospitality brands** — Session 20 mega-resort-transit post names Ryman Hospitality Properties (Gaylord Hotels) explicitly and frames standardized portfolio transit as a brand-level differentiator. Targets: Ryman corporate strategy / Gaylord Hotels brand team; Marriott Convention Hotels group; Hilton's large-footprint brands (Waldorf Astoria, Conrad). Approach: "you might find this interesting" intro email with the post link — the post does the positioning work. Pair with `/solutions/resort-hotel` for the conversion surface.
 - [ ] **Write "What Data-Driven Means for Your Gameday Shuttle" post** — FSU's testimonial used "data-driven solutions adaptable to our evolving needs" unprompted. Differentiator vs. any golf cart rental co. Turn the jargon into concrete value (utilization rates, route optimization, peak-hour modeling, historical patterns). Good mid-funnel content for athletics ops buyers.
 - [ ] **Watch GSC for FSU-vocab keyword surfacing** — shipped Session 17: `gameday parking operations`, `data-driven shuttle operations`, `P4 athletics shuttle`, `collegiate athletics shuttle`, `matchday parking operations`, `race day parking operations` across 5 stadium-cluster pages (stadiums-arenas, football-stadiums, fifa-world-cup, raceways-motorsports, university-campus). Body copy already carries these via the FSU testimonial. 2–4 week horizon. Same monitoring pattern as Session 14 stadium-mobility-infrastructure cluster. Lever for athletics ops buyers.
 - [ ] **Consider an `/operations` or `/planning` page** -- Surface the ops planning layer (heat maps, route modeling, schedule integration) that FSU specifically called out as valuable. This is the "platform" story your original homepage hinted at, told through operational credibility instead of vague platform-speak.
