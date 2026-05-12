@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.flextram.com/</loc>
-    <lastmod>2026-04-27</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
       <image:image>
@@ -13,7 +13,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/solutions/</loc>
-    <lastmod>2026-04-27</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -243,7 +243,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/stadium-districts-mixed-use-transportation</loc>
-    <lastmod>2026-04-27</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
       <image:image>
@@ -387,7 +387,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/parking-lot-mobility-origin</loc>
-    <lastmod>2026-04-27</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
       <image:image>
@@ -467,7 +467,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/turnkey-mass-transit</loc>
-    <lastmod>2026-04-27</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
