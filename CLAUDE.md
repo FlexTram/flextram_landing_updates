@@ -949,6 +949,76 @@ Long multi-day session. Five major shipments + a process improvement.
 
 ---
 
+### Session 22 (2026-05-12) — "Hits flatlined" diagnostic + SEO meta refresh on 5 impression-rich/click-poor pages
+
+**Triage of perceived traffic cliff:**
+- Joseph flagged "hits dropped off a cliff, basically flatlined since May 1." Initial concern was that something we'd shipped in recent sessions broke tracking or got the site deindexed.
+- Did a full site-infrastructure sweep before speculating: all 70 production pages return 200, sitemap validates clean (67 URLs), robots.txt correctly allows everything (including AI crawlers per Session 18 work). 70 of 70 pages carry intact GA4 deferred-loading pattern (`setTimeout(loadGA, 2500)` + 6 interaction listeners). `gtag.js` reachable from Google's CDN. No commit in the last 30 days touched GA tracking in a way that could have broken it. Cleared our code as a cause before doing anything else.
+- **Decisive runtime test** — used `preview_start` + `preview_eval` to load the live homepage in a real browser session and watched the GA4 network calls actually fire:
+  - `GET .../gtag/js?id=G-ZYK6B5M9QT → 200`
+  - `POST .../g/collect?...&en=page_view&cid=1599238841...` (the actual hit being sent to Google with a real client_id)
+  - `_ga` + `_ga_ZYK6B5M9QT` cookies set
+  - 4 events queued in dataLayer, zero console errors
+  - **Pattern to keep:** when diagnosing "is tracking broken?" claims in the future, runtime test via preview_eval is much more decisive than reading the snippet. Snippet-present-and-valid ≠ snippet-firing. The runtime test confirms the snippet actually does the network call.
+- Asked Joseph for the GA4 + GSC data. Three screenshots came back: GA4 home overview (498 YTD users, sharp peak May 1 → drop-off afterward), GA4 Traffic Acquisition channel breakdown, GSC Performance 28-day, GA4 Pages report.
+
+**Diagnosis (the cliff is a Direct-channel publishing artifact, not a real acquisition loss):**
+- Traffic Acquisition channel mix (28 days, 585 sessions):
+  - **Direct: 419 sessions (71.62%)** — 18.85% engagement rate, 12s avg session
+  - Organic Search: 97 (16.58%) — **59.79% engagement, 50s** ← quality
+  - Referral: 37 (6.32%) — **72.97% engagement, 35s** ← AMS-driven
+  - Organic Social: 33 (5.64%) — **84.85% engagement, 45s** ← excellent
+- Direct's low-engagement/short-session profile is the giveaway: that's not organic acquisition. It's the mix of (a) Joseph's own publish-verification visits during the April 28–May 5 burst of 5 blog posts, (b) LinkedIn mobile clicks (LinkedIn strips referrer on mobile, lands as Direct), (c) AI-search referrer pass-through gaps (ChatGPT/Gemini citations don't reliably pass referrer), (d) cold-email-recipient clicks (most email apps strip referrer), (e) bot traffic GA4 didn't catch.
+- GSC for the same 28-day window: **3.85K impressions, 37 clicks, 9.2 avg position — impressions trending flat-to-rising across April 13 → May 10 with no May 1 cliff.** Zero organic ranking degradation. The "cliff" is in the Direct channel only, and Direct doesn't reflect ranking.
+- **Verdict: site is healthy. Tracking is firing. GSC is growing. The May 1 peak was a sharing/publishing artifact (Joseph's own visits + LinkedIn shares + cold-email clicks during the 5-post publishing sprint Apr 28 – May 5), which decayed back to normal-baseline as expected.** Real organic acquisition is steady.
+
+**Insight from GSC top-queries: the real opportunity isn't traffic loss, it's impression-rich/click-poor pages:**
+- `flextrolley` — **92 impressions / 0 clicks** (ranked page 4–8)
+- `stadium mobility infrastructure` — 32 / 0 (page 2–3, the Session 14 breakthrough cluster still surfacing)
+- `flex trolley` — 26 / 0 (same brand-variant cluster as flextrolley)
+- `parking lot transport infrastructure and mobility` — 10 / 0 (Session 11 LAZ post)
+- `turnkey transportation system` — 7 / 0 (Session 11 turnkey post)
+- Branded comparison: `flextram` 11 clicks / 29 imps = 38% CTR; `flex tram` 2 / 15 = 13%. Same on-page quality, dramatically different CTR — position dominates CTR, not on-page work.
+- **Right diagnosis:** these pages aren't failing on content. They're ranked too low to be clicked. Position fixes = backlinks (AMS upgrade ask still the highest-leverage move per Session 16). On-page CTR fix = title + meta description rewrites to match the query verbatim.
+
+**Strategic recommendation Joseph asked for: refresh existing posts or keep publishing?**
+- Hybrid: 70% new content (each new post adds query surface area, signals freshness, gives links to point at older pages — what's actually growing impression count), 20% strategic refresh on impression-rich pages (title + meta only, NOT body copy), 10% backlink outreach (AMS Tier 1 ask).
+- Honest pushback: don't refresh every old post. Most have <10 impressions and aren't worth touching. Don't rewrite body copy on old posts — marginal SEO value. Don't update "modified" dates for show — Google has gotten smart about cosmetic date refreshes. Backlinks are the real lever for the flextrolley-style problem; one AMS dedicated /flextram page does more than 30 blog refreshes.
+
+**SEO meta refresh shipped (commit `7aec80b`):**
+
+| Page | New title | Target query (28d imps) |
+|---|---|---|
+| `/` | FlexTram (a.k.a. FlexTrolley) — Onsite Event Transportation | flextrolley (92) |
+| `/solutions/` | FlexTram & FlexTrolley Solutions for 20 Industries | flextrolley + flex trolley |
+| `blog/stadium-districts-mixed-use-transportation` | Stadium Mobility Infrastructure: The Hollywood Park Pattern | stadium mobility infrastructure (32) |
+| `blog/parking-lot-mobility-origin` | Parking Lot Transport Infrastructure: The Seventh Transformation | parking lot transport infrastructure (10) |
+| `blog/turnkey-mass-transit` | Turnkey Transportation System: Deploy in Two Weeks | turnkey transportation system (7) |
+
+- Strategy applied uniformly: front-load target keyword in title, preserve editorial hook where possible, sync all 4 SERP-visible signals (title + meta description + twitter:title/description + og:title/description) per page so SERPs render consistently.
+- Solutions hub specifically: previous title was `Solutions — FlexTram Systems 2026` (the trailing "2026" was odd, generic, and not keyword-relevant). Replaced with industry-count specificity and the brand-variant.
+- Homepage specifically: previous title omitted "FlexTrolley" entirely despite the variant being in body copy and `alternateName` JSON-LD. 92 impressions/zero clicks on `flextrolley` was the title-tag signal mismatch. Now title-tag agrees with body and schema.
+- Sitemap: lastmod bumped to 2026-05-12 for all 5 affected URLs to prompt Google recrawl with new metadata. XML validates clean.
+
+**Expected outcome (calibrated):**
+- Will NOT move ranking position — that's a backlink/authority problem
+- Should move CTR at the same position — title matches the query verbatim, more clickable SERP snippet
+- 2–3 weeks for Google to recrawl + re-index the new titles before impact shows in GSC
+- Measurement: in 3 weeks, check GSC for the 5 target queries. Clicks-per-impression should climb from 0% to 2–5%. If it stays at 0%, the issue isn't title — it's depth-of-ranking (page 4+).
+
+**Methodological wins from the session:**
+1. **Runtime tracking diagnostic via preview_eval beats static snippet inspection.** Whenever someone asks "is GA broken?" — load the live URL in preview, watch the actual `g/collect` POST fire. Cookies + dataLayer + network call all in one ~3 second test.
+2. **Cross-check GA4 against GSC before blaming our code.** If Users dropped but GSC Impressions are steady-or-growing → it's not a ranking issue. If GA4 dropped but GSC also dropped → could be algorithmic. If only GA4 dropped → tracking issue OR a single high-volume channel (Direct/LinkedIn) lost momentum.
+3. **Low-engagement Direct sessions are the publisher's own visits.** Filter internal traffic in GA4 (Admin → Data streams → Configure tag settings → Define internal traffic). Reduces both noise and false "peaks" during publish sprints. Already in the TODO list from prior sessions; promoted to higher visibility.
+4. **Don't refresh content body copy as a default SEO play.** Title + meta rewrite is the highest-leverage CTR move at a fraction of the time cost. Body copy rewrites are for pages that aren't surfacing at all (zero impressions), not pages ranked too low to click.
+
+**Followups (next session):**
+- Submit the 5 refreshed URLs (`/`, `/solutions/`, the 3 blog posts) via GSC URL Inspection → Request Indexing to accelerate recrawl. Uses 5 of the ~10/day quota; worth it because the goal is title-tag refresh propagation.
+- In 3 weeks (~2026-06-02), re-pull GSC top queries. Watch the 5 target queries for CTR movement. Success = 1–4 clicks where there were 0. Failure mode = still 0 clicks → diagnosis shifts from "title mismatch" to "position too deep" (needs backlinks not metadata).
+- Filter internal traffic in GA4 Admin so future publish-burst spikes don't inflate Direct.
+
+---
+
 ## TODOs for next session
 
 ### High priority — active leads + time-sensitive
@@ -968,6 +1038,9 @@ Long multi-day session. Five major shipments + a process improvement.
 - [ ] **Collect 2 more real testimonials** — FSU is the first; the deployment pattern (`.testimonial-block` component) is now proven and ready to receive 2 more. Once 3 are on hand, consider rotating the homepage placement, adding vertical-specific quotes on matching solution pages, and a `/case-studies` or `/clients` page. Likely candidates to ask: an Ingredion site contact (factory-tours / grand-openings vertical), a festival ops contact (Bonnaroo / Coachella / EDC), a NASCAR-region operations contact.
 
 ### Medium priority — content expansion
+- [ ] **Submit GSC manual indexing for the 5 Session 22 title-refresh URLs** to accelerate recrawl: `/`, `/solutions/`, `/blog/stadium-districts-mixed-use-transportation`, `/blog/parking-lot-mobility-origin`, `/blog/turnkey-mass-transit`. Goal: new titles propagate to SERPs in days vs weeks.
+- [ ] **In ~3 weeks (≈2026-06-02), re-pull GSC top queries for the 5 refreshed targets** — `flextrolley`, `flex trolley`, `stadium mobility infrastructure`, `parking lot transport infrastructure`, `turnkey transportation system`. Success: CTR moves from 0% to 2–5%. Failure: stays 0% → diagnosis shifts to "ranked too deep" (backlinks problem, not title problem).
+- [ ] **Filter internal traffic in GA4** — Admin → Data streams → Web stream → Configure tag settings → "Define internal traffic" → add Joseph's IP. Then Admin → Data filters → set "Internal traffic" filter to **Active** (not Testing). Stops Joseph's publish-verification visits + day-to-day site browsing from inflating Direct sessions and creating false "publishing spike" peaks. Was already a Session 11/15 TODO; promoted in priority because today's diagnosis showed this is the primary cause of the May 1 visual cliff.
 - [ ] **Submit GSC manual indexing for `/blog/theme-park-backstage-transit`** (Session 21 publish, 2026-05-11). Use a slot from today's ~10/day GSC URL Inspection quota.
 - [ ] **GA4 Realtime spot-check for `/blog/theme-park-backstage-transit`** — visit in private window, confirm pageview + scroll/first_visit fire within 30s.
 - [ ] **Watch GSC for theme-park cluster vocabulary** (2–4 week horizon) — `Disney utilidor`, `theme park backstage transit`, `cast member shuttle`, `theme park employee transportation`, `amusement park staff shuttle`, `Disney walk time`, `Universal Epic Universe shuttle`. New buyer persona: theme park ops directors / VP operations at Disney, Universal, Six Flags, Cedar Fair, SeaWorld, Merlin Entertainments.
