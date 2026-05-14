@@ -1019,6 +1019,47 @@ Long multi-day session. Five major shipments + a process improvement.
 
 ---
 
+### Session 23 (2026-05-14) — GSC "why pages aren't indexed" triage + senior-living-independence blog post
+
+**GSC indexing triage:**
+- Joseph surfaced the GSC "Why pages aren't indexed" dashboard, flagged the "Page with redirect" row (1 page) for investigation. Diagnosed inline without code changes — confirmed it's `landing-page.html` (the Session 19 commit `6784f9d` redirect from Paper Kit template artifact → `/`). Live page check confirmed: `noindex,follow` + canonical to `/` + meta refresh + JS fallback. **Working as designed.** Google correctly not indexing because we asked it not to; "Not Started" validation is informational, not an error.
+- Triaged the other 3 rows together:
+  - **"Alternate page with proper canonical tag"** (19 pages, validation "Failed") — same `.html` vs pretty-URL pattern Session 12 documented. GitHub Pages serves both URL forms; canonical tag tells Google to prefer pretty URL; Google "fails" the validation but correctly de-duplicates. Working as designed. Ignore.
+  - **"Page with redirect"** (1 page) — landing-page.html, see above. Ignore.
+  - **"Discovered — currently not indexed"** (7 pages, validation "Started") — **down from 22 in Session 12.** Healthy trajectory. Google knows about them via sitemap, just hasn't crawled. Fix: manual indexing requests for high-priority URLs from the daily ~10/day quota. **This is the only row with actual leverage.**
+  - **"Crawled — currently not indexed"** (0 pages) — clean.
+- **Pattern to keep:** ~3 of the 4 GSC indexing-flag categories are working-as-designed signals that show up as "errors" in the UI. When triaging, classify each row before reaching for a fix. Only "Discovered — not indexed" and (if it ever appears) "Crawled — not indexed" need action.
+
+**Content shipped — "Your Residents Chose This Community for Independence. The 300 Yards Between Their Apartment and the Dining Hall Is Taking It Away."** (`/blog/senior-living-independence`, ~2,150 words, **Senior Living**, sitemap priority 0.7, position 1 of "More articles" grid; commit `71796d1`):
+- Anchor narrative: Howard County 2026–2030 Age-Friendly Action Plan listening sessions placed transportation as the **second-most-urgent priority — behind only housing, ahead of healthcare**. Howard County is home to Charlestown by Erickson Senior Living (110 acres, 2,000+ residents, 1,100 staff, climate-controlled walkways) — yet transportation still ranked second. The walkways connect the buildings; the distance between buildings is the barrier.
+- Industry-scale framing: Erickson Senior Living's pipeline (Grandview Bethesda 33 acres / 1,300+ units, Emerson Lakes 87 acres / 1,000+ units, proposed Franklin TN 75 acres / 1,250 units). Brookdale 675+ communities across 40+ states. Acts Retirement-Life Fairhaven 300 acres.
+- "Walking distance is a health outcome" reframing: National Academies isolation-as-premature-mortality stat ("comparable to high blood pressure, smoking, or obesity"). 25–50% of adults over 65 experience loneliness; >70% in some congregate-living settings. U.S. News / USAging: **#1 cause of loneliness in older adults is physical disability or lack of mobility** — not loss of spouse or separation from family.
+- "Built on greenfields. Without transit." structural argument: senior communities built on cheap large-parcel outskirts land produce campuses whose distances were designed for active 65-year-olds and become barriers as those residents age into their 80s and 90s. Campus doesn't change. Resident does. Walkway infrastructure doesn't adapt to mobility decline.
+- Reactive-solutions catalog: golf-cart-on-request, scooter rentals, climate-controlled walkways, external shuttles. Each confirms the problem; none is a system.
+- Staff problem mirrors resident problem (1,100 staff / 2,000 residents / 110 acres at Charlestown). Pairs with workforce-amenity thesis at the senior-living vertical — CNAs, dietary, maintenance recruitment/retention dynamic.
+- "Portfolio opportunity" pitch directly to Erickson, Brookdale, Acts: standardized transit platform across 20–600+ campuses as a brand-level differentiator. Same logic as Session 20's mega-resort-transit Ryman pitch.
+- 5 FAQs with FAQPage JSON-LD; full BlogPosting + BreadcrumbList + Organization JSON-LD; OG/Twitter; canonical; 8 sourced citations (Howard County, Erickson SHN forecast, Budget Seniors / Capital Funding Group, Apartments.com Brookdale ranking, Acts Retirement, National Academies of Sciences, U.S. News / USAging, InTouchLink, Indiana Public Media WFIU greenfield framing).
+
+**Hero image — portrait-to-landscape crop methodology (Session 21 pattern, second application):**
+- Source: `seniorcommunnity.jpg` (4160×6240, portrait architectural campus model photograph — planned community model with central plaza + curving paths + house pieces + model trees). Cropped middle band y=400 to y=2979 (height 2579, 1200:744 ratio), centered the focal-point circular plaza. Resized to 1200×744 (JPG 115KB + WebP 57KB) + 640×397 mobile (JPG 36KB + WebP 18KB). 4 variants, 226KB total. **Portrait-source crop pattern is now repeatable** — used at theme-park-backstage (Session 21) and senior-living-independence (Session 23) successfully.
+
+**Cluster integration (Session 19 publish-workflow rule — inbound links in same commit):**
+- Inbound from `friction-is-eating-demand.html`: added inline anchor on the existing "Building C / 300 yards / book club / her knees" senior-living passage — the new post echoes that exact scene as its closing argument, so the link is contextually seamless. Reader in friction post is already in senior-living context when they hit the anchor.
+- Inbound from `mega-resort-transit.html`: added "senior living communities" inline anchor to the parallel-verticals list ("the same one that stadiums, convention centers, hospitals, senior living communities, and cruise destinations face").
+- Outbound from new post (in body): workforce-amenity, friction-is-eating-demand. Related-reading grid: friction-is-eating-demand, workforce-amenity, hospital-campus-transit, `/solutions/senior-living` (conversion surface).
+- Net link-graph delta: 2 new inbound, 4 new outbound. Senior living now reciprocally linked into the friction-eating-demand / campus-too-big-to-walk cluster alongside hospital-campus-transit, mega-resort-transit, properties-got-bigger.
+
+**Source-MD recurring bug (worth flagging as a pattern):**
+- Same broken outbound link as theme-park-backstage source MD (Session 21): `/blog/workforce-amenity-ride` (which does not exist) instead of `/blog/workforce-amenity`. Caught during HTML build, corrected before push. This is the second time the same wrong slug has appeared in source MDs. **Whatever upstream generator is producing these source MDs has a stale link template.** Worth mentioning to Joseph next time he's prepping a source MD — fixing it upstream prevents the recurring publish-time correction.
+
+**Followups (next session):**
+- GSC manual indexing request for `/blog/senior-living-independence` (use a slot from the ~10/day quota).
+- GA4 Realtime spot-check — visit in private window, confirm pageview + scroll/first_visit fire within 30s.
+- 2–4 week GSC monitoring for senior-living cluster vocabulary: `Erickson Senior Living transportation`, `senior living campus shuttle`, `CCRC campus mobility`, `retirement community tram`, `Charlestown Erickson transit`, `senior campus people mover`, `Brookdale community shuttle`. New buyer persona surface: VP operations / chief operating officers at Erickson, Brookdale, Acts, Senior Lifestyle, Holiday by Atria, Sunrise Senior Living.
+- **Cold-outreach play to senior living portfolios** — Session 23 senior-living-independence post explicitly names Erickson, Brookdale, and Acts and frames standardized portfolio transit as a brand-level differentiator (same playbook as mega-resort-transit / Ryman pitch from Session 20). Approach: "you might find this interesting" intro email with the post link — let the post do the positioning work. Pair with `/solutions/senior-living` as the conversion surface.
+
+---
+
 ## TODOs for next session
 
 ### High priority — active leads + time-sensitive
@@ -1038,6 +1079,10 @@ Long multi-day session. Five major shipments + a process improvement.
 - [ ] **Collect 2 more real testimonials** — FSU is the first; the deployment pattern (`.testimonial-block` component) is now proven and ready to receive 2 more. Once 3 are on hand, consider rotating the homepage placement, adding vertical-specific quotes on matching solution pages, and a `/case-studies` or `/clients` page. Likely candidates to ask: an Ingredion site contact (factory-tours / grand-openings vertical), a festival ops contact (Bonnaroo / Coachella / EDC), a NASCAR-region operations contact.
 
 ### Medium priority — content expansion
+- [ ] **Submit GSC manual indexing for `/blog/senior-living-independence`** (Session 23 publish, 2026-05-14). Use a slot from today's ~10/day GSC URL Inspection quota.
+- [ ] **GA4 Realtime spot-check for `/blog/senior-living-independence`** — visit in private window, confirm pageview + scroll/first_visit fire within 30s.
+- [ ] **Watch GSC for senior-living cluster vocabulary** (2–4 week horizon) — `Erickson Senior Living transportation`, `senior living campus shuttle`, `CCRC campus mobility`, `retirement community tram`, `Charlestown Erickson transit`, `Brookdale community shuttle`. New buyer persona surface: VP operations / COOs at Erickson, Brookdale, Acts, Senior Lifestyle, Holiday by Atria, Sunrise Senior Living.
+- [ ] **Cold-outreach play to senior living portfolios** — Session 23 post explicitly names Erickson, Brookdale, Acts and frames standardized portfolio transit as a brand-level differentiator (same playbook as Session 20 Ryman/Marriott pitch for mega-resort post). Approach: "you might find this interesting" intro email with the post link. Pair with `/solutions/senior-living` as the conversion surface.
 - [ ] **Submit GSC manual indexing for the 5 Session 22 title-refresh URLs** to accelerate recrawl: `/`, `/solutions/`, `/blog/stadium-districts-mixed-use-transportation`, `/blog/parking-lot-mobility-origin`, `/blog/turnkey-mass-transit`. Goal: new titles propagate to SERPs in days vs weeks.
 - [ ] **In ~3 weeks (≈2026-06-02), re-pull GSC top queries for the 5 refreshed targets** — `flextrolley`, `flex trolley`, `stadium mobility infrastructure`, `parking lot transport infrastructure`, `turnkey transportation system`. Success: CTR moves from 0% to 2–5%. Failure: stays 0% → diagnosis shifts to "ranked too deep" (backlinks problem, not title problem).
 - [ ] **Filter internal traffic in GA4** — Admin → Data streams → Web stream → Configure tag settings → "Define internal traffic" → add Joseph's IP. Then Admin → Data filters → set "Internal traffic" filter to **Active** (not Testing). Stops Joseph's publish-verification visits + day-to-day site browsing from inflating Direct sessions and creating false "publishing spike" peaks. Was already a Session 11/15 TODO; promoted in priority because today's diagnosis showed this is the primary cause of the May 1 visual cliff.
