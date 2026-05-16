@@ -28,7 +28,6 @@ Key facts:
 - [Warehouse & logistics](https://www.flextram.com/solutions/warehouse-logistics): Shift-change and intra-site worker transit at distribution centers.
 - [Factory tours](https://www.flextram.com/solutions/factory-tours): Manufacturing facility tour transport.
 - [Grand openings](https://www.flextram.com/solutions/grand-openings): VIP and guest movement during corporate facility openings.
-- [Convention centers](https://www.flextram.com/solutions/convention-centers): Trade show and conference attendee transit.
 - [Labor companies](https://www.flextram.com/solutions/labor-companies): Crew transit for staffing companies operating at venues.
 - [Golf courses](https://www.flextram.com/solutions/golf-courses): Spectator transit for tournaments and championship events.
 - [Raceways & motorsports](https://www.flextram.com/solutions/raceways-motorsports): Race-day spectator transit at NASCAR, F1, and IndyCar venues.
@@ -42,6 +41,7 @@ Key facts:
 - [The Pattern: Coachella, Kentucky Derby, Super Bowl, F1 — they all fail the same way](https://www.flextram.com/blog/the-pattern): Five different events, five different industries, the same failure mode. Synthesizes 5 named-event case studies into a single thesis: the event was designed, but the transportation wasn't.
 - [Cities solved this 100 years ago. Why haven't venues?](https://www.flextram.com/blog/cities-solved-this): Boston opened the first U.S. subway in 1897 because individual vehicles couldn't handle the volume. The math hasn't changed; the application has just moved from cities to venues.
 - [Systems Over Units: Why smaller vehicles don't solve bigger crowd problems](https://www.flextram.com/blog/systems-over-units): The decision framework — predictable flow needs systems, unpredictable flow needs units. Extends the argument forward to autonomous vehicles inside a venue.
+- [28 million people will need accessible transportation by 2030. Your golf cart program isn't ready.](https://www.flextram.com/blog/ada-demand-surge): Santa Barbara's Access Advisory Committee found a golf cart ADA shuttle non-compliant. The 65+ population grows 42% by 2050; older adults with activity limitations double to 28 million by 2030. Request-based dispatch doesn't scale to the demand that's already locked in.
 - [The Properties Got Bigger. The Plan Didn't.](https://www.flextram.com/blog/properties-got-bigger): Hollywood Park is 300 acres. Nashville's East Bank is 338. DataBank's Red Oak is 292. Properties crossed the walking-doesn't-work threshold years ago.
 - [The Demand Is Already There. The Friction Is Eating It.](https://www.flextram.com/blog/friction-is-eating-demand): Cruise disembark rates dropped from 85% to 83%. Fans leave in the 8th inning. Residents stop walking to dinner. Workers skip the trip. Patients miss the third appointment. Same pattern, every property.
 - [You're Already Paying for Transportation. You're Just Calling It Something Else.](https://www.flextram.com/blog/already-paying-for-transportation): The forensic accounting on what venues already spend on onsite transportation, scattered across a dozen budget line items owned by a dozen departments. Direct costs run $200K–$700K per season at large venues.
@@ -62,6 +62,12 @@ Key facts:
 - [Stadiums are becoming neighborhoods](https://www.flextram.com/blog/stadium-districts-mixed-use-transportation): Mixed-use stadium districts and the onsite transit implications nobody is planning for.
 - [Football season is 150 days out. Your parking lot is the weakest link.](https://www.flextram.com/blog/football-parking-lot-weakest-link): NFL and college football gameday parking shuttle operations.
 - [The hidden cost of making fans walk](https://www.flextram.com/blog/hidden-cost-of-making-fans-walk): Per-capita revenue loss from fan friction at stadiums.
+
+## Campus mobility: senior living, hospitality, attractions
+
+- [Your residents chose this community for independence. The 300 yards are taking it away.](https://www.flextram.com/blog/senior-living-independence): Howard County residents named transportation the #2 age-friendly priority — behind only housing. At a 110-acre Erickson community with climate-controlled walkways, the campus distance is still the barrier.
+- [Your resort has 2,888 rooms, 15 restaurants, and a waterpark. Nobody planned how guests move between them.](https://www.flextram.com/blog/mega-resort-transit): Gaylord Opryland rents wheelchairs because the resort is too large to walk. Atlantis spans 154 acres. Dorado Beach uses golf carts across 1,400. Every mega-resort acknowledged the walking problem; none solved it as a system.
+- [Your cast members park a mile away. They walk underground to clock in.](https://www.flextram.com/blog/theme-park-backstage-transit): Disney built the utilidors because a cowboy in Tomorrowland broke the illusion. 200,000 hourly workers behind the curtain on 500+ acre footprints. The backstage transit problem nobody writes about.
 
 ## Cruise & port operations
 
