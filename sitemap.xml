@@ -486,6 +486,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.flextram.com/blog/ada-demand-surge</loc>
+    <lastmod>2026-05-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-ada-demand-surge.jpg</image:loc>
+      <image:caption>Black-and-white photograph of a black 'ACCESSIBLE' wheelchair sign mounted on a wall, lit dramatically from above</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.flextram.com/blog/senior-living-independence</loc>
     <lastmod>2026-05-14</lastmod>
     <changefreq>monthly</changefreq>
