@@ -90,6 +90,17 @@ Static HTML site built on **Paper Kit 2 PRO v2.3.0** (Creative Tim). No build to
   - April 22: "The Fan Experience Gap" (Fan Experience)
   - April 29: "Sponsorship's Untapped Frontier" (Revenue)
 
+### Publish-workflow rules (run on EVERY new blog post, in the same commit as the HTML)
+1. **Inbound cross-links (Session 19 rule).** Add 1–2 inline anchor links from existing posts in the natural cluster pointing at the new post. Avoids the orphan-on-publish pattern that triggered two link-graph audits in Session 19. Inline anchor text > grid card for link authority.
+2. **llms.txt update (Session 25 rule).** Add the new post to [llms.txt](llms.txt) in the same commit. Placement rules:
+   - **One post = one home** (don't double-list under multiple section headers — dilutes which header an LLM treats as authoritative)
+   - **A section needs ~3 posts to justify its own header.** Single-post sections look like padding to a retrieval model. Below 3, file under the broader "Industry analysis (flagship)" section or the nearest vertical cluster.
+   - **Section order = importance.** Top of file = LLMs see first. Solutions hub stays top, then flagship Industry analysis, then vertical clusters roughly in revenue-priority order.
+   - Most AI-search traffic in GA4 (gemini.google.com referrals since Session 8) is **buyer queries** ("anyone making trams for X?"), not philosophical queries — so lean vertical-first, thesis-second when in doubt.
+3. **Sitemap entry** (with `<image:image>` block + lastmod = today) — auto-publish workflow handles this for scheduled drafts, but manual publishes must add it by hand.
+4. **Blog hub card** at top of "More articles" grid (or featured slot if displacing the manifesto).
+5. **Hero image variants** — 1200/640 JPG + WebP, per the Session 17 site-wide WebP pattern. Python PIL script template: see Session 18 (cruise-destination-transit) or Session 20 (mega-resort-transit).
+
 ### Contact form
 - Formspree endpoint: `https://formspree.io/f/mvzzoarr`
 - Form ID: `#contact-form` (used as anchor target from all CTAs)
