@@ -90,6 +90,26 @@ Static HTML site built on **Paper Kit 2 PRO v2.3.0** (Creative Tim). No build to
   - April 22: "The Fan Experience Gap" (Fan Experience)
   - April 29: "Sponsorship's Untapped Frontier" (Revenue)
 
+### AI-search query pattern (the unusual surface that's now driving real impressions)
+GSC top-queries report regularly shows long, operator-heavy Boolean queries hitting the site — patterns like `"cruise industry" -"sub" -"submarine" -site:reddit.com -site:twitter.com -site:tripadvisor.com -site:youtube.com -site:yelp.com -site:booking.com -site:facebook.com -site:instagram.com -site:tiktok.com -site:wykop.pl` or `"ingredion" | "ingredion inc" | "ingredion.com"`. These are **NOT human typed queries.** They are AI search tools (Perplexity, Gemini Deep Research, ChatGPT search, Claude with web search) issuing programmatic Google queries on behalf of a researcher.
+
+**Syntax fingerprints to recognize:**
+- Long `-site:reddit.com -site:twitter.com -site:tripadvisor.com -site:youtube.com -site:yelp.com -site:booking.com -site:facebook.com -site:instagram.com -site:tiktok.com -site:wykop.pl` exclusion lists → **Perplexity / Gemini Deep Research** (strips user-generated content to focus on authoritative sources)
+- Pipe-OR operators (`"x" | "y" | "z"`) → classic Google operator syntax issued by AI tools
+- Lowercase `or` with parens (`(staffing or "event staff" or "temporary workers")`) → less polished, possibly ChatGPT or Claude
+- Mid-query iteration visible (e.g., the same researcher refining `"cruise industry"` three times across consecutive queries with progressively tighter exclusions) → live AI research session, not separate users
+
+**Why this matters:**
+1. The traffic is HIGHEST-INTENT on the site — whoever is running these is in active B2B research mode on a specific entity (Ingredion, Capital Funding Group, Nowsta, HIMSS, named cruise destinations, named data centers). Not casual browsers. Consultants, planners, AI agents working for buyers, or buyers themselves using AI tools.
+2. First sign was Session 14 (stadium-districts 3 → 152 imps on "stadium mobility infrastructure" research vocab). 2026-05-16 GSC pull confirmed it has expanded across 6+ verticals — this is now systemic, not a one-vertical fluke.
+3. The optimization logic is INVERTED from classical SEO. Classical SEO chases short-tail high-volume queries. AI-tool queries are long, specific, entity-rich, operator-laden. What ranks here is **content depth + named-entity density** (specific companies, properties, dollar figures, regulations, people).
+
+**Maintenance rules:**
+- **Don't chase short-tail keywords or thin the content.** The named entities are why this surface works. Stripping them to "improve readability" would kill the highest-intent traffic on the site.
+- **Every named company / venue / property / dollar figure / person / regulation in body copy is a future hit on this surface.** Treat citation density as a feature, not a stylistic cost.
+- **Watch CTR on these queries specifically.** Impressions are confirmed; the open question is whether AI tools click through (sending GA4 sessions) or just cite the URL without a click (AI Overviews / Perplexity citation — different attribution path, may show as `(direct)` or `gemini.google.com` referrals).
+- **The cruise-iteration signal** (same researcher refining the same query 3 times) is the cleanest argument for publishing destination-by-destination cruise content (Half Moon Cay, Castaway Cay, Lighthouse Point, Royal Beach Club Nassau) — that researcher needs depth and is digging. Same logic applies whenever you see iterative queries in a vertical.
+
 ### Publish-workflow rules (run on EVERY new blog post, in the same commit as the HTML)
 1. **Inbound cross-links (Session 19 rule).** Add 1–2 inline anchor links from existing posts in the natural cluster pointing at the new post. Avoids the orphan-on-publish pattern that triggered two link-graph audits in Session 19. Inline anchor text > grid card for link authority.
 2. **llms.txt update (Session 25 rule).** Add the new post to [llms.txt](llms.txt) in the same commit. Placement rules:
@@ -1114,6 +1134,13 @@ Long multi-day session. Five major shipments + a process improvement.
 ---
 
 ## TODOs for next session
+
+### High priority — AI-search surface monitoring (new 2026-05-16)
+- [ ] **Track which posts the AI-search Boolean queries are sending traffic to.** GSC 2026-05-16 pull surfaced operator-heavy queries hitting cruise / Ingredion / Capital Funding Group / Nowsta / HIMSS / Louisville-data-center research. Map each query to the landing URL in GSC (Performance → Pages filter by query) so we know which posts are AI-tool magnets and which aren't. Use that mapping to decide where to invest content depth.
+- [ ] **Watch CTR specifically on the operator-heavy queries.** If impressions are high and clicks are zero, the AI tool is citing without sending a click (AI Overviews / Perplexity citation surface — traffic may show as `(direct)` in GA4). If clicks are non-zero, AI-tool-driven sessions are landing. Different attribution paths → different optimization moves.
+- [ ] **Publish the cruise destination-by-destination expansion** (Half Moon Cay, Castaway Cay, Lighthouse Point, Royal Beach Club Nassau, Great Stirrup Cay). The 2026-05-16 GSC pull showed an AI researcher iterating on the same cruise-industry query 3 times in a row with progressively tighter exclusions — that researcher needs vertical depth and is digging. This is the cleanest signal yet for the Session 18 destination-expansion TODO. Pair with cold outreach to RCL / Carnival / MSC / Disney / NCL destination teams.
+- [ ] **Build "named entity hub" pages** (one per top-AI-search vertical). E.g., a cruise destinations reference page that names 15+ owned cruise destinations with parent companies, acreage, and tram-relevant details. Same for major data center campuses, NFL stadiums, mega-resort portfolios, Power 4 athletics venues. Designed to be exactly what an AI-tool Boolean query is looking for: dense, named-entity-rich, authoritative, no fluff. Treat these as a new content category, not blog posts.
+- [ ] **Avoid pruning named entities from existing content.** When editing for readability, do NOT remove company names, dollar figures, regulation citations, named people, named venues, or named properties — those are why the AI-search surface works. The rule is the inverse of classical SEO copy editing.
 
 ### High priority — active leads + time-sensitive
 - **Daytona International Speedway / Frank Kelleher** — conversation has advanced past initial cold-outreach phase as of Session 23 (2026-05-14). Operational follow-up triggers (silent Lyndsey ping, etc.) no longer applicable. Strategic context preserved for future reference: NASCAR Southeastern Region = Daytona + Talladega + Richmond + Martinsville + Homestead halo; "Chip's 13-track portfolio" (NASCAR-owned tracks) is the obvious next-conversation seed once DIS deploys; Frank's Rock music festival mention is the unlock for the year-round utilization / non-racing events angle. References primed if needed: PVGP, Hinterland, SoCal 300-carts-to-8.
