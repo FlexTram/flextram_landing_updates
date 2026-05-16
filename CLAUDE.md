@@ -110,6 +110,31 @@ GSC top-queries report regularly shows long, operator-heavy Boolean queries hitt
 - **Watch CTR on these queries specifically.** Impressions are confirmed; the open question is whether AI tools click through (sending GA4 sessions) or just cite the URL without a click (AI Overviews / Perplexity citation — different attribution path, may show as `(direct)` or `gemini.google.com` referrals).
 - **The cruise-iteration signal** (same researcher refining the same query 3 times) is the cleanest argument for publishing destination-by-destination cruise content (Half Moon Cay, Castaway Cay, Lighthouse Point, Royal Beach Club Nassau) — that researcher needs depth and is digging. Same logic applies whenever you see iterative queries in a vertical.
 
+### Operator's Atlas — proposed format for capturing the AI-search surface (status: parked 2026-05-16, revisit 2026-05-23)
+**The concept:** a new IA section at `/atlas/` (separate from `/blog/`, `/solutions/`, `/resources/`) housing structured directories of named entities per vertical — `/atlas/cruise-destinations`, `/atlas/data-center-campuses`, `/atlas/nfl-stadiums`, etc. Each atlas is a practitioner-compiled reference page that pairs entity density (what AI-search tools surface) with editorial commentary per entry (what defends the page against scrapers + makes it useful to humans).
+
+**Format per atlas (proposed):**
+1. Editorial intro (300–400 words) — why this category, who the atlas is for, what FlexTram's perspective adds
+2. Entity entries (15–25, each ~80–150 words) — H3 with anchor ID + parent/owner + key facts one-liner (acreage, year, capacity, current transit) + 2–3 sentences of **FlexTram-specific operational observation** (the moat — the thing only practitioners can write)
+3. Patterns across the category (~400 words) — recurring operational themes
+4. What's coming (~200 words) — under construction / rumored / recently opened (lets the page absorb new entities without restructure)
+5. Sources + "Last updated" date (invites bookmarking + gives Google a freshness signal)
+
+**Why "atlas" not "list"/"guide":** "list" reads as SEO content marketing (low trust); "guide" implies how-to (wrong frame); "atlas" carries the practitioner-compiled-reference connotation — the kind of document a consultant bookmarks.
+
+**Why a new `/atlas/` IA section, not `/blog/`:** different mental model — atlas pages are reference, blog pages are editorial, solution pages are buyer-conversion. Clean URL pattern enables future expansion (one per vertical) without polluting blog grid.
+
+**Sequencing if approved:**
+1. **First atlas: cruise destinations.** The GSC 2026-05-16 signal showed an AI researcher iterating cruise queries 3 times — clearest documented demand for vertical depth. Anchor entries: CocoCay, Labadee, Royal Beach Club Nassau, Celebration Key, Half Moon Cay, Castaway Cay, Lighthouse Point, Great Stirrup Cay, Harvest Caye, Ocean Cay (10 obvious starters; could extend to 15–20 with Bahama Out Islands, private island programs).
+2. **Watch the first atlas for 4–6 weeks** before committing to a second. Maintenance is the real risk — three atlases is fine; twelve abandoned atlases is a "this site is dead" signal.
+3. **Likely candidates 2 and 3:** data center campuses (extends an already-strong cluster) and Power 4 collegiate athletics venues (FSU testimonial already opens the door).
+
+**Open questions to resolve when revisiting (2026-05-23):**
+- IA placement: `/atlas/cruise-destinations` vs `/atlas/cruise-destinations/index.html` vs nested `/atlas/cruise/destinations` (depends on whether we expect multiple atlas-per-vertical sub-pages later)
+- Schema: Dataset markup? ItemList? Both? Or just BlogPosting + BreadcrumbList like the rest of the site?
+- Nav placement: does the main nav need an "Atlas" link, or is atlas-as-reference content people land on via search and bookmark (no nav presence)?
+- Editorial standard: how much operational commentary per entry is enough? 2 sentences? A paragraph? The moat depends on this answer.
+
 ### Publish-workflow rules (run on EVERY new blog post, in the same commit as the HTML)
 1. **Inbound cross-links (Session 19 rule).** Add 1–2 inline anchor links from existing posts in the natural cluster pointing at the new post. Avoids the orphan-on-publish pattern that triggered two link-graph audits in Session 19. Inline anchor text > grid card for link authority.
 2. **llms.txt update (Session 25 rule).** Add the new post to [llms.txt](llms.txt) in the same commit. Placement rules:
@@ -1136,6 +1161,7 @@ Long multi-day session. Five major shipments + a process improvement.
 ## TODOs for next session
 
 ### High priority — AI-search surface monitoring (new 2026-05-16)
+- [ ] **2026-05-23 REVISIT: Operator's Atlas format decision.** Concept parked 2026-05-16, full design notes in the "Operator's Atlas" subsection of the Blog system area of CLAUDE.md. Need to resolve: (a) IA placement (`/atlas/` vs nested), (b) schema markup choice (Dataset / ItemList / BlogPosting), (c) nav-placement decision (link in main nav or search-discovery only), (d) editorial-commentary-per-entry standard. If approved, first atlas = cruise destinations (10–20 entries: CocoCay, Labadee, Royal Beach Club Nassau, Celebration Key, Half Moon Cay, Castaway Cay, Lighthouse Point, Great Stirrup Cay, Harvest Caye, Ocean Cay, etc.). Watch first atlas 4–6 weeks before committing to atlas #2.
 - [ ] **Track which posts the AI-search Boolean queries are sending traffic to.** GSC 2026-05-16 pull surfaced operator-heavy queries hitting cruise / Ingredion / Capital Funding Group / Nowsta / HIMSS / Louisville-data-center research. Map each query to the landing URL in GSC (Performance → Pages filter by query) so we know which posts are AI-tool magnets and which aren't. Use that mapping to decide where to invest content depth.
 - [ ] **Watch CTR specifically on the operator-heavy queries.** If impressions are high and clicks are zero, the AI tool is citing without sending a click (AI Overviews / Perplexity citation surface — traffic may show as `(direct)` in GA4). If clicks are non-zero, AI-tool-driven sessions are landing. Different attribution paths → different optimization moves.
 - [ ] **Publish the cruise destination-by-destination expansion** (Half Moon Cay, Castaway Cay, Lighthouse Point, Royal Beach Club Nassau, Great Stirrup Cay). The 2026-05-16 GSC pull showed an AI researcher iterating on the same cruise-industry query 3 times in a row with progressively tighter exclusions — that researcher needs vertical depth and is digging. This is the cleanest signal yet for the Session 18 destination-expansion TODO. Pair with cold outreach to RCL / Carnival / MSC / Disney / NCL destination teams.
