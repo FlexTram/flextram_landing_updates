@@ -1060,6 +1060,48 @@ Long multi-day session. Five major shipments + a process improvement.
 
 ---
 
+### Session 24 (2026-05-15) — Lighthouse audit + homepage CLS deep-dive (failed one-line fix, reverted; deeper diagnosis filed)
+
+**Lighthouse 3-page baseline established (mobile, against live production):**
+
+| Page | Perf | A11y | BP | SEO | LCP | TBT | CLS | Verdict |
+|---|---|---|---|---|---|---|---|---|
+| `/` (homepage) | 63 (cold) / **87 (median)** | 97 | 100 | 100 | 5.4s cold / 2.54s median | 90-260ms | **0.143** | CLS regression |
+| `/blog/senior-living-independence` | **96** | 100 | 100 | 100 | 2.7s | 0ms | 0.002 | Excellent |
+| `/solutions/senior-living` | **92** | 100 | 100 | 100 | 2.7s | 60ms | 0.018 | Solid |
+
+- **Cold-cache anomaly confirmed (Session 16 finding) again.** Homepage first-run measured Perf 63 / LCP 5.4s; median of 3 runs settled at Perf 87 / LCP 2.54s. Always run a curl warmup pass first and use 3-run median for any meaningful Perf/LCP signal. Single-run noise is dramatic.
+- **Blog template + solution template are excellent.** Post-Session-17 WebP work + deferred-loading pattern is paying compounding dividends. Ship pattern is healthy — new posts and solution pages don't need any performance work.
+- **Homepage CLS 0.143 is real (not noise).** 3-pass median came back 0.142 / 0.143 / 0.144 — deterministic within 0.0019 across runs. Above Google's 0.10 'Good' threshold, in 'Needs Improvement' band.
+
+**CLS smoking gun identified via Lighthouse `layout-shifts` audit JSON:**
+- **99% of the CLS (0.142 of 0.143)** traced to a single element: `div.features-2 > div.container > div.row > div.col-md-4` containing the "Independently Turning Axles" features card. The other 3 layout-shift items combined to 0.0019 — negligible.
+- **Root cause:** the May 1 commit `db8842d` ("Fix nav logo rendering small after CLS fix") set the nav logo's `width="900" height="184"` attrs to native dimensions on the theory that *"modern browsers derive aspect-ratio from width/height attrs without forcing the rendered width to match the attribute."* That theory holds **only when CSS has already loaded**. The site defers Paper Kit + Bootstrap CSS, so for the brief window before they load, the browser falls back to intrinsic dimensions and renders the logo at 900×184 — inflating the navbar to ~184px tall. Once CSS arrives, `.navbar-brand img { max-width: 25% }` collapses the logo to ~225px wide, navbar shrinks to ~50px, and **everything below shifts up by ~134px**, including the features-2 cards.
+
+**Failed one-line fix attempt (commit `dbba2b3`):**
+- Tried: added `style="width:225px;height:auto;"` to the nav logo, theory being inline style would force the rendered width before deferred CSS loads while width/height attrs preserved the 4.89:1 aspect ratio for space reservation.
+- Result was **catastrophic:** post-fix 3-pass Lighthouse measured CLS at 0.902 / 0.148 / 0.928 (median 0.902 — **6.3× worse than pre-fix**). 2 of 3 runs landed in **'Poor' CLS territory (>0.25 = Google ranking penalty)**.
+- **Reason the fix backfired:** by forcing the navbar to its small final size from first paint, the page-header / video-background layout timing changed in a way that exposed an intermittent CLS at the hero `<video>` element (`label="FlexTram micro-mobility vehicle in action at a live event"`). The video element's load lifecycle now raced with `.page-header { min-height: 100vh }` layout — sometimes video loaded after layout settled (CLS 0.14), sometimes during (CLS 0.90).
+- **Reverted in commit `bbbd0cb`.** Back to the stable 0.143.
+
+**Critical learning to remember:**
+- **The homepage has at least TWO stacked CLS sources.** The navbar shift was MASKING a worse intermittent video-container shift. Fixing one alone exposes the other. They need to be fixed together, not sequentially.
+- **Don't try one-line CLS fixes on the homepage.** Every quick fix touches layout timing, and the legacy stack (Slick + Bootstrap + Paper Kit + jQuery + hero video) has multiple interacting layout triggers. A single change shifts the timing race in unpredictable directions.
+- **The proper fix is the long-deferred homepage overhaul.** Multi-day project: inline `.page-header` + `.video-background` critical CSS, restructure how video container reserves space, possibly remove parallax (`data-parallax="true"`), possibly replace Slick with vanilla JS carousel. Until that happens, homepage CLS will float in the 0.10–0.18 range — annoying, above the 'Good' threshold, but not catastrophic. Site still ranks position 1.06 for branded `flextram` search; no organic-traffic blocker.
+
+**Methodological wins:**
+1. **3-pass median is essential for CLS** at this site. Single-run can be 0.14 OR 0.90 for the SAME page state depending on race conditions. Never act on single-run CLS data.
+2. **Lighthouse `layout-shifts` audit JSON** (under `audits.layout-shifts.details.items`) gives exact selector + score per shifting element. Pull this BEFORE proposing any fix. Saves chasing the wrong element.
+3. **Always run a verify-after-ship audit** before declaring success on a perf fix. Tonight's catastrophe would have shipped invisibly without it.
+4. **gh CLI active account reverts to `jmbradley` between sessions.** Confirm with `gh auth status` and switch back to FlexTram before pushing. Hit this again tonight — now the third occurrence (Session 21 + Session 22 + Session 24).
+
+**Followups (next session / queued):**
+- Homepage performance overhaul remains the only real fix for the CLS issue. Multi-day project, not a sprint task. Don't attempt incremental fixes until ready to do the full job — the legacy-stack interactions make every one-line attempt brittle.
+- Re-pull the 3-page Lighthouse baseline in ~2 weeks to confirm blog template + solution template stayed at 96 / 92 Perf.
+- The existing "Diagnose homepage CLS 0.223 regression" TODO is now resolved as fully diagnosed but unfixed; updated TODO entry reflects this.
+
+---
+
 ## TODOs for next session
 
 ### High priority — active leads + time-sensitive
@@ -1096,7 +1138,7 @@ Long multi-day session. Five major shipments + a process improvement.
 - [ ] **Watch GSC for procurement-packet vocabulary** — Session 19 shipped `/procurement-packet` with keyword-rich meta. Target queries: `FlexTram procurement packet`, `tram rental RFP`, `event transportation procurement`, `vehicle specifications FlexTram`, `FlexTram ADA compliance`, `FlexTram insurance COI`. Same monitoring pattern as cruise-destination vocab. If procurement-vocabulary impressions surface, consider building `/for-procurement-teams` companion content (still gated; just more SEO real estate for procurement-stage buyers).
 
 ### Performance opportunities (surfaced by Session 16/17 Lighthouse audit, real measurements)
-- [ ] **Diagnose homepage CLS 0.223 regression** — Session 17 Lighthouse showed homepage CLS at 0.223 (above the 0.1 Google ranking threshold). Session 10 had this site-wide at <0.1. Likely cause: late-loading hero video reflow + Slick carousel reflow + contact-alt-cards loading after critical CSS, combining into a measurable layout shift. Diagnostic next step: run Lighthouse on homepage 3 times (warm cache) for a stable median, then use the `--view` flag to inspect the layout-shift filmstrip and identify the offending element. Single-run noise caveat applies but at half the measured value (~0.11) it's still above threshold. Not urgent (homepage already ranks position 1.06 for "flextram" — no organic-traffic blocker), but it's an active CWV signal that didn't exist a sprint ago.
+- [ ] **Homepage CLS — fully diagnosed Session 24, fix deferred to broader overhaul.** Current state: median CLS 0.143 (above Google's 0.10 'Good' threshold, in 'Needs Improvement' band). Diagnosed via 3-pass Lighthouse + `layout-shifts` audit JSON: 99% of CLS comes from features-2 cards being pushed down when the navbar collapses on deferred CSS load. Root cause: nav logo `width="900" height="184"` attrs (set May 1 by `db8842d`) cause browser to render logo at intrinsic 900×184 before CSS loads, then collapse to ~225px once CSS arrives → navbar height drops → cards shift up. **One-line fix attempted (`dbba2b3`) and reverted (`bbbd0cb`)** — adding `style="width:225px"` to the logo exposed a second intermittent CLS at the hero `<video>` element, making CLS 6× worse (median 0.902, 2/3 runs in 'Poor' territory). The two CLS sources are stacked; fixing one alone exposes the other. **Real fix requires the deferred homepage overhaul** — inline `.page-header` + `.video-background` critical CSS, possibly remove `data-parallax`, possibly restructure video container. Multi-day work; don't attempt incremental fixes. Site still ranks position 1.06 for branded `flextram` — no organic-traffic blocker, so the urgency is real but not critical.
 - [ ] **Run 3-page perf-baseline audit on next session start** — Session 17 single-run Lighthouse showed `stadiums-arenas` slipped 90 → 88 (within typical variance per Session 16). 3-run median would tell us whether the dip is real or noise. Do same for `airport-fbo` (89→99 was big) and `stadium-districts-blog` (76→96). Confirms whether the WebP wins hold at high traffic.
 - [ ] **Homepage video bottleneck (still open)** — `/` Lighthouse mobile holding ~45–48 because of the 2.3MB hero video + Slick carousel + Bootstrap+jQuery+Paper Kit legacy stack. WebP heroes don't help here (homepage doesn't use the hero-* image system). Real fix is the larger homepage rebuild (drop jQuery, replace Slick with vanilla JS carousel, further compress or replace the hero video). Multi-day project — don't tackle without runway.
 
