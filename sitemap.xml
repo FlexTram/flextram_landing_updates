@@ -486,6 +486,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.flextram.com/blog/parking-lot-still-1987</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-parking-lot-still-1987.jpg</image:loc>
+      <image:caption>Empty stadium parking lot with worn asphalt, a faded posted-parking sign, and grandstand seating visible in the background under a clear sky</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.flextram.com/blog/ada-demand-surge</loc>
     <lastmod>2026-05-16</lastmod>
     <changefreq>monthly</changefreq>
