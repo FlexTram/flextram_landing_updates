@@ -109,5 +109,6 @@ Key facts:
 - [Contact form](https://www.flextram.com/#contact-form): Casual or exploratory inquiries.
 - [Request a bid](https://www.flextram.com/request-a-bid): Structured procurement form for RFPs and large deployments.
 - [Procurement packet](https://www.flextram.com/procurement-packet): Vehicle specifications, ADA compliance, COI on request, deployment SOPs (gated lead capture).
+- [Savings calculator](https://www.flextram.com/savings-calculator): Interactive tool — model labor, fuel, insurance, and maintenance savings from replacing a golf cart fleet with FlexTram. Live, traceable math.
 - [Calendly](https://calendly.com/jb-flextram/30min): 30-minute discovery call.
 - [Where we operate](https://www.flextram.com/where-we-operate): Service area (United States and Canada).

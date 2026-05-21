@@ -1,0 +1,964 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<!-- Google tag (gtag.js) -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-ZYK6B5M9QT');
+  (function() {
+    var loaded = false;
+    function loadGA() {
+      if (loaded) return; loaded = true;
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-ZYK6B5M9QT';
+      document.head.appendChild(s);
+    }
+    ['scroll','mousemove','touchstart','keydown','click','pointerdown'].forEach(function(e) {
+      window.addEventListener(e, loadGA, { once: true, passive: true });
+    });
+    setTimeout(loadGA, 2500);
+  })();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Golf Cart Fleet Savings Calculator | FlexTram</title>
+<meta name="description" content="Model what replacing your golf cart fleet with FlexTram saves on labor, fuel, insurance, and maintenance. Live numbers from your actual operation — every line traceable to your inputs." />
+<meta name="keywords" content="golf cart fleet cost calculator, golf cart vs tram cost, fleet savings calculator, golf cart operator labor cost, golf cart fleet replacement, FlexTram savings, golf cart fleet ROI, venue transportation cost calculator, golf cart fleet right-sizing, flex tram, flextrolley, flex trolley" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"></noscript>
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
+<link rel="canonical" href="https://www.flextram.com/savings-calculator" />
+<meta name="theme-color" content="#000000">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@FlexTram">
+<meta name="twitter:title" content="Golf Cart Fleet Savings Calculator | FlexTram">
+<meta name="twitter:description" content="Model what replacing your golf cart fleet with FlexTram saves on labor, fuel, insurance, and maintenance. Live numbers from your actual operation.">
+<meta name="twitter:image" content="https://www.flextram.com/assets/img/og-flextram-v1.jpg">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Golf Cart Fleet Savings Calculator | FlexTram" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.flextram.com/savings-calculator" />
+<meta property="og:image" content="https://www.flextram.com/assets/img/og-flextram-v1.jpg" />
+<meta property="og:description" content="Model what replacing your golf cart fleet with FlexTram saves on labor, fuel, insurance, and maintenance. Live numbers from your actual operation." />
+<meta property="og:site_name" content="FlexTram" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.flextram.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Savings Calculator", "item": "https://www.flextram.com/savings-calculator" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "FlexTram",
+  "alternateName": "FlexTrolley",
+  "url": "https://www.flextram.com",
+  "logo": "https://www.flextram.com/assets/img/logo_black_new.png",
+  "sameAs": ["https://www.instagram.com/flextrams/", "https://www.youtube.com/channel/UCpsB7uSokUzjf1TS0W5KaIQ", "https://www.linkedin.com/company/flextram"]
+}
+</script>
+<style>
+  :root {
+    --cream: #F1EFE8;
+    --surface: #F8F7F3;
+    --surface-2: #EDEAE0;
+    --border: #D3D1C7;
+    --border-strong: #B8B6AB;
+    --ink: #0A0A0A;
+    --ink-2: #2C2C2A;
+    --mid: #888780;
+    --muted: #5F5E5A;
+    --body: #1A1A19;
+    --orange: #c44323;
+    --orange-deep: #a3361c;
+    --orange-soft: #FBE8DE;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--body); }
+  body {
+    font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 56px 32px 96px;
+  }
+  /* Header */
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 56px;
+  }
+  .brand a { display: block; line-height: 0; }
+  .brand img { height: 18px; width: auto; display: block; }
+  .brand .divider {
+    width: 1px;
+    height: 14px;
+    background: var(--border-strong);
+  }
+  .brand .label {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Hero */
+  h1 {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(40px, 6vw, 60px);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 0 0 16px;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--orange);
+    font-weight: 400;
+  }
+  .lede {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 560px;
+    margin: 0 0 40px;
+  }
+
+  /* Section heading */
+  h2 {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-weight: 400;
+    font-size: 26px;
+    letter-spacing: 0;
+    color: var(--ink);
+    margin: 48px 0 8px;
+  }
+  .section-hint {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0 0 24px;
+  }
+
+  /* Form grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  @media (max-width: 560px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .field label {
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .field .label-aside {
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 400;
+    color: var(--mid);
+    margin-left: 4px;
+  }
+  .field .hint {
+    font-size: 12px;
+    color: var(--mid);
+    margin-top: 2px;
+  }
+  .input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .input-wrap .prefix,
+  .input-wrap .suffix {
+    position: absolute;
+    color: var(--muted);
+    font-size: 14px;
+    pointer-events: none;
+  }
+  .input-wrap .prefix { left: 14px; }
+  .input-wrap .suffix { right: 14px; }
+  input[type="number"], input[type="email"], select {
+    width: 100%;
+    padding: 12px 14px;
+    font: inherit;
+    font-size: 16px;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+    font-variant-numeric: tabular-nums;
+  }
+  input[type="number"].has-prefix { padding-left: 28px; }
+  input[type="number"].has-suffix { padding-right: 36px; }
+  input:focus, select:focus {
+    border-color: var(--ink);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(196, 67, 35, 0.15);
+  }
+  /* Hide number spinners */
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  input[type=number] { -moz-appearance: textfield; }
+
+  /* Advanced toggle */
+  .advanced-toggle {
+    margin: 32px 0 0;
+    background: none;
+    border: none;
+    padding: 8px 0;
+    font: inherit;
+    font-size: 13px;
+    color: var(--ink);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--ink);
+    border-radius: 0;
+    letter-spacing: 0.01em;
+  }
+  .advanced-toggle::after {
+    content: "+";
+    font-size: 16px;
+    font-weight: 400;
+    transition: transform 0.2s ease;
+  }
+  .advanced-toggle.open::after { content: "−"; }
+  .advanced-fields {
+    margin-top: 24px;
+    display: none;
+  }
+  .advanced-fields.open { display: block; }
+
+  /* Math card */
+  .math {
+    margin-top: 48px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px 32px;
+  }
+  .math h3 {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-weight: 400;
+    font-size: 22px;
+    margin: 0 0 4px;
+    color: var(--ink);
+  }
+  .math .sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin: 0 0 24px;
+  }
+  .math .row {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .math .row:last-of-type { border-bottom: none; }
+  .math .row-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .math .row-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .math .row-value {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-weight: 400;
+    font-size: 24px;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0;
+  }
+  .math .row-detail {
+    margin-top: 6px;
+    font-size: 12.5px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.6;
+  }
+  .math .row-detail .op { color: var(--mid); padding: 0 2px; }
+
+  /* Total card — the gated one */
+  .total-card {
+    margin-top: 28px;
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 12px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .total-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(60% 100% at 100% 0%, rgba(196, 67, 35, 0.12), transparent 70%);
+  }
+  .total-card .total-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(241, 239, 232, 0.6);
+    margin-bottom: 8px;
+  }
+  .total-card .total-number {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(44px, 7.5vw, 68px);
+    color: var(--orange);
+    line-height: 1;
+    letter-spacing: 0;
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 6px;
+  }
+  .total-card .total-sub {
+    font-size: 14px;
+    color: rgba(241, 239, 232, 0.8);
+    margin-bottom: 0;
+  }
+  .total-card .secondary {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(241, 239, 232, 0.15);
+  }
+  @media (max-width: 560px) {
+    .total-card .secondary { grid-template-columns: 1fr; gap: 16px; }
+  }
+  .total-card .secondary .label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(241, 239, 232, 0.6);
+    margin-bottom: 6px;
+  }
+  .total-card .secondary .value {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-weight: 400;
+    font-size: 26px;
+    color: var(--cream);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Gated blur */
+  .gated {
+    filter: blur(8px);
+    transition: filter 0.6s ease;
+    user-select: none;
+  }
+  .unlocked .gated { filter: blur(0); }
+
+  /* Gate form */
+  .gate {
+    margin-top: 32px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px 32px;
+    transition: opacity 0.4s ease, transform 0.4s ease, max-height 0.5s ease, padding 0.5s ease, margin 0.5s ease;
+    overflow: hidden;
+  }
+  .unlocked .gate {
+    opacity: 0;
+    transform: translateY(-8px);
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    border-color: transparent;
+    pointer-events: none;
+  }
+  .gate h3 {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-size: 24px;
+    margin: 0 0 6px;
+    color: var(--ink);
+    font-weight: 400;
+  }
+  .gate p {
+    margin: 0 0 20px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .gate-row {
+    display: flex;
+    gap: 10px;
+    align-items: stretch;
+  }
+  @media (max-width: 560px) {
+    .gate-row { flex-direction: column; }
+  }
+  .gate-row input { flex: 1; min-width: 0; }
+  .hp-field {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    overflow: hidden;
+  }
+  button.primary {
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.05s ease;
+    white-space: nowrap;
+  }
+  button.primary:hover { background: var(--orange-deep); }
+  button.primary:active { transform: translateY(1px); }
+  button.primary:disabled { opacity: 0.7; cursor: default; }
+  .gate-error {
+    color: var(--orange-deep);
+    font-size: 13px;
+    margin-top: 10px;
+    display: none;
+  }
+  .gate-error.show { display: block; }
+
+  /* Post-unlock CTAs */
+  .post-cta {
+    margin-top: 32px;
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .unlocked .post-cta { display: flex; animation: rise 0.5s 0.2s ease both; }
+  .confirm {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--orange);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .confirm-tick {
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--orange);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 1px;
+  }
+  .confirm-head {
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .confirm-body {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .post-cta-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .post-cta a.btn-secondary {
+    color: var(--ink);
+    text-decoration: none;
+    padding: 12px 22px;
+    border: 1px solid var(--ink);
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .post-cta a.btn-secondary:hover {
+    background: var(--ink);
+    color: var(--cream);
+  }
+  .post-cta .note {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  /* Tiny disclaimer */
+  .fine {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .sources {
+    margin-top: 24px;
+    font-size: 11px;
+    color: var(--mid);
+    line-height: 1.7;
+  }
+  .sources strong {
+    color: var(--muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 10px;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .sources a {
+    color: var(--muted);
+    text-decoration: underline;
+    text-decoration-color: var(--border-strong);
+  }
+  .sources a:hover {
+    color: var(--ink);
+    text-decoration-color: var(--ink);
+  }
+
+  /* Subtle entrance */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .rise { animation: rise 0.5s ease both; }
+  .rise-2 { animation-delay: 0.06s; }
+  .rise-3 { animation-delay: 0.12s; }
+  .rise-4 { animation-delay: 0.18s; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="brand rise">
+    <a href="/" aria-label="FlexTram home">
+      <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGlkPSJMYXllcl8yIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTguNzQ1NSAyNC4zMzA0Ij48ZyBpZD0iQ29tcG9uZW50cyI+PGcgaWQ9ImUyZTU4MTY2LWZiNDctNGQ0YS1iMjc4LWQxMTg2ZmQwZDFlN180Ij48cGF0aCBkPSJNOTMuNjkwNyw3LjcxNDVoLTcuMDExM3YxMS4zMjA5aC0zLjcxMzhWNy43MTQ1aC0xMC4zMjJsMy4zMTA2LTMuMTE0NGgxNy43MzY0djMuMTE0NFoiIHN0eWxlPSJzdHJva2Utd2lkdGg6MHB4OyIvPjxwYXRoIGQ9Ik0xMDkuODg2OCwxNC43NDcybDIuNjYwOCw0LjI4ODNoLTQuMzcxOWwtMi4zMy0zLjg1NjFoLTUuOTc5N3YzLjg1NjFoLTMuNzEzOFY0LjYwMDFoMTEuMzQ0YzMuMjc2MiwwLDUuNTI0NCwyLjA4MjgsNS41MjQ0LDUuMzAwMywwLDIuMzUxMy0xLjE5NTIsNC4wODM3LTMuMTMzOSw0Ljg0NjdaTTk5Ljg2NiwxMi4wNjVoNi41OTg3YzEuMTEzNCwwLDIuODQ1OCwwLDIuODQ1OC0yLjE2NDYsMC0yLjE4NTktMS43MzI0LTIuMTg1OS0yLjg0NTgtMi4xODU5aC02LjU5ODd2NC4zNTA1WiIgc3R5bGU9InN0cm9rZS13aWR0aDowcHg7Ii8+PHBhdGggZD0iTTEyOC44NTA0LDE1Ljk2MzdoLTguNjQwNWwtMS41NDc0LDMuMDcxN2gtNC4wODM3bDcuNDQ1My0xNC40MzUzaDUuMDEyMmw3LjQ2MzEsMTQuNDM1M2gtNC4xMDE1bC0xLjU0NzQtMy4wNzE3Wk0xMjcuNDY2NywxMy4xOTk4bC0yLjkyNzYtNS44NTctMi45NDksNS44NTdoNS44NzY2WiIgc3R5bGU9InN0cm9rZS13aWR0aDowcHg7Ii8+PHBhdGggZD0iTTE1OC43NDU1LDE5LjAzNTRoLTMuNzEzOHYtOS44OThsLTYuMDAxMSw5Ljg5OGgtMi42Nzg2bC02LjAwMTEtOS44OTh2OS44OThoLTMuNzEzOFY0LjYwMDFoNS4wMTIybDYuMDQwMiwxMC4xODc5LDYuMDQzOC0xMC4xODc5aDUuMDEyMnYxNC40MzUzWiIgc3R5bGU9InN0cm9rZS13aWR0aDowcHg7Ii8+PHBhdGggZD0iTTMuNzEzOCw3LjcxNDV2My42NzExaDEwLjMwODl2My4xMzM5SDMuNzEzOHY0LjUxNTlIMFY0LjYwMDFoMTUuMjYwNnYzLjExNDRIMy43MTM4Wk0zMi41NzM3LDE1LjkyMXYzLjExNDRoLTE0Ljg0NzlWNC42MDAxaDMuNzEzOHYxMS4zMjA5aDExLjEzNDJaTTM4Ljk3NjcsNy41NDkxdjIuOTI5NGg5LjcyMTJ2Mi42ODA0aC05LjcyMTJ2Mi45Mjc2aDE0LjI2MDZsLTIuNzEzOCwyLjk0OWgtMTUuMjYwNlY0LjYwMDFoMTUuMjYwNnYyLjk0OWgtMTEuNTQ2OFpNNDkuMjE3MywyNC4zMTIzbDEyLjQ3MjQtMTIuNDU2Ni01LjE2MzctNS4xNjM4aDIuNzI0NWwzLjgwMTUsMy44MDE1TDc0LjA2MzMsMGgtMi44MzkzbC04LjE3MjEsNy41MzUyLTIuOTM1LTIuOTM1aC04LjY0MDhsNy4yNTU0LDcuMjU1NS0xMi40MDEzLDEyLjQyMDksMi44ODcyLjAzNTdaTTc5LjUxNzQsMGgtMi45NjMzbC02Ljk5MTgsNi42OTE5aC4wMTU1bC01LjE2MzcsNS4xNjM4LDUuMTk0NSw1LjE5NDUtMi42OTExLjAzMzMtMy44NjU2LTMuODY1Ni0zLjg2NTYsMy44NjU2aC0uMDA2N3MtNy40MTE3LDcuMjEwNi03LjQxMTcsNy4yMTA2bDIuOTM4OS4wMzY0LDguMzQ1Mi04LjE1NDMsMy4wMDk5LDMuMDA5OCw4LjUzNTMtLjEwNTYtNy4yMjQ3LTcuMjI0N0w3OS41MTc0LDBaIiBzdHlsZT0ic3Ryb2tlLXdpZHRoOjBweDsiLz48L2c+PC9nPjwvc3ZnPg==" alt="FlexTram"/>
+    </a>
+    <div class="divider"></div>
+    <div class="label">Savings Calculator</div>
+  </header>
+
+  <h1 class="rise rise-2">Run the numbers on your <em>actual</em> operation.</h1>
+  <p class="lede rise rise-3">A single FlexTram with one operator can replace the capacity of five 6-seater golf carts with five operators. Labor, fuel, and liability exposure shrinks as well. Plug in your operation. See what FlexTram can save you.</p>
+
+  <section class="rise rise-4">
+    <h2>Your current operation</h2>
+    <p class="section-hint">Tell us about your fleet. We'll handle the math.</p>
+
+    <div class="grid">
+      <div class="field">
+        <label for="sixSeat">6-seater carts <span class="label-aside">(5 passenger seats each)</span></label>
+        <div class="input-wrap">
+          <input type="number" id="sixSeat" min="0" step="1" value="12"/>
+        </div>
+      </div>
+      <div class="field">
+        <label for="fourSeat">4-seater carts <span class="label-aside">(3 passenger seats each)</span></label>
+        <div class="input-wrap">
+          <input type="number" id="fourSeat" min="0" step="1" value="8"/>
+        </div>
+      </div>
+      <div class="field">
+        <label for="util">Fleet utilization at peak</label>
+        <div class="input-wrap">
+          <input type="number" id="util" min="10" max="100" step="5" value="60" class="has-suffix"/>
+          <span class="suffix">%</span>
+        </div>
+        <span class="hint">% of carts actively running with operators at peak. Most venues: 50–70%.</span>
+      </div>
+      <div class="field">
+        <label for="hours">Hours per day operated</label>
+        <div class="input-wrap">
+          <input type="number" id="hours" min="1" max="24" step="0.5" value="10" class="has-suffix"/>
+          <span class="suffix">hrs</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="days">Operating days per year</label>
+        <div class="input-wrap">
+          <input type="number" id="days" min="1" max="365" step="1" value="200"/>
+        </div>
+        <span class="hint">Year-round campus: ~365. Seasonal venue: 100–200.</span>
+      </div>
+      <div class="field">
+        <label for="wage">Operator wage</label>
+        <div class="input-wrap">
+          <span class="prefix">$</span>
+          <input type="number" id="wage" min="1" step="0.5" value="22" class="has-prefix has-suffix"/>
+          <span class="suffix">/ hr</span>
+        </div>
+        <span class="hint">All-in including benefits and overhead.</span>
+      </div>
+    </div>
+
+    <button type="button" class="advanced-toggle" id="advToggle">Advanced inputs</button>
+
+    <div class="advanced-fields" id="advFields">
+      <div class="grid">
+        <div class="field">
+          <label for="fuel">Fuel / charging cost per cart</label>
+          <div class="input-wrap">
+            <span class="prefix">$</span>
+            <input type="number" id="fuel" min="0" step="0.5" value="3.5" class="has-prefix has-suffix"/>
+            <span class="suffix">/ day</span>
+          </div>
+          <span class="hint">Electric: $1–3/day. Gas / propane: $6–10/day.</span>
+        </div>
+        <div class="field">
+          <label for="insurance">Insurance per cart</label>
+          <div class="input-wrap">
+            <span class="prefix">$</span>
+            <input type="number" id="insurance" min="0" step="50" value="850" class="has-prefix has-suffix"/>
+            <span class="suffix">/ yr</span>
+          </div>
+          <span class="hint">Commercial passenger use typically runs $600–$1,800/yr per cart.</span>
+        </div>
+        <div class="field">
+          <label for="maint">Maintenance per cart</label>
+          <div class="input-wrap">
+            <span class="prefix">$</span>
+            <input type="number" id="maint" min="0" step="50" value="500" class="has-prefix has-suffix"/>
+            <span class="suffix">/ yr</span>
+          </div>
+          <span class="hint">Electric: $300–$600/yr. Gas: $500–$1,200/yr.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="math" id="math" aria-live="polite">
+    <h3>Your operational savings</h3>
+    <p class="sub">Live calculation. Every line traceable to your inputs.</p>
+
+    <div class="row">
+      <div class="row-head">
+        <div class="row-label">Fleet right-sizing</div>
+        <div class="row-value" id="m-fleet">— → —</div>
+      </div>
+      <div class="row-detail" id="d-fleet"></div>
+    </div>
+
+    <div class="row">
+      <div class="row-head">
+        <div class="row-label">Labor savings</div>
+        <div class="row-value" id="m-labor">$—</div>
+      </div>
+      <div class="row-detail" id="d-labor"></div>
+    </div>
+
+    <div class="row">
+      <div class="row-head">
+        <div class="row-label">Fuel &amp; charging savings</div>
+        <div class="row-value" id="m-fuel">$—</div>
+      </div>
+      <div class="row-detail" id="d-fuel"></div>
+    </div>
+
+    <div class="row">
+      <div class="row-head">
+        <div class="row-label">Insurance + maintenance savings</div>
+        <div class="row-value" id="m-other">$—</div>
+      </div>
+      <div class="row-detail" id="d-other"></div>
+    </div>
+  </section>
+
+  <section class="total-card" id="totalCard">
+    <div class="total-label">Your potential annual savings</div>
+    <div class="total-number gated" id="totalNum">$— – $—</div>
+    <div class="total-sub" id="totalSub">Range reflects FlexTram lease vs. financed ownership.</div>
+    <div class="secondary">
+      <div>
+        <div class="label">5-year potential</div>
+        <div class="value gated" id="cumulative">$—</div>
+      </div>
+      <div>
+        <div class="label">Your exact payback period</div>
+        <div class="value" style="font-size:15px; line-height:1.4;">Available with a personalized quote →</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="gate" id="gate">
+    <h3>Get your personalized savings report</h3>
+    <p>Enter your email to reveal your numbers. Joseph will follow up with a personalized breakdown — including what site-specific route design and tandem configurations can add to your savings.</p>
+    <form class="gate-row" id="gateForm" novalidate>
+      <input type="email" id="email" name="email" placeholder="you@company.com" required autocomplete="email"/>
+      <div class="hp-field" aria-hidden="true">
+        <label for="hp">Leave this field empty</label>
+        <input type="text" id="hp" name="_gotcha" tabindex="-1" autocomplete="off"/>
+      </div>
+      <button type="submit" class="primary">Show my savings</button>
+    </form>
+    <div class="gate-error" id="gateError">Please enter a valid email address.</div>
+  </section>
+
+  <div class="post-cta">
+    <div class="confirm">
+      <div class="confirm-tick">✓</div>
+      <div>
+        <div class="confirm-head">You're all set.</div>
+        <div class="confirm-body">Your numbers are unlocked above. Joseph will follow up with a personalized breakdown — typically within one business day. Want your exact payback period and a route-design walkthrough now? Book a call below.</div>
+      </div>
+    </div>
+    <div class="post-cta-row">
+      <a href="mailto:jb@flextram.com?subject=FlexTram%20quote%20request" class="btn-secondary" id="bookCall">Book a 20-min call →</a>
+      <span class="note">With Joseph Bradley · jb@flextram.com</span>
+    </div>
+  </div>
+
+  <div class="fine">
+    Calculations are estimates based on the inputs you provide. Actual savings vary by site, route design, operator wages, fuel costs, regional insurance rates, and FlexTram configuration. Calculator assumes 27 passenger seats per FlexTram. Contact FlexTram for a site-specific quote.
+  </div>
+
+  <div class="sources">
+    <strong>Sources</strong>
+    Maintenance ranges from <a href="https://lvtonggolfcart.com/industry-news/golf-cart-maintenance-cost-for-commercial-fleets.html" target="_blank" rel="noopener">LvTong commercial fleet analysis (2026)</a> and <a href="https://carts-and-parts.com/how-much-does-a-golf-cart-cost/" target="_blank" rel="noopener">Carts &amp; Parts pricing guide (2026)</a>. Fuel and charging costs from <a href="https://golfcartsearch.com/golf-cart-cost-calculator" target="_blank" rel="noopener">Golf Cart Search ownership calculator (2026)</a>. Personal-use insurance ranges from <a href="https://www.insurance.com/other-insurance/golf-cart-insurance.html" target="_blank" rel="noopener">Insurance.com (2025)</a>; commercial passenger-fleet pricing from <a href="https://www.logrock.com/commercial-truck-insurance/average-cost-commercial-auto-insurance/" target="_blank" rel="noopener">Logrock 2026 commercial auto report</a>. Note that personal golf cart policies do not cover commercial use; defaults reflect commercial fleet pricing.
+  </div>
+
+</div>
+
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const fmt = (n) => "$" + Math.round(n).toLocaleString();
+  const fmtK = (n) => {
+    if (Math.abs(n) >= 1000000) return "$" + (n/1000000).toFixed(2) + "M";
+    if (Math.abs(n) >= 10000)   return "$" + Math.round(n/1000) + "K";
+    return fmt(n);
+  };
+  const ids = ["sixSeat","fourSeat","util","hours","days","wage","fuel","insurance","maint"];
+  const num = (id) => Math.max(0, parseFloat($(id).value) || 0);
+
+  // Range bounds: FlexTram annual cost varies by configuration.
+  // Low cost (best case): financed ownership amortized ≈ $12,000/yr/tram
+  // High cost (conservative): lease at $19,800/yr/tram
+  const FT_COST_LOW  = 12000;
+  const FT_COST_HIGH = 19800;
+
+  // Latest calc result — read by the gate submit handler for the lead payload.
+  let lastResult = {};
+
+  function calc() {
+    const sixSeat = Math.max(0, Math.round(num("sixSeat")));
+    const fourSeat = Math.max(0, Math.round(num("fourSeat")));
+    const carts = sixSeat + fourSeat;
+    const utilPct = Math.max(10, Math.min(100, num("util")));
+    const util = utilPct / 100;
+    const hours = num("hours");
+    const days  = num("days");
+    const wage  = num("wage");
+    const fuel  = num("fuel");
+    const ins   = num("insurance");
+    const maint = num("maint");
+
+    // Edge case: zero fleet → show empty state
+    if (carts === 0) {
+      $("m-fleet").textContent = "—";
+      $("d-fleet").innerHTML = "Enter at least one cart to begin.";
+      ["m-labor","m-fuel","m-other"].forEach(id => $(id).textContent = "$—");
+      ["d-labor","d-fuel","d-other"].forEach(id => $(id).innerHTML = "");
+      $("totalNum").textContent = "—";
+      $("totalSub").textContent = "Enter your fleet to see savings.";
+      $("cumulative").textContent = "—";
+      lastResult = {};
+      return;
+    }
+
+    // Passenger seat math: 6-seater = 5 passenger seats, 4-seater = 3 passenger seats
+    // FlexTram = 27 passenger seats
+    const passengerSeats = sixSeat * 5 + fourSeat * 3;
+    const trams = Math.max(1, Math.ceil(passengerSeats / 27));
+
+    // Labor: only the carts actually in use need operators. Utilization is the lever.
+    const activeOps = Math.max(0, Math.round(carts * util));
+    const operatorsSaved = Math.max(0, activeOps - trams);
+    const laborSavings = operatorsSaved * hours * days * wage;
+
+    // Fuel: cart fuel saved MINUS FlexTram operating energy.
+    const FLEXTRAM_ENERGY_MULTIPLIER = 2.5;
+    const cartFuelSaved = activeOps * fuel * days;
+    const flexTramEnergyCost = trams * fuel * FLEXTRAM_ENERGY_MULTIPLIER * days;
+    const fuelSavings = Math.max(0, cartFuelSaved - flexTramEnergyCost);
+
+    // Maintenance scales with active use (heavily-used carts wear faster)
+    const maintSavings = operatorsSaved * maint;
+
+    // Insurance: tied to fleet size (sell the carts, drop the policies)
+    const insSavings = Math.max(0, carts - trams) * ins;
+
+    const otherSavings = insSavings + maintSavings;
+    const gross = laborSavings + fuelSavings + otherSavings;
+
+    // Range based on FlexTram cost bounds
+    const netHigh = Math.max(0, gross - trams * FT_COST_LOW);
+    const netLow  = Math.max(0, gross - trams * FT_COST_HIGH);
+    const fiveYearLow  = netLow  * 5;
+    const fiveYearHigh = netHigh * 5;
+
+    // Build the fleet description with proper grammar
+    const cartParts = [];
+    if (sixSeat > 0) cartParts.push(`<strong>${sixSeat}</strong> six-seater${sixSeat !== 1 ? 's' : ''}`);
+    if (fourSeat > 0) cartParts.push(`<strong>${fourSeat}</strong> four-seater${fourSeat !== 1 ? 's' : ''}`);
+    const cartDesc = cartParts.join(' + ');
+
+    // Math card output
+    $("m-fleet").textContent = passengerSeats + " seats → " + trams + " FlexTram" + (trams !== 1 ? 's' : '');
+    $("d-fleet").innerHTML = `${cartDesc} <span class="op">=</span> <strong>${passengerSeats}</strong> passenger seats <span class="op">÷</span> 27 seats per FlexTram <span class="op">=</span> <strong>${trams}</strong> FlexTram${trams !== 1 ? 's' : ''} needed.`;
+
+    $("m-labor").textContent = fmt(laborSavings);
+    $("d-labor").innerHTML = `<strong>${activeOps}</strong> active operators at ${utilPct}% utilization <span class="op">−</span> ${trams} FlexTram driver${trams !== 1 ? 's' : ''} <span class="op">=</span> <strong>${operatorsSaved}</strong> saved <span class="op">×</span> ${hours} hrs <span class="op">×</span> ${days} days <span class="op">×</span> $${wage}/hr <span class="op">=</span> <strong>${fmt(laborSavings)}</strong>`;
+
+    $("m-fuel").textContent = fmt(fuelSavings);
+    $("d-fuel").innerHTML = fuelSavings > 0
+      ? `<strong>${activeOps}</strong> active carts × $${fuel}/day = $${cartFuelSaved.toLocaleString()}/yr cart fuel <span class="op">−</span> <strong>${trams}</strong> FlexTrams × $${(fuel * FLEXTRAM_ENERGY_MULTIPLIER).toFixed(2)}/day (≈${FLEXTRAM_ENERGY_MULTIPLIER}× cart energy) = $${Math.round(flexTramEnergyCost).toLocaleString()}/yr <span class="op">=</span> <strong>${fmt(fuelSavings)}</strong> net`
+      : `Trams use comparable energy to the carts replaced. Net fuel impact ≈ $0.`;
+
+    $("m-other").textContent = fmt(otherSavings);
+    $("d-other").innerHTML = `<strong>${Math.max(0, carts - trams)}</strong> carts × $${ins} insurance <span class="op">+</span> <strong>${operatorsSaved}</strong> active carts × $${maint} maintenance <span class="op">=</span> <strong>${fmt(otherSavings)}</strong>`;
+
+    // Total card — show range
+    if (netHigh > 0) {
+      $("totalNum").textContent = fmtK(netLow) + " – " + fmtK(netHigh);
+      $("totalSub").textContent = `Range reflects FlexTram lease vs. financed ownership · ${trams}-FlexTram fleet`;
+      $("cumulative").textContent = fmtK(fiveYearLow) + " – " + fmtK(fiveYearHigh);
+    } else {
+      $("totalNum").textContent = "—";
+      $("totalSub").textContent = "Try a larger fleet or higher utilization to see meaningful savings.";
+      $("cumulative").textContent = "—";
+    }
+
+    // Stash a plain-text snapshot for the lead payload
+    lastResult = {
+      fleet: cartDesc.replace(/<[^>]+>/g, ''),
+      passengerSeats: passengerSeats,
+      trams: trams,
+      netLow: netHigh > 0 ? Math.round(netLow) : 0,
+      netHigh: netHigh > 0 ? Math.round(netHigh) : 0,
+      annualRange: netHigh > 0 ? (fmtK(netLow) + " – " + fmtK(netHigh)) : "—",
+      fiveYearRange: netHigh > 0 ? (fmtK(fiveYearLow) + " – " + fmtK(fiveYearHigh)) : "—"
+    };
+  }
+
+  ids.forEach(id => $(id).addEventListener("input", calc));
+  calc();
+
+  // Advanced toggle
+  const advBtn = $("advToggle");
+  const advFields = $("advFields");
+  advBtn.addEventListener("click", () => {
+    const open = advFields.classList.toggle("open");
+    advBtn.classList.toggle("open", open);
+    advBtn.textContent = open ? "Hide advanced inputs" : "Advanced inputs";
+  });
+
+  // Gate form — async submit to Formspree, unlock on success
+  const form = $("gateForm");
+  const submitBtn = form.querySelector("button.primary");
+  const errEl = $("gateError");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = $("email").value.trim();
+    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!valid) {
+      errEl.textContent = "Please enter a valid email address.";
+      errEl.classList.add("show");
+      return;
+    }
+    // Honeypot — a filled hidden field means a bot. Drop silently.
+    if ($("hp").value) { return; }
+    errEl.classList.remove("show");
+
+    const originalLabel = submitBtn.textContent;
+    submitBtn.textContent = "Sending…";
+    submitBtn.disabled = true;
+
+    try {
+      const res = await fetch("https://formspree.io/f/mvzzoarr", {
+        method: "POST",
+        headers: { "Accept": "application/json", "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email,
+          source: "savings_calculator",
+          _subject: "New FlexTram savings-calculator lead",
+          fleet: lastResult.fleet || "—",
+          flextrams_needed: lastResult.trams || "—",
+          annual_savings_range: lastResult.annualRange || "—",
+          five_year_range: lastResult.fiveYearRange || "—"
+        })
+      });
+      if (!res.ok) throw new Error("Formspree " + res.status);
+
+      document.body.classList.add("unlocked");
+      gtag('event', 'savings_calculator_submit', {
+        source: 'savings_calculator',
+        flextrams_needed: lastResult.trams || 0,
+        annual_savings_low: lastResult.netLow || 0,
+        annual_savings_high: lastResult.netHigh || 0
+      });
+    } catch (err) {
+      submitBtn.textContent = originalLabel;
+      submitBtn.disabled = false;
+      errEl.textContent = "Something went wrong. Please try again, or email jb@flextram.com directly.";
+      errEl.classList.add("show");
+    }
+  });
+
+  // GA4 — track the post-unlock book-a-call click
+  const bookCall = $("bookCall");
+  if (bookCall) {
+    bookCall.addEventListener("click", () => {
+      gtag('event', 'cta_click', { cta_type: 'email', cta_location: 'savings_calculator' });
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
