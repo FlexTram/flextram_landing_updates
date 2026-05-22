@@ -920,18 +920,23 @@
     submitBtn.disabled = true;
 
     try {
+      // Submit as multipart FormData (not JSON) so Formspree sees a
+      // standard browser form post rather than an API-style call —
+      // less likely to be auto-classified as spam. The browser sets
+      // the multipart Content-Type boundary automatically; only Accept
+      // is set, so Formspree replies with JSON instead of redirecting.
+      const fd = new FormData();
+      fd.append("email", email);
+      fd.append("source", "savings_calculator");
+      fd.append("_subject", "New FlexTram savings-calculator lead");
+      fd.append("fleet", lastResult.fleet || "—");
+      fd.append("flextrams_needed", lastResult.trams || "—");
+      fd.append("annual_savings_range", lastResult.annualRange || "—");
+      fd.append("five_year_range", lastResult.fiveYearRange || "—");
       const res = await fetch("https://formspree.io/f/mykvjpbo", {
         method: "POST",
-        headers: { "Accept": "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: email,
-          source: "savings_calculator",
-          _subject: "New FlexTram savings-calculator lead",
-          fleet: lastResult.fleet || "—",
-          flextrams_needed: lastResult.trams || "—",
-          annual_savings_range: lastResult.annualRange || "—",
-          five_year_range: lastResult.fiveYearRange || "—"
-        })
+        headers: { "Accept": "application/json" },
+        body: fd
       });
       if (!res.ok) throw new Error("Formspree " + res.status);
 
