@@ -426,6 +426,10 @@
             }
         }]
     });
+    // A11y: Slick 1.6.0 puts role="listbox" on the generated .slick-track
+    // with no accessible name (Lighthouse aria-input-field-name failure).
+    // Label it — the carousel is a decorative client-logo strip.
+    $('.customer-logos .slick-track').attr('aria-label', 'FlexTram client logos');
 });
   </script>
 
