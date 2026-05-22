@@ -748,7 +748,7 @@
       </div>
     </div>
     <div class="post-cta-row">
-      <a href="mailto:jb@flextram.com?subject=FlexTram%20quote%20request" class="btn-secondary" id="bookCall">Book a 20-min call →</a>
+      <a href="https://calendly.com/jb-flextram/30min" target="_blank" rel="noopener" class="btn-secondary" id="bookCall">Book a 30-min call →</a>
       <span class="note">With Joseph Bradley · jb@flextram.com</span>
     </div>
   </div>
@@ -954,7 +954,7 @@
   const bookCall = $("bookCall");
   if (bookCall) {
     bookCall.addEventListener("click", () => {
-      gtag('event', 'cta_click', { cta_type: 'email', cta_location: 'savings_calculator' });
+      gtag('event', 'cta_click', { cta_type: 'calendly', cta_location: 'savings_calculator' });
     });
   }
 })();
