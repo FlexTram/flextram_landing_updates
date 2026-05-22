@@ -255,6 +255,17 @@
       </div>
     </div>
 
+    <div class="section text-center landing-section" style="padding-top:0px;padding-bottom:56px;">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 ml-auto mr-auto">
+            <p style="font-weight:500;font-size:1.15em;line-height:1.6;color:#5f5e5a;margin-bottom:18px">Already running a golf cart fleet? See what consolidating into FlexTram saves on labor, fuel, insurance, and maintenance &mdash; with live, traceable math.</p>
+            <a href="/savings-calculator" style="display:inline-block;color:#fff;font-size:14px;font-weight:700;text-decoration:none;background:#c44323;padding:12px 30px;border-radius:50px;transition:transform 0.2s ease;">Run the numbers &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="container" style="padding-bottom: 60px;">
       <div class="row justify-content-center">
         <div class="col-md-4" style="padding: 10px;">
@@ -456,12 +467,13 @@
 
     // CTA click tracking
     document.addEventListener('click', function(e) {
-      var link = e.target.closest('a[href*="contact-form"], a[href*="/request-a-bid"], a[href*="calendly.com"], .nav-cta');
+      var link = e.target.closest('a[href*="contact-form"], a[href*="/request-a-bid"], a[href*="calendly.com"], a[href*="/savings-calculator"], .nav-cta');
       if (link) {
         var dest = link.getAttribute('href') || '';
         var cta_type = 'contact_form';
         if (dest.indexOf('calendly.com') > -1) cta_type = 'calendly';
         else if (dest.indexOf('request-a-bid') > -1) cta_type = 'bid_form';
+        else if (dest.indexOf('savings-calculator') > -1) cta_type = 'savings_calculator';
         gtag('event', 'cta_click', {
           cta_text: link.textContent.trim(),
           cta_location: link.closest('nav') ? 'nav' : 'body',
