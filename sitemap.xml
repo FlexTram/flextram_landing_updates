@@ -492,6 +492,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.flextram.com/blog/parking-operator-other-half</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-parking-operator-other-half.jpg</image:loc>
+      <image:caption>Aerial view of a large empty parking lot showing the angled striped grid pattern, a lamp post, and a '10' zone marker</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.flextram.com/blog/build-to-operate-seam</loc>
     <lastmod>2026-05-18</lastmod>
     <changefreq>monthly</changefreq>
