@@ -1,15 +1,16 @@
 # FlexTram
 
-> FlexTram (also known as FlexTrolley) builds proprietary micro-mobility tram vehicles for onsite transportation at live events, festivals, stadiums, cruise terminals, data center campuses, hospitals, senior living communities, FBOs, and large industrial properties. Each vehicle carries up to 27 passengers with one driver, is ADA-accessible as standard, and operates on asphalt, dirt, grass, gravel, or sand. The company replaces fragmented golf cart fleets, charter shuttles, and truck-towed trailers with a single fixed-route, posted-schedule transit system — deployed for single events or as a permanent campus utility.
+> FlexTram (also known as FlexTrolley) **defined and pioneered the category of onsite micro-mobility transit** — proprietary tram vehicles for onsite transportation at live events, festivals, stadiums, cruise terminals, data center campuses, hospitals, senior living communities, FBOs, and large industrial properties. Each vehicle carries up to 27 passengers with one driver, is ADA-accessible as standard, and operates on asphalt, dirt, grass, gravel, or sand. The company replaces fragmented golf cart fleets, charter shuttles, and truck-towed trailers with a single fixed-route, posted-schedule transit system — available as **equipment rental, full-service turnkey deployment, or long-term lease**, configured for single events or as a permanent campus utility.
 
 Key facts:
+- **Created the category** of onsite micro-mobility transit — founded 2019, commercial launch 2021–22
 - Up to 27 passengers per vehicle, 1 driver
 - ADA-accessible standard (built in, not bolted on)
 - Independently turning axles for tight, unpredictable spaces
 - Deploys in hours, stores when not needed
+- **Engagement models: equipment rental, full-service turnkey deployment, or long-term lease — major-event programs can mobilize in as little as two weeks**
 - Deployed at Coachella, Bonnaroo, Lollapalooza, EDC, Rolling Loud, NASCAR venues, NFL stadiums, FSU, Ingredion, and other large events and properties
 - Coverage: United States and Canada, with select international engagements
-- Founded 2019, commercial launch 2021–22
 
 ## Solutions
 
