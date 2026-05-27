@@ -191,12 +191,15 @@ git push origin master && git push production master
 ```
 Note: `gh` CLI installed at `/usr/local/bin/gh`, authenticated as FlexTram account with `workflow` scope.
 
-**⚠ gh auth account-switching gotcha (Session 21, 2026-05-11):** Two GitHub accounts are logged into the `gh` CLI keychain — `jmbradley` (personal) and `FlexTram` (org). Git pushes to both `origin` and `production` rely on the **active** `gh` account's token. If `jmbradley` is the active account, both pushes return `403 Permission denied to jmbradley` — repos belong to FlexTram org and require the FlexTram token. Check + fix:
+**⚠ gh auth account-switching gotcha — engineered away by `scripts/setup-credentials.sh`.** Two GitHub accounts are logged into the `gh` CLI keychain (`jmbradley` personal + `FlexTram` org). Without the credential-helper setup, pushes use the *active* `gh` account's token; if `jmbradley` is active, both pushes return `403 Permission denied to jmbradley`. **Run once per fresh clone:**
 ```bash
-gh auth status                          # confirm which account is "Active account: true"
-gh auth switch --user FlexTram          # switch active account before pushing
+./scripts/setup-credentials.sh
 ```
-Symptom is `remote: Permission to <repo> denied to jmbradley` on a push. Not a credentials cache issue — `git` uses gh's current active token. Worktree push pattern from Session 20 still applies once the account is correct: `git push origin HEAD:master && git push production HEAD:master`.
+This pins git's credential resolution for both flextram remotes to the FlexTram token specifically — the active `gh` account becomes irrelevant for these pushes. Verified working with either account active.
+
+**If you skipped the setup and hit the 403** (symptom: `remote: Permission to <repo> denied to jmbradley`): run `gh auth switch --user FlexTram` and retry. Then run `./scripts/setup-credentials.sh` so it doesn't happen again.
+
+Worktree push pattern from Session 20 still applies: `git push origin HEAD:master && git push production HEAD:master`.
 
 ## Manual blog publish — IndexNow notification
 After pushing a new blog post (or any URL with structurally meaningful changes) to production, run a one-line IndexNow submission so Bing / DuckDuckGo / Yandex / Seznam recrawl within hours instead of days. Auto-publish via GitHub Actions already handles this automatically (see `.github/workflows/publish-drafts.yml` Notify IndexNow step). For manual publishes, use:
