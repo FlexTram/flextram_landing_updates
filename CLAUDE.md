@@ -1493,6 +1493,75 @@ Long multi-day session. Five concrete threads.
 - ✅ Published F1 fan transportation post (grid position 6, NOT featured)
 - ✅ Added shuttle bus alternative / tram rental keywords (4 pages)
 
+---
+
+### Session 27 (2026-05-27) — Repo cleanup, gh-account-mismatch engineered away (the credential helper, not the failed pre-push hook), World Cup last-half-mile post, full site audit, 52-entry sitemap refresh
+
+Long single-day session covering four distinct phases.
+
+**1. Repo hygiene reckoning (session start):**
+- Local was 25 commits behind both remotes and had a stash of staged changes from an abandoned worktree session sitting in the index — including deletions of 3 still-live blog posts (`mega-resort-transit`, `senior-living-independence`, `theme-park-backstage-transit`) and a sitemap rollback from May → April dates. Smoking gun confirmed it was stale, not new work.
+- Cleaned via `git stash` (preserved CLAUDE.md IndexNow doc + settings.local.json edits), `git reset --hard origin/master`, then surgically extracted the IndexNow doc back into the now-current CLAUDE.md.
+- Audited git fsck dangling commits — all 6 were old April stashes from prior worktree sessions, all superseded by 25 commits of newer origin work. **No real work was lost.**
+- Deleted 2 stray `claude/dreamy-cray-258aac` and `claude/keen-greider-534014` branches from prior worktree sessions.
+- Committed and pushed the recovered IndexNow doc (`462f0de`).
+
+**2. gh-account-mismatch 403 — engineered away (with one failed approach first):**
+- **Failed first attempt:** built `.githooks/pre-push` (tracked hook via `core.hooksPath`) that checks `gh auth status` and rejects pushes when active account isn't FlexTram. Shipped to both remotes (commit `58de694`) with a CLAUDE.md note claiming "every real push runs through the hook." **Wrong.** Diagnostic via `GIT_TRACE` + debug echo confirmed: the hook **never fires** when HTTPS auth fails, because git's HTTPS auth happens at the transport layer *before* git invokes any pre-push hook stage. The auth 403 short-circuits the hook entirely. The hook would only have worked if the wrong account could partially authenticate — but jmbradley gets rejected at the very first byte of the HTTPS request, so the hook stage is never reached. **Lesson:** don't claim a hook works without testing the actual failure path. Reverted via `git revert` (kept history honest with revert commit `bc5b818` rather than force-push).
+- **Working approach: per-remote credential helpers.** Configured git's credential machinery to always source the FlexTram token (via `gh auth token --user FlexTram`) when authenticating to either flextram remote, regardless of which gh account is "active". Built as `scripts/setup-credentials.sh` (tracked, run once per fresh clone). The credential helper output format is `printf 'username=FlexTram\npassword=%s\n' "$(gh auth token --user FlexTram)"`.
+- **Two non-obvious gotchas discovered during build:**
+  1. **URL match requires `.git` suffix.** Config key `credential.https://github.com/FlexTram/flextram_landing_updates.helper` doesn't match the credential request because git's actual request URL is `https://github.com/FlexTram/flextram_landing_updates.git`. The trailing `.git` matters. Without it the helper is silently never invoked. Verified with `git credential fill`.
+  2. **Empty-helper reset required to override gh's global helper chain.** The gh CLI installs `credential.https://github.com.helper` pointing at `gh auth git-credential` (which returns the *active* account's token — wrong for us). Without a reset, my URL-specific helper just gets *added* to the chain and never gets asked because gh's helper returns first. The reset pattern is `git config --add <key> ""` (empty entry) followed by `git config --add <key> "$helper"` (real entry) — empty resets the inherited list, then ours becomes the only helper at the URL-specific scope.
+- **Acceptance test passed:** committed and pushed the World Cup post to BOTH remotes while jmbradley was the active gh account. No 403, no manual `gh auth switch`, no thinking required. The failure mode is now structurally impossible.
+- Documented in CLAUDE.md "Git workflow" section as the standard fix; the symptom + manual workaround stays documented for fresh clones that haven't run the setup yet.
+
+**3. Content shipped — "80,000 Fans. No Parking. No Walking. 300 School Buses. And Still Nobody Planned the Last Half Mile." (`/blog/world-cup-last-half-mile`, ~1,800 words, World Cup 2026 & Event Transportation — new category):**
+- Riff on Fortune's May 25 piece about the 2026 FIFA World Cup transportation plan at MetLife Stadium. The whole national conversation is about how fans get *to* the venue ($98 NJ Transit train, 300 yellow school buses, $225 American Dream parking, walking ban enforced by NJ State Police, rideshare drop one mile away). Nobody's discussing the **last half mile** from the transit node through a reconfigured complex (parking lots converted to FIFA Fan Village + bus staging + operations) to the stadium gate. As of two weeks before the first match, no publicly available map shows the new pedestrian routes — because that part hasn't been designed.
+- Position 1 of "More articles" grid, sitemap priority 0.7. Full SEO stack: BlogPosting + FAQPage + BreadcrumbList + Organization JSON-LD, OG/Twitter, canonical, `<picture>` element WebP + JPG fallback, 5 FAQs, 4-card related-reading cluster (the-pattern, parking-lot-still-1987, world-cup-fan-first-mobility, systems-over-units).
+- **Reciprocal inline cross-links shipped same commit (Session 19 publish rule):**
+  - `the-pattern.html` — added "the most public version of the pattern arriving this summer: the 2026 FIFA World Cup at MetLife" as inline anchor closing out the synthesis statement
+  - `world-cup-fan-first-mobility.html` — added a parenthetical "(Updated — May 2026: the MetLife transportation plan has now been published, and it confirms exactly this gap)" pointing forward to the new post
+  - `parking-lot-still-1987.html` — added "the most visible expression of the gap arrives this summer at MetLife" inline anchor in the innovation-timeline section
+- llms.txt updated with detailed entry under Festivals/motorsports/golf/FBOs section.
+- Hero image: World Cup trophy + Adidas tournament ball on stadium pitch. PIL-generated variants (1200/640 × JPG/WebP), 89KB / 48KB / 34KB / 20KB.
+- IndexNow notification fired for new post + 4 cluster URLs → HTTP 200.
+
+**4. Comprehensive site audit + 52-entry sitemap refresh:**
+- **Site hygiene is in excellent shape** (this is the cleanest the site has been since Session 19):
+  - 0 broken internal links across 1,300+ checked
+  - All 74 sitemap URLs resolve to actual files
+  - All 47 blog posts indexed in both sitemap and hub
+  - All 20 solution pages indexed in both sitemap and hub
+  - No duplicate titles or descriptions
+  - No multiple H1 tags anywhere
+  - No `<img>` tags missing alt attributes
+  - No TODO/FIXME/HACK in code
+  - No untracked junk, no tracked `.DS_Store`
+  - No placeholder OG images (Session 11 sweep held)
+  - No localhost URLs leaked, no ghost trackers (Hotjar/fbq/UA-*)
+- **The one real finding: 52 stale sitemap `lastmod` dates** — sitemap entries dated days to weeks before the file's actual most-recent commit. Real SEO impact: tells Google "nothing changed" on pages that have, in fact, changed, reducing recrawl frequency. Fixed via Python script that pulls true last-commit date per file via `git log -1 --format=%ai -- <file>` and rewrites each sitemap entry's `<lastmod>`. Sample corrections: `/solutions/resort-hotel` (04-27 → 05-21), `/solutions/stadiums-arenas` (05-01 → 05-21), `/blog/world-cup-fan-first-mobility` (04-27 → 05-27 — picked up today's cross-link edit), `/blog/` (04-30 → 05-27). xmllint clean, IndexNow ping sent for sitemap.
+- **Three smaller cleanups parked for later** (low urgency):
+  1. 4 orphan template images (580KB total) from 2020 Paper Kit — `assets/img/sections/david-marcu.jpg` (577KB) + `assets/img/photo_swipe/{preloader.gif,default-skin.png,default-skin.svg}`. The photo_swipe/ directory is referenced only in `assets/css/paper-kit.css` (also dead code from the same era). Safe to remove if/when convenient.
+  2. 4 hero JPGs over 400KB — `hero-festival-season.jpg` (638KB), `hero-planned-community.jpg` (529KB), `hero-labor.jpg` (434KB), `hero-convention.jpg` (415KB). WebP variants likely already exist alongside (per Session 17 site-wide WebP conversion) and serve to most browsers, so impact is on the long-tail JPG fallback path only. Easy re-run through PIL at q=85 when batching another image pass.
+  3. `assets/img/404graphic.svg` is 1.1MB — investigated and determined the C2PA provenance manifest accounts for only 22KB (2%); the rest is the actual SVG path complexity. Not worth optimizing without rasterizing, which would defeat the SVG's purpose.
+
+**5. Bonus: validated GA4 tracking on production via Claude Preview:**
+- User reported "not seeing activity in analytics" after the World Cup post went live. Used Claude Preview to load the page and inspect both the GA4 stack (`gtag` function, `dataLayer`, gtag.js script in DOM) and the actual network beacon (`POST https://www.google-analytics.com/g/collect?...&en=page_view... → 204`). The 204 IS the expected GA response code; the `[FAILED: net::ERR_ABORTED]` next to it was from the response handling being interrupted by a subsequent navigation, not the beacon being rejected. **GA4 is firing correctly on production.** Most likely root cause of "not seeing activity": user was checking standard Reports (which lag 24-48 hrs) instead of Realtime → Overview (which updates within ~5 seconds). User confirmed "seems to be working now" shortly after.
+
+**Commits shipped this session (pushed to both remotes):**
+- `462f0de` — Document IndexNow manual-publish notification curl in CLAUDE.md
+- `58de694` — Add pre-push hook enforcing gh active=FlexTram + doc the setup *(broken approach, reverted)*
+- `bc5b818` — Revert "Add pre-push hook enforcing gh active=FlexTram + doc the setup"
+- `574e694` — Pin git auth to FlexTram token via setup-credentials.sh — fixes 403 on wrong gh active account
+- `c2b0201` — Publish '80,000 Fans. No Parking. 300 School Buses. And Still Nobody Planned the Last Half Mile.' (World Cup 2026 / MetLife)
+- `894d8ca` — Refresh 52 stale sitemap lastmod dates from git history
+
+**What changes for next session:**
+- Fresh clones now need a one-time `./scripts/setup-credentials.sh` run. Documented in CLAUDE.md Git workflow section.
+- World Cup last-half-mile post is the freshest piece on the site; watch GSC over the next 2-3 weeks for queries related to MetLife transportation, World Cup shuttle, NJ Transit fan transit, last mile event transportation. The post is timed to ride the late-May/June news cycle as the tournament approaches.
+- Sitemap lastmod refresh should be a periodic ritual — every 4-6 weeks, or after any cluster of edits that touches many pages. Could be scripted as a session-end check.
+- 3 smaller cleanups (orphan images, oversized hero JPGs, photo_swipe css references) sit on the punch list when bandwidth allows.
+
 ### Scheduled blog posts (auto-publish via GitHub Actions)
 - [x] **April 15** -- "We Created the Category" (live)
 - [x] **April 18** -- "The Hidden Cost of Making Fans Walk" (live — auto-published 2026-04-18)
