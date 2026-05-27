@@ -492,6 +492,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.flextram.com/blog/world-cup-last-half-mile</loc>
+    <lastmod>2026-05-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-world-cup-last-half-mile.jpg</image:loc>
+      <image:caption>The FIFA World Cup trophy and an official tournament soccer ball resting on a stadium pitch with empty grandstand seating in the background</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.flextram.com/blog/parking-operator-other-half</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
