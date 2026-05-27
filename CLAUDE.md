@@ -198,12 +198,6 @@ gh auth switch --user FlexTram          # switch active account before pushing
 ```
 Symptom is `remote: Permission to <repo> denied to jmbradley` on a push. Not a credentials cache issue — `git` uses gh's current active token. Worktree push pattern from Session 20 still applies once the account is correct: `git push origin HEAD:master && git push production HEAD:master`.
 
-**Pre-push hook enforces the FlexTram-active check automatically.** A tracked hook at `.githooks/pre-push` rejects any push when the gh active account isn't FlexTram, with a one-line fix message. **One-time setup on every fresh clone:**
-```bash
-git config core.hooksPath .githooks
-```
-The hook is a no-op if `gh` isn't installed. To bypass intentionally (rare): `git push --no-verify`. Caveat: pre-push hooks only fire when there are commits to push — they cannot intercept the rare case where you push an already-current branch from the wrong account, because git's HTTPS auth fails before refs are negotiated. In practice, every real push runs through the hook.
-
 ## Manual blog publish — IndexNow notification
 After pushing a new blog post (or any URL with structurally meaningful changes) to production, run a one-line IndexNow submission so Bing / DuckDuckGo / Yandex / Seznam recrawl within hours instead of days. Auto-publish via GitHub Actions already handles this automatically (see `.github/workflows/publish-drafts.yml` Notify IndexNow step). For manual publishes, use:
 ```bash
