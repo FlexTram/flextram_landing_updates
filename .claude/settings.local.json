@@ -140,7 +140,12 @@
       "Bash(sips -Z 1200 /Users/josephbradley/Downloads/stadium_her_micromobility.jpg --out assets/img/hero-systems-over-units.jpg)",
       "Bash(sips -Z 640 /Users/josephbradley/Downloads/stadium_her_micromobility.jpg --out assets/img/640/hero-systems-over-units.jpg)",
       "Bash(sips -Z 1200 /Users/josephbradley/Downloads/fbo_ground_transportation_article.jpg --out assets/img/hero-fbo-ground-transportation.jpg)",
-      "Bash(sips -Z 640 /Users/josephbradley/Downloads/fbo_ground_transportation_article.jpg --out assets/img/640/hero-fbo-ground-transportation.jpg)"
+      "Bash(sips -Z 640 /Users/josephbradley/Downloads/fbo_ground_transportation_article.jpg --out assets/img/640/hero-fbo-ground-transportation.jpg)",
+      "Bash(xmllint --noout sitemap.xml)",
+      "Bash(git rebase *)",
+      "Bash(git -c core.editor=true rebase --continue)",
+      "Bash(grep -nA2 \"where reputations are made\" blog/world-cup-fan-first-mobility.html)",
+      "Bash(grep -nA2 \"The sponsorship angle nobody's talking about\" blog/world-cup-fan-first-mobility.html)"
     ]
   }
 }

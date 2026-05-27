@@ -198,6 +198,15 @@ gh auth switch --user FlexTram          # switch active account before pushing
 ```
 Symptom is `remote: Permission to <repo> denied to jmbradley` on a push. Not a credentials cache issue — `git` uses gh's current active token. Worktree push pattern from Session 20 still applies once the account is correct: `git push origin HEAD:master && git push production HEAD:master`.
 
+## Manual blog publish — IndexNow notification
+After pushing a new blog post (or any URL with structurally meaningful changes) to production, run a one-line IndexNow submission so Bing / DuckDuckGo / Yandex / Seznam recrawl within hours instead of days. Auto-publish via GitHub Actions already handles this automatically (see `.github/workflows/publish-drafts.yml` Notify IndexNow step). For manual publishes, use:
+```bash
+curl -s -o /dev/null -w "IndexNow: HTTP %{http_code}\n" -X POST "https://api.indexnow.org/indexnow" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -d '{"host":"www.flextram.com","key":"3b5dd366e4db30dd7e6249ecda05e4c4","keyLocation":"https://www.flextram.com/3b5dd366e4db30dd7e6249ecda05e4c4.txt","urlList":["https://www.flextram.com/blog/NEW-SLUG"]}'
+```
+Replace `NEW-SLUG` with the published URL(s). Add additional URLs to the `urlList` array (comma-separated strings) if cluster pieces also got inbound links and should be recrawled. Success = HTTP 200 or 202. Failures are non-fatal — Bing will still find the post via organic crawl, just slower.
+
 ## Status
 
 ### Session 1 (2026-04-06) -- Foundation
