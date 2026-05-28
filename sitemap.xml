@@ -492,6 +492,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.flextram.com/atlas/cruise-destinations</loc>
+    <lastmod>2026-05-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-atlas-cruise-destinations.jpg</image:loc>
+      <image:caption>Aerial view of a cruise-line-owned private destination in the Bahamas with a ship docked at the pier and developed beach amenities</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.flextram.com/blog/world-cup-last-half-mile</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>monthly</changefreq>
