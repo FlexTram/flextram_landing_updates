@@ -514,19 +514,40 @@ image_alt: Aerial view of Nassau Bahamas cruise port with five cruise ships dock
   </main>
 
   <script>
-    // Mailto obfuscation: assemble the address from separated data attributes at runtime
-    // so email harvesters scraping HTML source see no usable address pattern.
-    // Falls back to /#contact-form for users without JS.
+    // Mailto obfuscation + GA4 click tracking on atlas CTAs.
+    // - Address is assembled from separated data attributes at runtime so email
+    //   harvesters scraping HTML source see no usable pattern. Falls back to
+    //   /#contact-form for users without JS (graceful degradation).
+    // - Click fires GA4 cta_click event with cta_type=email_atlas + cta_location
+    //   (mid_page / bottom / sticky / correction) so we can slice atlas CTA
+    //   performance in GA4's CTA Type / CTA Location custom dimensions.
     (function() {
+      function ctaLocation(el) {
+        if (el.classList.contains('sticky-cta')) return 'sticky';
+        if (el.closest('.post-cta-inline')) return 'mid_page';
+        if (el.closest('.post-cta')) return 'bottom';
+        return 'correction'; // inline body link in About this atlas / Sources
+      }
       var els = document.querySelectorAll('.js-mailto');
       for (var i = 0; i < els.length; i++) {
-        var el = els[i];
-        var addr = el.dataset.u + '@' + el.dataset.d;
-        var href = 'mailto:' + addr;
-        if (el.dataset.s) href += '?subject=' + encodeURIComponent(el.dataset.s);
-        el.href = href;
-        var display = el.querySelector('.js-mail-display');
-        if (display) display.textContent = addr;
+        (function(el) {
+          var addr = el.dataset.u + '@' + el.dataset.d;
+          var href = 'mailto:' + addr;
+          if (el.dataset.s) href += '?subject=' + encodeURIComponent(el.dataset.s);
+          el.href = href;
+          var display = el.querySelector('.js-mail-display');
+          if (display) display.textContent = addr;
+          var location = ctaLocation(el);
+          el.addEventListener('click', function() {
+            if (typeof gtag === 'function') {
+              gtag('event', 'cta_click', {
+                cta_type: 'email_atlas',
+                cta_location: location,
+                cta_subject: el.dataset.s || ''
+              });
+            }
+          });
+        })(els[i]);
       }
     })();
   </script>

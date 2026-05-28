@@ -1562,6 +1562,121 @@ Long single-day session covering four distinct phases.
 - Sitemap lastmod refresh should be a periodic ritual — every 4-6 weeks, or after any cluster of edits that touches many pages. Could be scripted as a session-end check.
 - 3 smaller cleanups (orphan images, oversized hero JPGs, photo_swipe css references) sit on the punch list when bandwidth allows.
 
+---
+
+### Session 28 (2026-05-28) — GSC validates AI-search thesis, first Operator's Atlas ships, cruise-buyer-specific CTAs with mailto obfuscation + GA4 tracking, cleanup punch list cleared
+
+Heavy single-day session. Six concrete shipments. Most strategically significant work of the project to date: the AI-search Boolean-query pattern documented in Session 25 is now confirmed at the top-of-GSC level, and we shipped the response — the first Operator's Atlas, built specifically for the AI-tool research surface that's driving the impressions.
+
+**1. GSC top-10 query review confirms the AI-search thesis empirically.**
+
+Joseph shared the GSC top-10 queries report (28-day). 7 of 10 queries match the AI-tool Boolean fingerprint documented in CLAUDE.md Session 25:
+
+| Rank | Query | Type | Note |
+|---|---|---|---|
+| 1 | `flextram` | Branded | 9 clicks / 34.6% CTR / pos 1.12. Locked in. |
+| 2 | `flex tram` | Brand variant | 7 clicks / 41.2% CTR / pos 3.35. Healthy. |
+| 3 | `wicket facial recognition` | Mixed | 1 click / 25% CTR / pos 9.25. **Single body-copy mention of Wicket in parking-lot-still-1987.html (Session 26 post) is generating the page-1 ranking** — perfect proof of the named-entity density principle. |
+| 4 | `"capital funding group" -site:reddit...` | Perplexity/Gemini fingerprint | Pos 3, AI tool researching CFG (named in senior-living-independence post) |
+| 5 | `"cruise industry" -"sub" -"submarine" -"subs" -site:...` | **Cruise iteration round 1** | Researcher hit submarine content, added exclusions |
+| 6 | `"cruise industry" -site:...` | **Cruise iteration round 2** | Same researcher, broader |
+| 7 | `"cruise" "industry" "line" "ship" -"car" -"tom" -site:...` | **Cruise iteration round 3** | Same researcher, switched operator syntax + added `-"tom"` to filter Tom Cruise content |
+| 8 | `"grand view research"` | AI tool citing GVR | Pos 80 (page 8). Noise — not actionable. |
+| 9 | `"jackie endsley" "pga championship" "championship director"` | Named-person query | **Position 1** on her name + title. Quoted in build-to-operate-seam post. Top-of-page named-entity authority. |
+| 10 | `"louisville" "data center" -"hiring" -site:...` | **NEW AI-search vertical** | Louisville data center researcher filtering out job listings |
+
+**The cruise iteration signal is happening LIVE in this snapshot** — same researcher, 3 rounds, refining Boolean operators in real time. This is the strongest possible empirical evidence for the Operator's Atlas concept (parked 2026-05-16 for 2026-05-23 revisit, slipped to today). **Zero CTR on every AI-tool Boolean query** — confirms the prediction that AI tools cite without clicking; traffic comes via direct/AI-referrer attribution paths, not these queries.
+
+The maintenance rule in CLAUDE.md — *don't prune named entities, citation density is a feature* — is now empirically validated at the top-10 level.
+
+**2. Strategic discussion on atlas format before shipping.**
+
+Before writing any atlas content, walked through the design space with Joseph:
+- **How to optimize for robots AND humans without writing twice?** Landed on: the structure that helps humans skim IS the structure that helps AI tools retrieve. Both want H3-per-entity + anchor IDs, scan-friendly facts blocks, first-person practitioner commentary (the moat — Wikipedia can't write this, Perplexity can quote it but can't replace it), specific numbers over vague phrases, Q-style headers in pattern sections, and "Last updated" freshness signals.
+- **Should we build an atlas per solutions card?** Pushed back hard. CLAUDE.md flags "twelve abandoned atlases" as the failure mode. Atlas format only works where 4 conditions hold: finite + named entity set, AI-search already querying for them, meaningful operational variance per entity, and B2B audience mapping to entities directly. By that filter: cruise destinations now, hyperscale data center campuses in 4-6 weeks if cruise works, then maybe NFL stadiums or Power 5 athletics venues — 4 atlases max total, not 20. **Solutions-card 1:1 mapping is the wrong model** because solutions pages are buyer-conversion (purposeful navigation), atlases are research-stage discovery (search/citation). Different funnel stages.
+
+**3. First Operator's Atlas shipped — `/atlas/cruise-destinations` (15 entries, ~3,800 words):**
+
+- **Research phase:** Dispatched a background research agent to verify facts on 15 destinations against authoritative sources (cruise line official pages, trade press, Wikipedia cross-references). The agent surfaced 4 substantive issues in my originally-proposed list: Bimini Beach Club is NOT cruise-line-owned (Resorts World Bimini/Genting owns it; Virgin Voyages has co-branded usage); Falmouth Jamaica is a joint venture with Port Authority of Jamaica (multi-line public port, not exclusive); Sir Bani Yas is an operating agreement, not ownership; Costa Maya IS owned by Royal Caribbean (acquired Sept 2024, $292M) but the Perfect Day Mexico expansion was just blocked by Mexico's SEMARNAT on May 19, 2026, with RCL withdrawing the proposal on May 27 (6 days before this session). The agent recommended swaps: drop Bimini + Falmouth, add Mahogany Bay/Isla Tropicale (Carnival/Roatan — has a category-unique "Magical Flyer" chairlift transit asset) and Amber Cove (Carnival/Dominican Republic, $85M owned destination, dual-berth). Joseph approved.
+- **Final 15 entries** grouped by parent: Royal Caribbean (CocoCay, Labadee, Royal Beach Club Paradise Island), Carnival Corp (Celebration Key, Half Moon Cay/RelaxAway, Mahogany Bay/Isla Tropicale, Amber Cove, Princess Cays), Disney (Castaway Cay, Lookout Cay at Lighthouse Point), MSC (Ocean Cay, Sir Bani Yas), Norwegian (Great Stirrup Cay, Harvest Caye), Royal Caribbean again — in regulatory limbo (Costa Maya / Perfect Day Mexico).
+- **Page structure:** editorial intro (~400w) + 15 entries grouped by parent company (~150w each, with structured facts block + first-person practitioner commentary + cited source) + patterns section (~450w covering tram-as-category-standard, pier capacity as binding constraint, capex expansion, owned-destinations-as-revenue-centers, ADA-integration-as-next-standard) + What's coming (~300w, including the Mexico regulatory situation, Perfect Day Lelepa in Vanuatu, Royal Beach Club portfolio expansion, exclusive-operating-agreement model) + Sources + last-updated date. Plus a callout block explicitly noting the page is maintained as the category evolves.
+- **Visual treatment:** reuses `blog-post.css` but adds atlas-specific inline styles for the practitioner-reference distinction — uppercase eyebrow label ("Atlas · Cruise destinations · Updated May 27, 2026"), structured facts list with dashed dividers per entry, scan-friendly Contents block at the top, parent-company section labels with subtle horizontal-rule dividers, scroll-margin-top so deep-link anchors land cleanly below the nav.
+- **Full SEO stack:** BreadcrumbList (Home → Atlas → Cruise Destinations) + Article + Organization + **ItemList JSON-LD with 15 ListItems** (each pointing to the entry's anchor URL like `#cococay`). Sitemap priority 0.8 (one tier above blog posts). Meta description, OG, Twitter, canonical, keywords. The ItemList schema is the key structural-SEO move: it tells Google "this is a curated list of 15 named entities" which is exactly what an AI-tool retrieval query is looking for.
+- **No main nav placement** — atlas is landed-on-via-search reference content, per CLAUDE.md design. Discoverable via inline cross-links from cluster blog posts + sitemap + llms.txt + IndexNow.
+- **Hero image:** real Nassau cruise port aerial (5 cruise ships docked side-by-side: Royal Caribbean, Carnival, Norwegian, MSC visible — flanked by Paradise Island and Nassau city, turquoise Caribbean water). User provided the source; PIL-generated 4 variants at 1200/640 × JPG/WebP (200KB JPG / 138KB WebP at 1200×722). Page shipped initially with a placeholder hero (copy of `hero-cruise-destination-transit`) then swapped to the real hero in commit `a98641f`.
+- **Reciprocal inline cross-links per Session 19 publish rule** (orphan-on-publish avoided):
+  - `blog/cruise-destination-transit.html` — anchor in the body paragraph naming RCL/Carnival/MSC/Disney destinations, pointing to atlas as "full operational catalog"
+  - `blog/cruise-terminals-people-moving.html` — anchor in the owned-destinations paragraph
+  - `solutions/cruise-terminals.html` — discreet "Reference: FlexTram atlas of cruise-line-owned private destinations →" link after the related-reading grid (preserves card layout instead of forcing a 4th card)
+- **llms.txt** — new entry at the top of Cruise & port operations section, bolded and explicitly labeled "Reference content, not editorial" so AI crawlers categorize it differently from blog posts.
+
+**4. Cruise-line-buyer-specific CTAs (mailto-only to `jb@flextram.com`):**
+
+Recognized that cruise line destination strategy buyers have a fundamentally different sales motion than the festival/event personas the homepage contact form was designed for: multi-year strategic partnerships, not discrete deployments; senior personnel won't fill out a generic vendor form after spending 30 minutes reading a practitioner reference atlas; expectation is a direct conversation, not a procurement gate. Replaced all 5 generic "Get in Touch → /#contact-form" CTAs on the atlas with cruise-buyer-specific framing:
+
+- **Mid-page CTA:** "Building or scaling transit at an owned destination?" → email Joseph (subject: "Atlas inquiry — cruise destination transit")
+- **Bottom CTA:** "Talk through an onsite transit platform for an owned destination." → email Joseph (subject: "Atlas inquiry — onsite transit strategy")
+- **Sticky CTA:** "Email Joseph →" (subject: "Atlas inquiry — cruise destinations")
+- **"About this atlas" correction link** → email Joseph (subject: "Atlas correction")
+- **Sources correction link** → email Joseph (subject: "Atlas correction")
+
+Three distinct "Atlas inquiry" subjects let Joseph see in his inbox which CTA the buyer clicked. Nav "Get in Touch" stays at /#contact-form for site-wide consistency. Single contact path per CTA = no decision paralysis.
+
+Joseph's email choice: `jb@flextram.com` (new flextram.com address for cruise-line strategic buyers; signals enterprise vendor positioning vs. the personal jmbradley808@gmail.com that the homepage form routes to). **Joseph needs to verify the alias is set up + receiving** before atlas-driven inquiries land.
+
+**5. Mailto obfuscation via runtime JS (commit `2080f00`):**
+
+User-prompted question on spam: how do we avoid harvesting? The 5 mailto links written in plain HTML would expose `jb@flextram.com` to crawlers; within weeks of indexing, the address would be on cold-spam lists. Shipped the JS-render-at-runtime pattern:
+- HTML source contains `data-u="jb"` and `data-d="flextram.com"` as **separate strings** (no `@` connecting them), defeating pattern-based email harvesters
+- IIFE at end of body reads the data attributes, assembles `jb@flextram.com`, sets the real `href`, and swaps "Joseph" → full address in visible link text via `.js-mail-display` spans
+- Fallback `href="/#contact-form"` for no-JS users so the link still functions
+- Verified via Claude Preview: all 5 elements correctly rebuilt; visible text shows full address after JS runs; zero pattern-matchable email addresses in the HTML source
+
+Bar set: defeat the common email-harvesting bots that pattern-match `[email-like]@[domain]`. Doesn't defeat targeted JS-aware scrapers — but those represent 100× the engineering effort of standard harvesters for low payoff against a low-volume B2B atlas page. Trade-off accepted.
+
+Also caught and fixed a doc-comment leak ("Mailto obfuscation: assemble jb@flextram.com from...") that would have defeated the whole purpose; rewrote without the literal address.
+
+**6. GA4 click tracking layered onto the same IIFE:**
+
+Mailto clicks don't auto-fire `cta_click` events in GA4 (only form submissions and Enhanced Measurement clicks register). Extended the obfuscation IIFE to wire an `addEventListener('click', ...)` on each `.js-mailto` element that fires:
+```javascript
+gtag('event', 'cta_click', {
+  cta_type: 'email_atlas',
+  cta_location: 'mid_page' | 'bottom' | 'sticky' | 'correction',
+  cta_subject: <prefilled subject string>
+});
+```
+
+`cta_location` is derived from the element's class + closest parent (`.post-cta-inline` → mid_page, `.post-cta` → bottom, `.sticky-cta` → sticky, else → correction). Both `cta_type` and `cta_location` custom dimensions are already registered in GA4 from Session 12, so atlas CTA performance will be sliceable in the existing Explore reports.
+
+Verified via Claude Preview by simulating clicks on bottom/mid/sticky CTAs and inspecting the `gtag` call stack — all 3 fired the expected events with correct location labels.
+
+**7. Cleanup punch-list cleared (1.3MB / 8 files):**
+
+- **4 orphan Paper Kit images deleted:** `assets/img/sections/david-marcu.jpg` (577KB), `assets/img/photo_swipe/preloader.gif` (866B), `assets/img/photo_swipe/default-skin.png` (989B), `assets/img/photo_swipe/default-skin.svg` (1.6KB). Both directories now empty and auto-removed by git. Verified zero references in HTML/JS/MD/XML before deletion (the photoswipe CSS in `assets/css/paper-kit.css` lines 1154-1180+ remains as dead code — larger surgery to remove, parked for a future pass).
+- **4 oversized hero JPGs re-compressed via PIL q=85 + progressive:**
+  - `hero-festival-season.jpg`: 638KB → 369KB (-268KB)
+  - `hero-planned-community.jpg`: 529KB → 342KB (-187KB)
+  - `hero-labor.jpg`: 434KB → 305KB (-128KB)
+  - `hero-convention.jpg`: 415KB → 272KB (-142KB)
+  - Total: 2017KB → 1289KB, **36.1% reduction**, 727KB saved
+  - WebP variants untouched (already optimized per Session 17 site-wide WebP rollout); only the JPG fallback path was the regression source.
+
+**Commits shipped this session** (all pushed to both remotes):
+- `92dfa93` — Ship /atlas/cruise-destinations (placeholder hero + initial CTAs)
+- `a98641f` — Swap atlas hero to real Nassau cruise port aerial (5 ships at pier)
+- `f355101` — Atlas CTAs: cruise-line-buyer specific — direct email to jb@flextram.com
+- `2080f00` — Obfuscate atlas mailto links via runtime JS — defeat email harvesters
+- (Pending — cleanup + GA4 tracking + this Session 28 log)
+
+**What changes for next session:**
+
+- **The cruise destinations atlas is now the freshest piece of B2B reference content on the site, intentionally built for the AI-search Boolean-query retrieval surface.** Watch GSC over the next 4-6 weeks for: (a) impression growth on named-entity queries (CocoCay, Celebration Key, Castaway Cay, individual destinations); (b) atlas appearing as the landing URL for cruise-iteration Boolean queries; (c) GA4 engagement time on `/atlas/cruise-destinations` (atlas content should run higher than blog content because the bookmarkable-reference format invites longer dwell); (d) `cta_click` events with `cta_type=email_atlas` — actual atlas-driven inquiries.
+- **Decision rule on atlas #2:** if atlas #1 pulls citations + impressions by ~mid-July, atlas #2 (hyperscale data center campuses) becomes the next move. If it sits dead at 4-6 weeks, the format failed and we don't repeat it.
+- **`jb@flextram.com` MUST be a working email address** for atlas-driven inquiries to land. Joseph to verify the alias is set up + receiving. If not, all 5 CTAs route to a bounce.
+- **Optional next-week refinements** if traffic justifies: (a) cruise-destinations-specific OG image (currently uses the hero); (b) a small inline "Want notification when this atlas updates?" opt-in (maintenance form, doesn't compete with the email CTA); (c) Louisville data center post or hyperscale-campus content riding the AI-search vertical that surfaced in row 10 of GSC.
+- **Photo_swipe CSS in `assets/css/paper-kit.css` (lines ~1154-1180+) is dead code** — orphan images deleted but the CSS referencing them is still there. Worth a larger paper-kit.css cleanup pass when bandwidth allows.
+
 ### Scheduled blog posts (auto-publish via GitHub Actions)
 - [x] **April 15** -- "We Created the Category" (live)
 - [x] **April 18** -- "The Hidden Cost of Making Fans Walk" (live — auto-published 2026-04-18)
