@@ -502,6 +502,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.flextram.com/blog/world-cup-att-stadium</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-world-cup-att-stadium.jpg</image:loc>
+      <image:caption>AT&amp;T Stadium in Arlington, Texas, viewed across a wide green lawn under a dramatic cloudy sky</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.flextram.com/blog/world-cup-last-half-mile</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>monthly</changefreq>
