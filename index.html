@@ -503,7 +503,7 @@
         else if (dest.indexOf('savings-calculator') > -1) cta_type = 'savings_calculator';
         gtag('event', 'cta_click', {
           cta_text: link.textContent.trim(),
-          cta_location: link.closest('nav') ? 'nav' : 'body',
+          cta_location: link.closest('#calc-toast') ? 'homepage_scroll_toast' : (link.closest('nav') ? 'nav' : 'body'),
           cta_type: cta_type,
           cta_destination: dest
         });
@@ -525,6 +525,55 @@
         gtag('event', 'form_submit_success', { form_id: 'contact-form' });
       });
     }
+  })();
+  </script>
+
+  <!-- Golf-cart savings calculator scroll toast (non-blocking, dismissible, once per session) -->
+  <style>
+    .calc-toast{position:fixed;right:20px;bottom:20px;z-index:9998;width:322px;max-width:calc(100vw - 32px);background:#fff;border:1px solid #e6e3dc;border-radius:12px;box-shadow:0 10px 34px rgba(0,0,0,0.17);padding:20px 20px 18px;transform:translateY(24px);opacity:0;visibility:hidden;transition:transform .35s ease,opacity .35s ease,visibility .35s ease;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;}
+    .calc-toast.is-visible{transform:translateY(0);opacity:1;visibility:visible;}
+    .calc-toast-close{position:absolute;top:7px;right:9px;background:none;border:none;font-size:22px;line-height:1;color:#8a877f;cursor:pointer;padding:4px 6px;}
+    .calc-toast-close:hover{color:#1a1a1a;}
+    .calc-toast-title{font-weight:700;font-size:15px;color:#1a1a1a;margin:0 0 5px;}
+    .calc-toast-text{font-size:13px;line-height:1.45;color:#5f5d55;margin:0 0 14px;}
+    .calc-toast-cta{display:inline-block;background:#c44323;color:#fff;font-size:13px;font-weight:700;text-decoration:none;padding:9px 18px;border-radius:50px;transition:transform .2s ease,box-shadow .2s ease;}
+    .calc-toast-cta:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(196,67,35,0.35);color:#fff;}
+    @media (max-width:480px){.calc-toast{right:12px;left:12px;bottom:12px;width:auto;}}
+    @media (prefers-reduced-motion:reduce){.calc-toast{transition:opacity .2s ease,visibility .2s ease;transform:none;}}
+  </style>
+  <div id="calc-toast" class="calc-toast" role="dialog" aria-label="Golf cart fleet savings calculator" aria-hidden="true">
+    <button type="button" class="calc-toast-close" aria-label="Dismiss">&times;</button>
+    <p class="calc-toast-title">Running a golf cart fleet?</p>
+    <p class="calc-toast-text">See how much you could save by consolidating into FlexTram &mdash; live, traceable math on labor, fuel, insurance, and maintenance.</p>
+    <a href="/savings-calculator" class="calc-toast-cta">See your savings &rarr;</a>
+  </div>
+  <script>
+  (function(){
+    var toast = document.getElementById('calc-toast');
+    if (!toast) return;
+    var KEY = 'calcToastSeen';
+    try { if (sessionStorage.getItem(KEY)) return; } catch(e){}
+    var shown = false;
+    function markSeen(){ try { sessionStorage.setItem(KEY,'1'); } catch(e){} }
+    function show(){
+      if (shown) return; shown = true;
+      toast.classList.add('is-visible');
+      toast.setAttribute('aria-hidden','false');
+      if (typeof gtag === 'function') gtag('event','cta_view',{cta_type:'savings_calculator',cta_location:'homepage_scroll_toast'});
+      window.removeEventListener('scroll', onScroll);
+    }
+    function dismiss(){
+      toast.classList.remove('is-visible');
+      toast.setAttribute('aria-hidden','true');
+      markSeen();
+    }
+    function onScroll(){
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      if (h > 0 && (window.scrollY / h) >= 0.5) show();
+    }
+    toast.querySelector('.calc-toast-close').addEventListener('click', dismiss);
+    toast.querySelector('.calc-toast-cta').addEventListener('click', markSeen);
+    window.addEventListener('scroll', onScroll, { passive:true });
   })();
   </script>
 </body>
