@@ -502,6 +502,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.flextram.com/blog/world-cup-miami-hard-rock</loc>
+    <lastmod>2026-07-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-world-cup-miami-hard-rock.jpg</image:loc>
+      <image:caption>Aerial view of Hard Rock Stadium in Miami Gardens at dusk, surrounded by vast parking lots with the Miami skyline on the horizon</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.flextram.com/blog/festival-season-proving-the-point</loc>
     <lastmod>2026-06-29</lastmod>
     <changefreq>monthly</changefreq>
