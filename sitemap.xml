@@ -502,6 +502,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.flextram.com/blog/world-cup-houston-nrg</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-world-cup-houston-nrg.jpg</image:loc>
+      <image:caption>NRG Stadium in Houston lit up at dusk with a full parking lot in the foreground</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.flextram.com/blog/world-cup-miami-hard-rock</loc>
     <lastmod>2026-07-03</lastmod>
     <changefreq>monthly</changefreq>
