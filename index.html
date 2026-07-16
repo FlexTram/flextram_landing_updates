@@ -296,6 +296,29 @@
       /* #6b6a64 = --color-text-tertiary; 5.43:1 on white (WCAG AA). Do not
          lighten — #8a877f fails AA for text this size. */
       .fieldsheet-meta{margin:14px 0 0;color:#6b6a64;font-size:12.5px;letter-spacing:0.03em;}
+
+      /* Logo strip pause control. Visually quiet but NOT low-contrast: #6b6a64 is
+         5.43:1 on white, clearing WCAG 1.4.11's 3:1 floor for UI components. It
+         stays visible at rest (a hover-only control isn't discoverable, and hover
+         doesn't exist for keyboard or touch). */
+      /* Reserve a gutter BELOW the strip for the control rather than overlaying the
+         track — logos scroll under an overlaid button and get occluded, and this
+         strip exists so clients can spot themselves. Padding on the wrapper (not the
+         carousel) keeps slick's geometry untouched, so the reserved pre-init heights
+         above stay correct and no layout shift is reintroduced. */
+      .logos-wrap{position:relative;padding-bottom:34px}
+      .logos-pause{position:absolute;bottom:0;right:16px;z-index:2;
+        display:flex;align-items:center;justify-content:center;width:32px;height:32px;padding:0;
+        background:rgba(255,255,255,0.75);border:1px solid #d8d5cd;border-radius:50%;
+        color:#6b6a64;cursor:pointer;opacity:0.55;
+        transition:opacity .2s ease,color .2s ease,border-color .2s ease,background .2s ease}
+      .logos-wrap:hover .logos-pause,.logos-pause:hover,.logos-pause:focus-visible{opacity:1;color:#1a1a18;border-color:#b3afa5;background:#fff}
+      .logos-pause:focus-visible{outline:2px solid #c44323;outline-offset:2px}
+      .logos-pause svg{width:11px;height:13px;fill:currentColor;display:block}
+      .logos-pause .logos-play-icon{display:none}
+      .logos-pause[aria-pressed="true"] .logos-pause-icon{display:none}
+      .logos-pause[aria-pressed="true"] .logos-play-icon{display:block}
+      @media(max-width:520px){.logos-wrap{padding-bottom:30px}.logos-pause{width:28px;height:28px;right:8px}.logos-pause svg{width:9px;height:11px}}
     </style>
     <div class="section text-center landing-section" style="padding-top:0px;padding-bottom:56px;">
       <div class="container">
@@ -309,6 +332,7 @@
       </div>
     </div>
 
+   <div class="logos-wrap">
    <section class="customer-logos slider">
       <div class="slide vertical-center" style="display: flex;"><img src="assets/img/logos/Tesla_Motors.svg.png" alt="Tesla Motors - FlexTram client for onsite transportation" loading="lazy" style="max-width: 45%; margin: auto;"></div>
       <div class="slide vertical-center" style="display: flex;"><img src="assets/img/logos/lollapalooza.png" alt="Lollapalooza music festival - FlexTram event transportation partner" loading="lazy"></div>
@@ -338,6 +362,21 @@
       <div class="slide vertical-center" style="display: flex;"><img src="assets/img/logos/za_queen_mary.jpg" alt="ZA Queen Mary - FlexTram event venue transportation client" loading="lazy"></div>
 
    </section>
+      <!-- WCAG 2.2.2 (Pause, Stop, Hide): the strip auto-scrolls >5s, so it needs a
+           pause mechanism. Must live OUTSIDE .customer-logos — slick turns every
+           direct child into a slide. Hidden until slick initializes so it never
+           appears next to a non-moving strip. -->
+      <button type="button" class="logos-pause" id="logos-pause" hidden
+              aria-label="Pause the scrolling client logos">
+        <svg class="logos-pause-icon" viewBox="0 0 12 14" aria-hidden="true" focusable="false">
+          <rect x="1" y="1" width="3.5" height="12" rx="1"></rect>
+          <rect x="7.5" y="1" width="3.5" height="12" rx="1"></rect>
+        </svg>
+        <svg class="logos-play-icon" viewBox="0 0 12 14" aria-hidden="true" focusable="false">
+          <path d="M2 1.5v11l9-5.5z"></path>
+        </svg>
+      </button>
+   </div>
 
    <div class="testimonial-block">
      <p class="testimonial-quote">FlexTram has been a tremendous partner in supporting our football gameday parking operations. They are reliable, professional, and consistently deliver a seamless shuttle experience for our guests. They are also easy to work with, provide data-driven solutions that are adaptable to our evolving needs, and play an important role in enhancing the overall gameday experience for our patrons. We truly value their partnership and the level of service they provide.</p>
@@ -444,10 +483,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.js"></script>
   <script>
     $(document).ready(function(){
+    // Respect the OS "reduce motion" setting: start the strip stopped rather than
+    // autoplaying and then yanking it to a halt.
+    var reduceMotionMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+
     $('.customer-logos').slick({
         slidesToShow: 6,
         slidesToScroll: 1,
-        autoplay: true,
+        autoplay: !reduceMotionMQ.matches,
         autoplaySpeed: 1500,
         arrows: false,
         dots: false,
@@ -473,6 +516,61 @@
     // with no accessible name (Lighthouse aria-input-field-name failure).
     // Label it — the carousel is a decorative client-logo strip.
     $('.customer-logos .slick-track').attr('aria-label', 'FlexTram client logos');
+
+    // ---- Logo strip: pause control + reduced-motion + off-screen pause ----
+    // Three reasons this exists:
+    //  1. WCAG 2.2.2 (Pause, Stop, Hide) — auto-scrolling content lasting >5s needs
+    //     a pause mechanism. Level A.
+    //  2. prefers-reduced-motion.
+    //  3. Main-thread cost. Slick animates via JS on every tick, so a strip that
+    //     scrolls forever means the main thread never idles — a big TBT contributor
+    //     on mobile. Stop animating when nobody can see it.
+    (function () {
+      var $carousel = $('.customer-logos');
+      var btn = document.getElementById('logos-pause');
+      if (!btn || !$carousel.length) return;
+
+      // Two INDEPENDENT reasons the strip may be stopped. Kept separate so that
+      // scrolling away and back never resurrects motion the user chose to stop.
+      var userPaused = reduceMotionMQ.matches;
+      var offScreen = false;
+
+      function sync() {
+        var shouldRun = !userPaused && !offScreen;
+        $carousel.slick(shouldRun ? 'slickPlay' : 'slickPause');
+        // aria-pressed drives the icon swap in CSS; keep the label describing the
+        // ACTION the button performs, not the current state.
+        btn.setAttribute('aria-pressed', String(userPaused));
+        btn.setAttribute('aria-label', userPaused
+          ? 'Play the scrolling client logos'
+          : 'Pause the scrolling client logos');
+      }
+
+      btn.hidden = false; // only reveal once slick is actually running
+      sync();
+
+      btn.addEventListener('click', function () {
+        userPaused = !userPaused;
+        sync();
+      });
+
+      // IntersectionObserver, not a scroll listener — a scroll handler would add
+      // main-thread work on every frame, which is the exact cost we're removing.
+      // If IntersectionObserver is missing or never fires, offScreen stays false and
+      // the strip just plays — degrading to today's behaviour, never stuck paused.
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          // Take the LAST entry: callbacks batch, and entries[0] is the oldest.
+          offScreen = !entries[entries.length - 1].isIntersecting;
+          sync();
+        }, { threshold: 0 }).observe($carousel[0]);
+      }
+
+      // Honor the OS setting changing mid-session.
+      var onMotionChange = function (e) { userPaused = e.matches; sync(); };
+      if (reduceMotionMQ.addEventListener) reduceMotionMQ.addEventListener('change', onMotionChange);
+      else if (reduceMotionMQ.addListener) reduceMotionMQ.addListener(onMotionChange);
+    })();
 });
   </script>
 
