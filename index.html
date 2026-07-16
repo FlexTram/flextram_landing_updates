@@ -293,7 +293,9 @@
     <style>
       .fieldsheet-cta{display:inline-block;color:#c44323;font-size:14px;font-weight:700;text-decoration:none;background:transparent;border:2px solid #c44323;padding:10px 28px;border-radius:50px;transition:background .2s ease,color .2s ease,transform .2s ease,box-shadow .2s ease;}
       .fieldsheet-cta:hover,.fieldsheet-cta:focus{background:#c44323;color:#fff;text-decoration:none;transform:translateY(-1px);box-shadow:0 4px 14px rgba(196,67,35,0.3);}
-      .fieldsheet-meta{margin:14px 0 0;color:#8a877f;font-size:12.5px;letter-spacing:0.03em;}
+      /* #6b6a64 = --color-text-tertiary; 5.43:1 on white (WCAG AA). Do not
+         lighten — #8a877f fails AA for text this size. */
+      .fieldsheet-meta{margin:14px 0 0;color:#6b6a64;font-size:12.5px;letter-spacing:0.03em;}
     </style>
     <div class="section text-center landing-section" style="padding-top:0px;padding-bottom:56px;">
       <div class="container">
