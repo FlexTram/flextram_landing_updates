@@ -78,17 +78,44 @@ Static HTML site built on **Paper Kit 2 PRO v2.3.0** (Creative Tim). No build to
 ### Blog system
 - Hub page at `/blog/` with article card grid
 - Article template uses `blog-post.css` (based on use-case.css patterns)
-- **Auto-publish workflow:** GitHub Actions runs daily at 9 AM UTC
-  - Drafts in `blog/_drafts/` with filename `YYYY-MM-DD_slug.html`
-  - When date arrives: moves to `blog/`, updates sitemap (with `<image:image>` block sourced from BLOG_META), adds card to hub page
-  - Drafts include `BLOG_META` comment block for hub card metadata + sitemap image entry
-  - Can also trigger manually from GitHub Actions tab
-  - **Runs on production only** (guard added 2026-04-18): `if: github.repository == 'blackbox-engineering/flextram_landing'`. Before the guard, the workflow fired independently on origin (fork) and production, creating divergent commit SHAs with identical content and forcing a cherry-pick pattern on same-day manual pushes. On 2026-04-19 the two remotes were reconciled via `git reset --hard production/master` locally + `git push origin master --force-with-lease` — both remotes now track a single linear history. If the fork ever falls behind after an auto-publish, sync with: `git fetch production && git push origin production/master:master` (non-destructive, fork fast-forwards to production).
-  - **Image-sitemap support added 2026-04-22:** workflow now emits `<image:image>` blocks in the sitemap entry by transforming BLOG_META `image:` and `image_alt:` fields (relative `../assets/img/foo.jpg` → absolute URL, `&` chars XML-escaped). Falls back gracefully (no image:image block) if BLOG_META lacks image fields. Backstory: when fan-experience-gap auto-published on 2026-04-22, its sitemap entry shipped without an image declaration since the image-sitemap extension was added 2026-04-21 (a day after the workflow was last touched). Patched same-day so future auto-publishes inherit the structural-SEO work automatically.
-- **Scheduled articles:**
-  - April 15: "The True Cost of the Golf Cart" (Operations)
-  - April 22: "The Fan Experience Gap" (Fan Experience)
-  - April 29: "Sponsorship's Untapped Frontier" (Revenue)
+- **Publishing is manual** (as of 2026-07-16). Scheduled auto-publishing was removed —
+  see "Scheduled auto-publish (REMOVED 2026-07-16)" below for why and how to restore.
+
+To publish a post, do what the workflow used to do, by hand:
+1. Add the article at `blog/<slug>.html`
+2. Add a `<url>` entry to `sitemap.xml` (include the `<image:image>` block — the
+   urlset declares the image-sitemap extension via `xmlns:image`)
+3. Add a card to `blog/index.html` above the `<!-- NEW-ARTICLES-ABOVE -->` marker
+4. Optional: ping IndexNow so Bing/DuckDuckGo recrawl in hours instead of waiting on
+   organic discovery. Key file `3b5dd366e4db30dd7e6249ecda05e4c4.txt` is still in the
+   repo root and still served (it's a verification token, public by design):
+   `curl -X POST https://api.indexnow.org/indexnow -H 'Content-Type: application/json' -d '{"host":"www.flextram.com","key":"3b5dd366e4db30dd7e6249ecda05e4c4","keyLocation":"https://www.flextram.com/3b5dd366e4db30dd7e6249ecda05e4c4.txt","urlList":["https://www.flextram.com/blog/<slug>"]}'`
+
+### Scheduled auto-publish (REMOVED 2026-07-16)
+`.github/workflows/publish-drafts.yml` and `blog/_drafts/` are gone. It ran daily at
+9 AM UTC, moved `blog/_drafts/YYYY-MM-DD_slug.html` into `blog/` once the date
+arrived, updated the sitemap and hub card from the draft's `BLOG_META` block, and
+pinged IndexNow. It worked, and had genuinely published posts.
+
+Removed for two reasons:
+1. Not in use — recent posts were all published by hand, and the daily cron was a
+   no-op against an empty `_drafts/`.
+2. **`.nojekyll` disarmed its safety.** Drafts were hidden from the live site only
+   because *Jekyll* excludes underscore-prefixed directories. Adding `.nojekyll`
+   (needed to stop GitHub's Jekyll build failing on api.github.com — see "Deployment")
+   made `blog/_drafts/` publicly served: `/blog/_drafts/.gitkeep` started returning
+   200. Nothing leaked (the folder was empty), but any future draft would have gone
+   live the moment it was committed — the exact opposite of scheduling it.
+
+**If you ever restore this:** the workflow itself never depended on Jekyll (it was
+plain bash), so it would still function. But `_drafts` will NOT be hidden while
+`.nojekyll` exists. Stage drafts somewhere unpublished instead — note `.github/` is
+excluded by Pages (verified 404) while underscore dirs are not. Do not simply revert
+the removal and assume drafts are private.
+
+History worth keeping:
+- **Production-only guard (2026-04-18):** `if: github.repository == 'blackbox-engineering/flextram_landing'`. Without it the workflow fired on both origin (fork) and production, creating divergent SHAs with identical content and forcing cherry-picks on same-day manual pushes. Remotes were reconciled 2026-04-19 via `git reset --hard production/master` + `git push origin master --force-with-lease`. If the fork ever falls behind: `git fetch production && git push origin production/master:master` (non-destructive fast-forward).
+- **Image-sitemap support (2026-04-22):** the workflow emitted `<image:image>` blocks by transforming BLOG_META `image:`/`image_alt:` (relative `../assets/img/foo.jpg` → absolute URL, `&` XML-escaped). Retained above as a manual step.
 
 ### AI-search query pattern (the unusual surface that's now driving real impressions)
 GSC top-queries report regularly shows long, operator-heavy Boolean queries hitting the site — patterns like `"cruise industry" -"sub" -"submarine" -site:reddit.com -site:twitter.com -site:tripadvisor.com -site:youtube.com -site:yelp.com -site:booking.com -site:facebook.com -site:instagram.com -site:tiktok.com -site:wykop.pl` or `"ingredion" | "ingredion inc" | "ingredion.com"`. These are **NOT human typed queries.** They are AI search tools (Perplexity, Gemini Deep Research, ChatGPT search, Claude with web search) issuing programmatic Google queries on behalf of a researcher.
