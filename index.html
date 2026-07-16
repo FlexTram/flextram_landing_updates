@@ -289,6 +289,24 @@
       </div>
     </div>
 
+    <!-- Field cut sheet: shareable one-pager of real deployments -->
+    <style>
+      .fieldsheet-cta{display:inline-block;color:#c44323;font-size:14px;font-weight:700;text-decoration:none;background:transparent;border:2px solid #c44323;padding:10px 28px;border-radius:50px;transition:background .2s ease,color .2s ease,transform .2s ease,box-shadow .2s ease;}
+      .fieldsheet-cta:hover,.fieldsheet-cta:focus{background:#c44323;color:#fff;text-decoration:none;transform:translateY(-1px);box-shadow:0 4px 14px rgba(196,67,35,0.3);}
+      .fieldsheet-meta{margin:14px 0 0;color:#8a877f;font-size:12.5px;letter-spacing:0.03em;}
+    </style>
+    <div class="section text-center landing-section" style="padding-top:0px;padding-bottom:56px;">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 ml-auto mr-auto">
+            <p style="font-weight:500;font-size:1.15em;line-height:1.6;color:#5f5e5a;margin-bottom:18px">Need to show your team what this looks like on the ground? One page, seven real deployments &mdash; waterfronts, festivals, urban loops, and a Gigafactory.</p>
+            <a href="/assets/docs/FlexTram-In-The-Field.pdf" target="_blank" rel="noopener" class="fieldsheet-cta">See it in the field &rarr;</a>
+            <p class="fieldsheet-meta">One-page PDF &middot; 0.7 MB &middot; built to forward</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
    <section class="customer-logos slider">
       <div class="slide vertical-center" style="display: flex;"><img src="assets/img/logos/Tesla_Motors.svg.png" alt="Tesla Motors - FlexTram client for onsite transportation" loading="lazy" style="max-width: 45%; margin: auto;"></div>
       <div class="slide vertical-center" style="display: flex;"><img src="assets/img/logos/lollapalooza.png" alt="Lollapalooza music festival - FlexTram event transportation partner" loading="lazy"></div>
@@ -494,13 +512,14 @@
 
     // CTA click tracking
     document.addEventListener('click', function(e) {
-      var link = e.target.closest('a[href*="contact-form"], a[href*="/request-a-bid"], a[href*="calendly.com"], a[href*="/savings-calculator"], .nav-cta');
+      var link = e.target.closest('a[href*="contact-form"], a[href*="/request-a-bid"], a[href*="calendly.com"], a[href*="/savings-calculator"], a[href*="FlexTram-In-The-Field"], .nav-cta');
       if (link) {
         var dest = link.getAttribute('href') || '';
         var cta_type = 'contact_form';
         if (dest.indexOf('calendly.com') > -1) cta_type = 'calendly';
         else if (dest.indexOf('request-a-bid') > -1) cta_type = 'bid_form';
         else if (dest.indexOf('savings-calculator') > -1) cta_type = 'savings_calculator';
+        else if (dest.indexOf('FlexTram-In-The-Field') > -1) cta_type = 'field_sheet';
         gtag('event', 'cta_click', {
           cta_text: link.textContent.trim(),
           cta_location: link.closest('#calc-toast') ? 'homepage_scroll_toast' : (link.closest('nav') ? 'nav' : 'body'),
