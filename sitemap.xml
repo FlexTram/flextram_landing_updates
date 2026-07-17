@@ -771,4 +771,14 @@
       <image:caption>Cruise passengers walking along a pier alongside a docked cruise ship at a port of call, with a second ship visible in the background</image:caption>
     </image:image>
   </url>
+  <url>
+    <loc>https://www.flextram.com/blog/cant-buy-availability-one-cart</loc>
+    <lastmod>2026-07-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-cant-buy-availability.jpg</image:loc>
+      <image:caption>A long row of white numbered golf carts parked side by side along a paved resort path, with green trees and mountains in the background</image:caption>
+    </image:image>
+  </url>
 </urlset>
