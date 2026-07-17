@@ -474,13 +474,54 @@
       </div>
     </div>
   </footer>
-  <!--   Core JS Files   -->
+  <!-- Core JS. jQuery is here only because slick 1.6 requires it — see the logo
+       strip below. Bootstrap JS, Popper and paper-kit.js were removed 2026-07-16:
+       nothing on this page used them (no collapse/dropdown/modal; the navbar's
+       rel="tooltip" never initialised because paper-kit looks for
+       data-toggle="tooltip"). paper-kit.js's only live feature was the hero
+       parallax, reimplemented below in ~10 lines. Bootstrap/paper-kit CSS stays —
+       .navbar/.container/.row/.col-md-* are used. -->
   <script src="assets/js/core/jquery.min.js" type="text/javascript"></script>
-  <script src="assets/js/core/popper.min.js" type="text/javascript"></script>
-  <script src="assets/js/core/bootstrap.min.js" type="text/javascript"></script>
-  <!-- Control Center for Paper Kit: parallax effects, scripts for the example pages etc -->
-  <script src="assets/js/paper-kit.js?v=2.3.0" type="text/javascript"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.js"></script>
+  <script>
+    // Hero parallax — replaces paper-kit.js's version, which ran a
+    // debounce(4ms) jQuery handler writing four vendor-prefixed transforms.
+    // This uses rAF (frame-aligned, not every 4ms), a passive listener (never
+    // blocks scrolling), skips work once the hero is off-screen, and honours
+    // prefers-reduced-motion — parallax is exactly the motion that setting is for.
+    (function () {
+      var hero = document.querySelector('.page-header[data-parallax="true"]');
+      if (!hero) return;
+
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var onScreen = true;
+      var ticking = false;
+
+      function update() {
+        ticking = false;
+        hero.style.transform = 'translate3d(0,' + (window.scrollY / 3) + 'px,0)';
+      }
+
+      function onScroll() {
+        if (ticking || !onScreen || reduceMotion.matches) return;
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          onScreen = entries[entries.length - 1].isIntersecting;
+        }, { threshold: 0 }).observe(hero);
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      // If the user turns reduce-motion on mid-session, drop any offset already applied.
+      var onMotionChange = function (e) { if (e.matches) hero.style.transform = ''; };
+      if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', onMotionChange);
+      else if (reduceMotion.addListener) reduceMotion.addListener(onMotionChange);
+    })();
+  </script>
   <script>
     $(document).ready(function(){
     // Respect the OS "reduce motion" setting: start the strip stopped rather than
