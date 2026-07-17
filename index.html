@@ -84,17 +84,22 @@
     @media(max-width:768px){.features-2 .card[data-background="image"]{height:380px}}
     @media(max-width:576px){.features-2 .card[data-background="image"]{height:360px}}
   </style>
-  <!-- Deferred CSS Files -->
-  <link rel="preload" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="assets/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="assets/css/custom.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="assets/css/paper-kit.css?v=2.3.0" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="assets/css/custom.css" rel="stylesheet" />
-    <link href="assets/css/paper-kit.css?v=2.3.0" rel="stylesheet" />
-  </noscript>
+  <!-- CSS loads render-blocking, deliberately (changed 2026-07-16).
+       These were rel=preload + onload=this.rel='stylesheet', which paints the page
+       before the CSS arrives and leaves layout held by the inline critical CSS
+       above. Any gap between the two is a layout shift, and because it's a race
+       against the network it was nondeterministic: mobile CLS swung 0 -> 0.92 on
+       identical code. It also caused two real bugs by drift, since the critical CSS
+       is hand-maintained (the nav-logo shift, and a WCAG contrast miss).
+       These files total ~48KB — small enough that blocking is the better trade:
+       slightly later FCP for a whole eliminated bug class. Do not "optimise" this
+       back to async without re-measuring CLS over several runs.
+       font-awesome was dropped here: zero fa-* classes on this page (the icons are
+       Nucleo, which ships with paper-kit.css), so it was 31KB and a third-party
+       connection for nothing. -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/custom.css">
+  <link rel="stylesheet" href="assets/css/paper-kit.css?v=2.3.0">
 
 
   <!-- Twitter Card -->
