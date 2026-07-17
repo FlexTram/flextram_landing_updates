@@ -781,4 +781,14 @@
       <image:caption>A long row of white numbered golf carts parked side by side along a paved resort path, with green trees and mountains in the background</image:caption>
     </image:image>
   </url>
+  <url>
+    <loc>https://www.flextram.com/blog/plant-tour-transportation</loc>
+    <lastmod>2026-07-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-plant-tour-transportation.jpg</image:loc>
+      <image:caption>A train of open-air FlexTram trams towed by Kubota utility vehicles carries seated guests in hi-vis vests across a concrete apron past a large aircraft hangar during a facility tour</image:caption>
+    </image:image>
+  </url>
 </urlset>
