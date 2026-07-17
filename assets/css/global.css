@@ -58,6 +58,16 @@ body {
 a { color: inherit; text-decoration: none; }
 
 /* ---- NAV (stub — replace with your component) ---- */
+/* Sticky since 2026-07-16. Deliberately position:sticky and NOT fixed+JS: sticky
+   stays in flow (so it can't cause layout shift) and runs on the compositor, where
+   a scroll listener would add main-thread work on every frame.
+   No full-width wrapper is needed even though .nav is max-width'd and centred —
+   every page container uses the same --max-width token, so beyond that column
+   there is no content to scroll past the nav's edges. The background is required:
+   without it, content scrolls visibly THROUGH the nav.
+   z-index 50 sits below .sticky-cta (100) — different corners, no collision.
+   Homepage is excluded by construction: it uses the legacy Paper Kit .navbar, not
+   this component. See task #4. */
 .nav {
   display: flex;
   align-items: center;
@@ -66,6 +76,10 @@ a { color: inherit; text-decoration: none; }
   border-bottom: 0.5px solid var(--color-border-light);
   max-width: var(--max-width);
   margin: 0 auto;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--color-bg-primary);
 }
 .nav-logo {
   font-family: var(--font-serif);
