@@ -513,21 +513,21 @@ image_alt: Aerial view of a large-footprint destination resort with dispersed lo
       <p><strong>The Greenbrier ownership question &mdash; unresolved.</strong> The receivership fight between the Justice family and TRT Holdings (Omni's parent) will determine whether one of the category's most storied properties moves under a multi-resort portfolio operator. If it does, it becomes a live test of the consolidation pattern above: a portfolio owner inheriting a walkable-core historic resort and deciding how &mdash; or whether &mdash; to standardize its circulation.</p>
 
       <div class="atlas-callout">
-        <p><strong>About this atlas.</strong> Last updated July 20, 2026. The destination-resort category is in active expansion and consolidation &mdash; new courses, new villages, ownership changes, and renovation programs are announced every few months. Transit-status details are drawn from each resort's own published guest materials where available, and flagged where they are not. This page is maintained as the category evolves; if you spot an error or a meaningful update, email <a href="/#contact-form" class="js-mailto" data-u="jb" data-d="flextram.com" data-s="Atlas correction — destination resorts"><span class="js-mail-display">Joseph</span></a>.</p>
+        <p><strong>About this atlas.</strong> Last updated July 20, 2026. The destination-resort category is in active expansion and consolidation &mdash; new courses, new villages, ownership changes, and renovation programs are announced every few months. Transit-status details are drawn from each resort's own published guest materials where available, and flagged where they are not. This page is maintained as the category evolves; if you spot an error or a meaningful update, <a href="/#contact-form">get in touch</a>.</p>
       </div>
 
       <!-- Mid-page CTA — resort buyer specific -->
       <div class="post-cta-inline">
         <div class="post-cta-inline-text">
           <h3>Building or scaling transit at a destination resort?</h3>
-          <p>A permanent onsite platform, not an event deployment &mdash; equipment that lives on property, continuous loops between lodging and amenity zones run by local staff, seasonal peak-scaling for golf and beach days, and integrated ADA service on the standard vehicle rather than a separate cart on request. If you're evaluating circulation for a buildout, an expansion, or a portfolio of properties, the right path is a direct conversation &mdash; no form, no procurement gate.</p>
+          <p>A permanent onsite platform, not an event deployment &mdash; equipment that lives on property, continuous loops between lodging and amenity zones run by local staff, seasonal peak-scaling for golf and beach days, and integrated ADA service on the standard vehicle rather than a separate cart on request. If you're evaluating circulation for a buildout, an expansion, or a portfolio of properties, the right path is a direct conversation &mdash; tell us about the project and we’ll take it from there.</p>
         </div>
-        <a href="/#contact-form" class="btn-primary js-mailto" data-u="jb" data-d="flextram.com" data-s="Atlas inquiry — destination resort transit">Email <span class="js-mail-display">Joseph</span> &rarr;</a>
+        <a href="/#contact-form" class="btn-primary">Get in Touch &rarr;</a>
       </div>
 
       <h2>Sources</h2>
 
-      <p style="font-size: 14px; line-height: 1.7;">Each entry above cites its primary source inline. The atlas synthesizes data from resorts' own guest-services and getting-around pages, ownership and trade press (Travel Weekly, Forbes, Golf.com, PR Newswire, SEC filings), Wikipedia cross-references, and FlexTram's own operational analysis of the category. Transit-status claims are drawn from each resort's published materials where available and flagged where they rest on secondary sources. For corrections or updates, email <a href="/#contact-form" class="js-mailto" data-u="jb" data-d="flextram.com" data-s="Atlas correction — destination resorts"><span class="js-mail-display">Joseph</span></a>.</p>
+      <p style="font-size: 14px; line-height: 1.7;">Each entry above cites its primary source inline. The atlas synthesizes data from resorts' own guest-services and getting-around pages, ownership and trade press (Travel Weekly, Forbes, Golf.com, PR Newswire, SEC filings), Wikipedia cross-references, and FlexTram's own operational analysis of the category. Transit-status claims are drawn from each resort's published materials where available and flagged where they rest on secondary sources. For corrections or updates, <a href="/#contact-form">get in touch</a>.</p>
 
       <h2>Related reading on FlexTram</h2>
 
@@ -556,52 +556,14 @@ image_alt: Aerial view of a large-footprint destination resort with dispersed lo
     <div class="post-cta">
       <div>
         <h2>Talk through an onsite transit platform for a destination resort.</h2>
-        <p>This atlas is a fraction of what we track in the destination-resort category. If you're evaluating circulation for a new build, an amenity expansion, a renovation program, or a portfolio of properties at multiple stages of buildout &mdash; start a conversation. Direct email, no form, no procurement gate, no generic vendor pitch.</p>
+        <p>This atlas is a fraction of what we track in the destination-resort category. If you're evaluating circulation for a new build, an amenity expansion, a renovation program, or a portfolio of properties at multiple stages of buildout &mdash; start a conversation. Tell us about the project and we’ll route it to the right person &mdash; no generic vendor pitch.</p>
       </div>
-      <a href="/#contact-form" class="btn-primary js-mailto" data-u="jb" data-d="flextram.com" data-s="Atlas inquiry — resort transit strategy">Email <span class="js-mail-display">Joseph</span> &rarr;</a>
+      <a href="/#contact-form" class="btn-primary">Get in Touch &rarr;</a>
     </div>
 
-    <a href="/#contact-form" class="sticky-cta js-mailto" data-u="jb" data-d="flextram.com" data-s="Atlas inquiry — destination resorts" aria-label="Email Joseph">Email Joseph &rarr;</a>
+    <a href="/#contact-form" class="sticky-cta" aria-label="Get in Touch">Get in Touch &rarr;</a>
   </main>
 
-  <script>
-    // Mailto obfuscation + GA4 click tracking on atlas CTAs.
-    // - Address is assembled from separated data attributes at runtime so email
-    //   harvesters scraping HTML source see no usable pattern. Falls back to
-    //   /#contact-form for users without JS (graceful degradation).
-    // - Click fires GA4 cta_click event with cta_type=email_atlas + cta_location
-    //   (mid_page / bottom / sticky / correction) so we can slice atlas CTA
-    //   performance in GA4's CTA Type / CTA Location custom dimensions.
-    (function() {
-      function ctaLocation(el) {
-        if (el.classList.contains('sticky-cta')) return 'sticky';
-        if (el.closest('.post-cta-inline')) return 'mid_page';
-        if (el.closest('.post-cta')) return 'bottom';
-        return 'correction'; // inline body link in About this atlas / Sources
-      }
-      var els = document.querySelectorAll('.js-mailto');
-      for (var i = 0; i < els.length; i++) {
-        (function(el) {
-          var addr = el.dataset.u + '@' + el.dataset.d;
-          var href = 'mailto:' + addr;
-          if (el.dataset.s) href += '?subject=' + encodeURIComponent(el.dataset.s);
-          el.href = href;
-          var display = el.querySelector('.js-mail-display');
-          if (display) display.textContent = addr;
-          var location = ctaLocation(el);
-          el.addEventListener('click', function() {
-            if (typeof gtag === 'function') {
-              gtag('event', 'cta_click', {
-                cta_type: 'email_atlas',
-                cta_location: location,
-                cta_subject: el.dataset.s || ''
-              });
-            }
-          });
-        })(els[i]);
-      }
-    })();
-  </script>
 
 </body>
 </html>
