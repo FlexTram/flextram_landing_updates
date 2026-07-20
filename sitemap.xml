@@ -811,4 +811,20 @@
       <image:caption>Long interior corridor of electrical switchgear lineups staged on pallets inside a data center under construction</image:caption>
     </image:image>
   </url>
+  <url>
+    <loc>https://www.flextram.com/atlas/</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.flextram.com/atlas/destination-resorts</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-atlas-destination-resorts.jpg</image:loc>
+      <image:caption>Aerial view of a large-footprint destination resort with dispersed lodging, golf, and amenity zones separated by water and landscaped grounds</image:caption>
+    </image:image>
+  </url>
 </urlset>
