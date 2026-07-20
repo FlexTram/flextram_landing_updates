@@ -801,4 +801,14 @@
       <image:caption>A Chicago CTA station board mounted on a rusted pipe frame displaying the Rail L System Map beside the Brown Line Quincy station timetable with posted train frequencies</image:caption>
     </image:image>
   </url>
+  <url>
+    <loc>https://www.flextram.com/solutions/data-centers</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-data-center-construction.jpg</image:loc>
+      <image:caption>Long interior corridor of electrical switchgear lineups staged on pallets inside a data center under construction</image:caption>
+    </image:image>
+  </url>
 </urlset>
