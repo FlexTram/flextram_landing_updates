@@ -791,4 +791,14 @@
       <image:caption>A train of open-air FlexTram trams towed by Kubota utility vehicles carries seated guests in hi-vis vests across a concrete apron past a large aircraft hangar during a facility tour</image:caption>
     </image:image>
   </url>
+  <url>
+    <loc>https://www.flextram.com/blog/world-cup-retrospective</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-world-cup-retrospective.jpg</image:loc>
+      <image:caption>A Chicago CTA station board mounted on a rusted pipe frame displaying the Rail L System Map beside the Brown Line Quincy station timetable with posted train frequencies</image:caption>
+    </image:image>
+  </url>
 </urlset>
