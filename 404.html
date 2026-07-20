@@ -2,6 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <!-- Google tag (gtag.js) — same deferred loader as the rest of the site.
+       On 404 we also send the requested path + referrer as a page_view param
+       so broken inbound links are visible in GA4 rather than silent. -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZYK6B5M9QT', {
+      page_title: '404 - ' + location.pathname,
+      page_location: location.href
+    });
+    gtag('event', 'page_not_found', {
+      requested_path: location.pathname + location.search,
+      referrer: document.referrer || '(none)'
+    });
+    (function() {
+      var loaded = false;
+      function loadGA() {
+        if (loaded) return; loaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-ZYK6B5M9QT';
+        document.head.appendChild(s);
+      }
+      ['scroll','mousemove','touchstart','keydown','click','pointerdown'].forEach(function(e) {
+        window.addEventListener(e, loadGA, { once: true, passive: true });
+      });
+      setTimeout(loadGA, 2500);
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Page Not Found — FlexTram Systems</title>
   <meta name="robots" content="noindex, nofollow" />
