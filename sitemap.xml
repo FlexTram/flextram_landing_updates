@@ -802,6 +802,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.flextram.com/blog/gigawatt-campus-crossing</loc>
+    <lastmod>2026-07-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-gigawatt-campus-crossing.jpg</image:loc>
+      <image:caption>Aerial view at sunset of a sprawling industrial and data center campus with multiple large buildings, parking lots, and access roads spread across hundreds of acres</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.flextram.com/solutions/data-centers</loc>
     <lastmod>2026-07-20</lastmod>
     <changefreq>monthly</changefreq>

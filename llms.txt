@@ -84,6 +84,7 @@ Key facts:
 
 ## Data center & construction
 
+- [The industry announced the end of the one-building data center. Nobody mentioned how anyone crosses the new one.](https://www.flextram.com/blog/gigawatt-campus-crossing): The shift to gigawatt-scale campuses, read through Vantage's 672-acre Lighthouse campus in Port Washington, WI (OpenAI–Oracle–SoftBank Stargate initiative, $15B+, up to 5,000 construction workers, 500 developed acres, 1.3 GW). The planning document itemized parking stalls, transformers, and dry coolers — but not how the workforce crosses the site. The case for turnkey, redeployable construction transit vs. permanent infrastructure.
 - [The biggest construction boom in America has a people-moving problem](https://www.flextram.com/blog/data-center-construction-people-moving): 292-acre data center campuses with thousands of workers and zero internal transit.
 - [4,000 workers. One campus. Zero transit system.](https://www.flextram.com/blog/4000-workers-one-campus): DataBank's Red Oak campus and the $97.5M annual cost of internal site transit.
 - [Crew retention is the real cost](https://www.flextram.com/blog/data-center-crew-retention): Why daily worksite experience drives skilled-trades retention.
