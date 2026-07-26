@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.flextram.com/</loc>
-    <lastmod>2026-07-03</lastmod>
+    <lastmod>2026-07-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
       <image:image>
@@ -199,7 +199,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/</loc>
-    <lastmod>2026-07-03</lastmod>
+    <lastmod>2026-07-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -703,7 +703,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/properties-got-bigger</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-07-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -713,7 +713,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/4000-workers-one-campus</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-07-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -803,7 +803,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/gigawatt-campus-crossing</loc>
-    <lastmod>2026-07-25</lastmod>
+    <lastmod>2026-07-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
