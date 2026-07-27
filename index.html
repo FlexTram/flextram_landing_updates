@@ -83,6 +83,27 @@
     .features-2 .card[data-background="image"] .card-icon i{display:inline-block;width:105px;height:105px;line-height:105px;border:2px solid #ccc;border-radius:50%;box-sizing:border-box}
     @media(max-width:768px){.features-2 .card[data-background="image"]{height:380px}}
     @media(max-width:576px){.features-2 .card[data-background="image"]{height:360px}}
+    /* Homepage mobile nav (<=991px): hamburger menu. Desktop (>=992px) keeps the
+       existing Paper Kit horizontal bar untouched. Vanilla toggle (script at end of
+       body) — no jQuery. Lives in the render-blocking critical block so the stacked
+       legacy layout never flashes before this applies. !important beats the inline
+       styles on .navbar-nav (display/gap/align/padding) inside the mobile query only. */
+    .ft-navbar-toggler{display:none}
+    @media(max-width:991px){
+      .navbar .navbar-translate{display:flex;align-items:center;justify-content:space-between;width:100%}
+      .ft-navbar-toggler{display:flex;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;padding:11px;margin-right:20px;background:transparent;border:0;cursor:pointer;position:relative;z-index:1032}
+      .ft-navbar-toggler span{display:block;width:100%;height:2px;background:#fff;border-radius:2px;transition:transform .25s ease,opacity .2s ease}
+      .ft-navbar-toggler[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+      .ft-navbar-toggler[aria-expanded="true"] span:nth-child(2){opacity:0}
+      .ft-navbar-toggler[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+      .navbar .navbar-nav{position:absolute!important;top:0;left:0;right:0;width:100%;flex-direction:column!important;align-items:stretch!important;gap:0!important;margin:0!important;padding:96px 24px 28px!important;background:rgba(18,17,16,0.98);box-shadow:0 12px 30px rgba(0,0,0,0.35);transform:translateY(-14px);opacity:0;pointer-events:none;transition:opacity .22s ease,transform .22s ease}
+      .navbar.nav-open .navbar-nav{transform:translateY(0);opacity:1;pointer-events:auto}
+      .navbar .navbar-nav a{opacity:1!important;padding:17px 6px!important;font-size:17px!important;border-bottom:1px solid rgba(255,255,255,0.09)}
+      .navbar .navbar-nav a.nav-cta{margin-top:20px!important;padding:15px 24px!important;border-bottom:0;text-align:center;border-radius:50px}
+    }
+    @media(max-width:991px) and (prefers-reduced-motion:reduce){
+      .navbar .navbar-nav,.ft-navbar-toggler span{transition:none}
+    }
   </style>
   <!-- CSS loads render-blocking, deliberately (changed 2026-07-16).
        These were rel=preload + onload=this.rel='stylesheet', which paints the page
@@ -167,8 +188,11 @@
         <a class="navbar-brand" href="/" rel="tooltip" title="FlexTram" data-placement="bottom">
           <img src="assets/img/logo_white_new.png" alt="FlexTram - micro-mobility vehicles for live events and onsite transportation" width="900" height="184">
         </a>
+        <button class="ft-navbar-toggler" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="ftMobileNav">
+          <span></span><span></span><span></span>
+        </button>
       </div>
-      <div class="navbar-nav ml-auto" style="display:flex;gap:20px;align-items:center;padding-right:30px;">
+      <div id="ftMobileNav" class="navbar-nav ml-auto" style="display:flex;gap:20px;align-items:center;padding-right:30px;">
         <a href="/solutions/" style="color:#fff;font-size:14px;font-weight:500;text-decoration:none;opacity:0.9;">Solutions</a>
         <a href="/blog/" style="color:#fff;font-size:14px;font-weight:500;text-decoration:none;opacity:0.9;">Blog</a>
         <a href="#contact-form" class="nav-cta" style="color:#fff;font-size:14px;font-weight:700;text-decoration:none;background:#c44323;padding:10px 24px;border-radius:50px;transition:transform 0.2s ease, box-shadow 0.2s ease;">Get in Touch</a>
@@ -723,6 +747,27 @@
     toast.querySelector('.calc-toast-close').addEventListener('click', dismiss);
     toast.querySelector('.calc-toast-cta').addEventListener('click', markSeen);
     window.addEventListener('scroll', onScroll, { passive:true });
+  })();
+  </script>
+  <script>
+  /* Mobile nav hamburger toggle (<=991px). Vanilla — no jQuery. Desktop nav is
+     unaffected (toggler is display:none >=992px). */
+  (function(){
+    var nav = document.querySelector('.navbar');
+    var btn = document.querySelector('.ft-navbar-toggler');
+    var menu = document.getElementById('ftMobileNav');
+    if (!nav || !btn || !menu) return;
+    function setOpen(open){
+      nav.classList.toggle('nav-open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
+    btn.addEventListener('click', function(){ setOpen(!nav.classList.contains('nav-open')); });
+    // Tapping any menu link closes the panel (esp. the #contact-form in-page anchor).
+    menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setOpen(false); }); });
+    // Escape closes; resizing up to desktop resets state so the panel never sticks open.
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') setOpen(false); });
+    window.addEventListener('resize', function(){ if (window.innerWidth >= 992) setOpen(false); });
   })();
   </script>
 </body>
