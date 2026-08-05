@@ -812,6 +812,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.flextram.com/blog/lollapalooza-urban-festival</loc>
+    <lastmod>2026-08-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-lollapalooza-urban-festival.jpg</image:loc>
+      <image:caption>A fan with arms raised in a dense nighttime crowd facing the brightly lit Tower Stage at Lollapalooza in Grant Park, downtown Chicago</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.flextram.com/solutions/data-centers</loc>
     <lastmod>2026-07-20</lastmod>
     <changefreq>monthly</changefreq>
