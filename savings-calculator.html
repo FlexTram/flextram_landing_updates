@@ -827,8 +827,9 @@
     const flexTramEnergyCost = trams * fuel * FLEXTRAM_ENERGY_MULTIPLIER * days;
     const fuelSavings = Math.max(0, cartFuelSaved - flexTramEnergyCost);
 
-    // Maintenance scales with active use (heavily-used carts wear faster)
-    const maintSavings = operatorsSaved * maint;
+    // Maintenance: same basis as insurance — you stop maintaining the carts you
+    // remove (net of the trams you add). Keeps the two per-cart costs consistent.
+    const maintSavings = Math.max(0, carts - trams) * maint;
 
     // Insurance: tied to fleet size (sell the carts, drop the policies)
     const insSavings = Math.max(0, carts - trams) * ins;
@@ -861,7 +862,7 @@
       : `Trams use comparable energy to the carts replaced. Net fuel impact ≈ $0.`;
 
     $("m-other").textContent = fmt(otherSavings);
-    $("d-other").innerHTML = `<strong>${Math.max(0, carts - trams)}</strong> carts × $${ins} insurance <span class="op">+</span> <strong>${operatorsSaved}</strong> active carts × $${maint} maintenance <span class="op">=</span> <strong>${fmt(otherSavings)}</strong>`;
+    $("d-other").innerHTML = `<strong>${Math.max(0, carts - trams)}</strong> carts × $${ins} insurance <span class="op">+</span> <strong>${Math.max(0, carts - trams)}</strong> carts × $${maint} maintenance <span class="op">=</span> <strong>${fmt(otherSavings)}</strong>`;
 
     // Total card — show range
     if (netHigh > 0) {
