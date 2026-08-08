@@ -522,6 +522,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.flextram.com/blog/mfg-day-tour-capacity</loc>
+    <lastmod>2026-08-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-mfg-day-tour-capacity.jpg</image:loc>
+      <image:caption>A FlexTram multi-car passenger tram staged in a distribution center yard with workers in safety vests beside it and semi-trailers in the background</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.flextram.com/blog/world-cup-miami-hard-rock</loc>
     <lastmod>2026-07-03</lastmod>
     <changefreq>monthly</changefreq>
