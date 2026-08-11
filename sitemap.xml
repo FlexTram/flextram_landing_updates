@@ -528,6 +528,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.flextram.com/blog/small-midsize-amusement-parks</loc>
+    <lastmod>2026-08-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-small-midsize-amusement-parks.jpg</image:loc>
+      <image:caption>A brightly lit multicolored Ferris wheel towers over a packed, rain-slicked amusement park parking lot full of cars at night</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.flextram.com/blog/college-football-game-day</loc>
     <lastmod>2026-08-11</lastmod>
     <changefreq>monthly</changefreq>
