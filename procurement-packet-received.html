@@ -72,7 +72,7 @@
       <div class="bid-contact-card">
         <p>Questions in the meantime?</p>
         <p class="bid-contact-name">Joseph Bradley</p>
-        <p>jb@flextram.com &middot; 865.300.4834</p>
+        <p><a class="js-mail bc-link" href="/#contact-form" data-u="jb" data-d="flextram.com" data-show>Email Joseph</a> &middot; <a class="js-tel bc-link" href="/#contact-form" data-p1="865" data-p2="300" data-p3="4834" data-show>Call Joseph</a></p>
         <p style="margin-top:1rem;"><a href="/" class="bc-link">&larr; Back to FlexTram.com</a></p>
       </div>
 
@@ -98,6 +98,26 @@
         });
       }
     });
+  </script>
+
+  <script>
+    // Contact details are split across data attributes and assembled at runtime,
+    // so no complete address or number ever appears in the HTML source for
+    // pattern-matching harvesters. Falls back to /#contact-form without JS.
+    (function() {
+      var AT = String.fromCharCode(64);
+      Array.prototype.forEach.call(document.querySelectorAll('.js-mail'), function(el) {
+        var addr = el.getAttribute('data-u') + AT + el.getAttribute('data-d');
+        var subj = el.getAttribute('data-s');
+        el.setAttribute('href', 'mailto:' + addr + (subj ? '?subject=' + subj : ''));
+        if (el.hasAttribute('data-show')) el.textContent = addr;
+      });
+      Array.prototype.forEach.call(document.querySelectorAll('.js-tel'), function(el) {
+        var parts = [el.getAttribute('data-p1'), el.getAttribute('data-p2'), el.getAttribute('data-p3')];
+        el.setAttribute('href', 'tel:+1' + parts.join(''));
+        if (el.hasAttribute('data-show')) el.textContent = parts.join('.');
+      });
+    })();
   </script>
 
   <footer class="site-footer">

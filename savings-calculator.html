@@ -749,7 +749,7 @@
     </div>
     <div class="post-cta-row">
       <a href="https://calendly.com/jb-flextram/30min" target="_blank" rel="noopener" class="btn-secondary" id="bookCall">Book a 30-min call →</a>
-      <span class="note">With Joseph Bradley · jb@flextram.com</span>
+      <span class="note">With Joseph Bradley · <a class="js-mail" href="/#contact-form" data-u="jb" data-d="flextram.com" data-show>email</a></span>
     </div>
   </div>
 
@@ -951,7 +951,7 @@
     } catch (err) {
       submitBtn.textContent = originalLabel;
       submitBtn.disabled = false;
-      errEl.textContent = "Something went wrong. Please try again, or email jb@flextram.com directly.";
+      errEl.textContent = "Something went wrong. Please try again, or email " + ["jb", "flextram.com"].join(String.fromCharCode(64)) + " directly.";
       errEl.classList.add("show");
     }
   });
@@ -975,6 +975,21 @@
     <a href="/#contact-form" style="color:var(--mid); font-size:13px; text-decoration:none; letter-spacing:0.02em;">Contact</a>
   </nav>
 </footer>
+
+  <script>
+    // Contact details are split across data attributes and assembled at runtime,
+    // so no complete address ever appears in the HTML source for pattern-matching
+    // harvesters. Falls back to /#contact-form without JS.
+    (function() {
+      var AT = String.fromCharCode(64);
+      Array.prototype.forEach.call(document.querySelectorAll('.js-mail'), function(el) {
+        var addr = el.getAttribute('data-u') + AT + el.getAttribute('data-d');
+        var subj = el.getAttribute('data-s');
+        el.setAttribute('href', 'mailto:' + addr + (subj ? '?subject=' + subj : ''));
+        if (el.hasAttribute('data-show')) el.textContent = addr;
+      });
+    })();
+  </script>
 
 </body>
 </html>
