@@ -30,6 +30,18 @@
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-ZYK6B5M9QT');
+    // Contact-form conversion. Formspree redirects to /?success=true ONLY after it
+    // accepts a submission, so this is a server-confirmed success — unlike a submit
+    // listener, which fires on attempt and races the page unload. Buffered in
+    // dataLayer and flushed when gtag.js loads, same as the thank-you pages.
+    // The param is scrubbed afterwards so a refresh can't double-count.
+    (function() {
+      if (window.location.search.indexOf('success=true') === -1) return;
+      gtag('event', 'form_submit_success', { form_id: 'contact-form' });
+      if (window.history && history.replaceState) {
+        history.replaceState({}, '', window.location.pathname + '#contact-form');
+      }
+    })();
     (function() {
       var loaded = false;
       function loadGA() {
@@ -696,9 +708,13 @@
         }
       });
 
-      // Form submission tracking
+      // Submit ATTEMPT, not success. Fires whether or not Formspree accepts, and
+      // bots that trip the _gotcha honeypot are counted here too — same inflation
+      // that got GA4 Enhanced Measurement's form_submit disabled in Session 11.
+      // Diagnostic only; the real conversion is form_submit_success, fired on the
+      // ?success=true round-trip above. Attempt >> success means bots or drop-off.
       contactForm.addEventListener('submit', function() {
-        gtag('event', 'form_submit_success', { form_id: 'contact-form' });
+        gtag('event', 'form_submit_attempt', { form_id: 'contact-form' });
       });
     }
   })();
