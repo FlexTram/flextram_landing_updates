@@ -564,7 +564,7 @@ image_alt: Aerial view of Nassau Bahamas cruise port with five cruise ships dock
       <p><strong>The exclusive-operating-agreement model.</strong> Sir Bani Yas demonstrates that the category isn't limited to property ownership &mdash; long-term exclusive operating rights on assets owned by host governments is a viable structural alternative. Expect more cruise lines to pursue this model in jurisdictions where outright land acquisition is politically infeasible.</p>
 
       <div class="atlas-callout">
-        <p><strong>About this atlas.</strong> Last updated August 25, 2026. The cruise-line-owned private destinations category is in active capex expansion &mdash; major openings, pier extensions, and regulatory developments are happening every few months. This page is maintained as the category evolves; if you spot an error or a meaningful update, <a href="/#contact-form">get in touch</a>.</p>
+        <p><strong>About this atlas.</strong> Last updated August 25, 2026. The cruise-line-owned private destinations category is in active capex expansion &mdash; major openings, pier extensions, and regulatory developments are happening every few months. This page is maintained as the category evolves; if you spot an error or a meaningful update, <a href="/#contact-form" class="js-mail js-mailto atlas-correction" data-u="jb" data-d="flextram.com" data-s="Atlas correction %E2%80%94 cruise destinations">email Joseph directly</a>.</p>
       </div>
 
       <!-- Mid-page CTA — cruise-line buyer specific -->
@@ -573,12 +573,12 @@ image_alt: Aerial view of Nassau Bahamas cruise port with five cruise ships dock
           <h3>Building or scaling transit at an owned destination?</h3>
           <p>Different operational model than event deployments. Permanent platforms, onsite equipment storage, local destination crew, pier-capacity scaling, two-ship-day saturation planning, integrated ADA service from day one. If you're evaluating transit for a buildout, an expansion, or a new property in the planning phase, the right path is a direct conversation &mdash; tell us about the project and we’ll take it from there.</p>
         </div>
-        <a href="/#contact-form" class="btn-primary">Get in Touch &rarr;</a>
+        <a href="/#contact-form" class="js-mail js-mailto btn-primary" data-u="jb" data-d="flextram.com" data-s="Atlas inquiry %E2%80%94 cruise destination transit">Email Joseph &rarr;</a>
       </div>
 
       <h2>Sources</h2>
 
-      <p style="font-size: 14px; line-height: 1.7;">Each entry above cites its primary source inline. The atlas synthesizes data from cruise line operational pages, trade press (Cruise Industry News, Seatrade Cruise, Travel Weekly), Wikipedia cross-references, and FlexTram's own operational analysis of the category. For corrections or updates, <a href="/#contact-form">get in touch</a>.</p>
+      <p style="font-size: 14px; line-height: 1.7;">Each entry above cites its primary source inline. The atlas synthesizes data from cruise line operational pages, trade press (Cruise Industry News, Seatrade Cruise, Travel Weekly), Wikipedia cross-references, and FlexTram's own operational analysis of the category. For corrections or updates, <a href="/#contact-form" class="js-mail js-mailto atlas-correction" data-u="jb" data-d="flextram.com" data-s="Atlas correction %E2%80%94 cruise destinations">email Joseph directly</a>.</p>
 
       <h2>Related reading on FlexTram</h2>
 
@@ -609,10 +609,10 @@ image_alt: Aerial view of Nassau Bahamas cruise port with five cruise ships dock
         <h2>Talk through an onsite transit platform for an owned destination.</h2>
         <p>This atlas is a fraction of what we track in the cruise-destination category. If you're evaluating transit for a new build, a pier-capacity expansion, a destination acquisition under negotiation, or a portfolio of properties at multiple stages of buildout &mdash; start a conversation. Tell us about the project and we’ll route it to the right person &mdash; no generic vendor pitch.</p>
       </div>
-      <a href="/#contact-form" class="btn-primary">Get in Touch &rarr;</a>
+      <a href="/#contact-form" class="js-mail js-mailto btn-primary" data-u="jb" data-d="flextram.com" data-s="Atlas inquiry %E2%80%94 onsite transit strategy">Email Joseph &rarr;</a>
     </div>
 
-    <a href="/#contact-form" class="sticky-cta" aria-label="Get in Touch">Get in Touch &rarr;</a>
+    <a href="/#contact-form" class="js-mail js-mailto sticky-cta" data-u="jb" data-d="flextram.com" data-s="Atlas inquiry %E2%80%94 cruise destinations" aria-label="Email Joseph">Email Joseph &rarr;</a>
   </main>
 
 
@@ -628,5 +628,41 @@ image_alt: Aerial view of Nassau Bahamas cruise port with five cruise ships dock
       </nav>
     </div>
   </footer>
+  <script>
+    // Atlas CTAs route to Joseph directly rather than the generic contact form:
+    // these are strategic-partnership buyers, not discrete-deployment leads.
+    // Contact details are split across data attributes and assembled at runtime,
+    // so no complete address appears in the HTML source for pattern-matching
+    // harvesters. Falls back to /#contact-form without JS.
+    // Each CTA carries a distinct subject so the source is visible in the inbox.
+    (function() {
+      var AT = String.fromCharCode(64);
+      Array.prototype.forEach.call(document.querySelectorAll('.js-mail'), function(el) {
+        var addr = el.getAttribute('data-u') + AT + el.getAttribute('data-d');
+        var subj = el.getAttribute('data-s');
+        el.setAttribute('href', 'mailto:' + addr + (subj ? '?subject=' + subj : ''));
+        if (el.hasAttribute('data-show')) el.textContent = addr;
+      });
+
+      // GA4: mailto clicks don't fire automatically. cta_type/cta_location are
+      // already registered custom dimensions, so these slice in existing reports.
+      Array.prototype.forEach.call(document.querySelectorAll('.js-mailto'), function(el) {
+        el.addEventListener('click', function() {
+          var loc = el.classList.contains('sticky-cta') ? 'sticky'
+                  : el.classList.contains('atlas-correction') ? 'correction'
+                  : el.closest('.post-cta-inline') ? 'mid_page'
+                  : el.closest('.post-cta') ? 'bottom'
+                  : 'other';
+          if (typeof gtag === 'function') {
+            gtag('event', 'cta_click', {
+              cta_type: 'email_atlas',
+              cta_location: loc,
+              cta_subject: decodeURIComponent(el.getAttribute('data-s') || '')
+            });
+          }
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
