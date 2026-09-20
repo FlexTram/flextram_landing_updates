@@ -38,7 +38,7 @@
   <link rel="canonical" href="https://www.flextram.com/solutions/" />
   <meta name="theme-color" content="#000000">
   <link rel="stylesheet" href="../assets/css/global.css" />
-  <link rel="stylesheet" href="../assets/css/solutions.css?v=2" />
+  <link rel="stylesheet" href="../assets/css/solutions.css?v=3" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -289,6 +289,13 @@
         <figcaption><strong>Asphalt, dirt, grass, gravel, and sand.</strong> This is salt. Bonneville Salt Flats, a corporate event deployment. The crust coats every tire and the fleet runs anyway.</figcaption>
       </figure>
     </div>
+    <figure class="proof-wide">
+      <video class="js-lazy-video" muted loop playsinline preload="none" width="720" height="404"
+             poster="../assets/video/proof-bonneville-poster.jpg"
+             data-src="../assets/video/proof-bonneville-loop.mp4"
+             aria-label="A two-car FlexTram train carrying seated passengers across the Bonneville Salt Flats, towed by a utility vehicle, filmed during a corporate event"></video>
+      <figcaption><strong>And with people on it.</strong> Two cars, full load, moving across the flats. Same deployment as the stills above. The vehicle is the starting point; the ride is the product.</figcaption>
+    </figure>
     <p class="proof-note">Photographed on deployment, not in a showroom. Same vehicle, same tires, the surface your property actually has.</p>
 
     <div class="divider"></div>
@@ -668,5 +675,26 @@
       </nav>
     </div>
   </footer>
+  <script>
+    // The proof loop is below the fold and 327KB. Attach its source only when it
+    // approaches the viewport so visitors who never scroll there never pay for it.
+    // IntersectionObserver per site rule (no scroll listeners); falls back to
+    // loading immediately where IO is unavailable.
+    (function() {
+      var vids = document.querySelectorAll('video.js-lazy-video');
+      if (!vids.length) return;
+      function arm(v) {
+        if (v.dataset.armed) return; v.dataset.armed = '1';
+        v.src = v.getAttribute('data-src');
+        v.load();
+        var p = v.play(); if (p && p.catch) p.catch(function(){});
+      }
+      if (!('IntersectionObserver' in window)) { Array.prototype.forEach.call(vids, arm); return; }
+      var io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) { if (e.isIntersecting) { arm(e.target); io.unobserve(e.target); } });
+      }, { rootMargin: '300px 0px' });
+      Array.prototype.forEach.call(vids, function(v) { io.observe(v); });
+    })();
+  </script>
 </body>
 </html>

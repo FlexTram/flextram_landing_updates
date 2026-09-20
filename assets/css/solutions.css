@@ -92,6 +92,31 @@
   color: var(--color-text-tertiary);
   margin: -1.5rem 0 2.5rem;
 }
+.proof-wide {
+  margin: 0 0 1rem;
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.proof-wide video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 720 / 404;
+  background: var(--color-bg-tertiary);
+}
+.proof-wide figcaption {
+  padding: 0.875rem 1rem 1rem;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+.proof-wide figcaption strong {
+  display: block;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: 3px;
+}
 @media (max-width: 640px) {
   .proof-row { grid-template-columns: 1fr; gap: 14px; }
 }
