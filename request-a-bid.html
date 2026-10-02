@@ -310,6 +310,15 @@
   </main>
 
   <script>
+    // Prefill "Additional details" from ?interest= (set by the /rentals and
+    // /pricing forwarding pages). Only known keys, so the URL can't inject text.
+    (function() {
+      var messages = { rental: "I'm interested in more info on renting FlexTrams." };
+      var key = new URLSearchParams(window.location.search).get('interest');
+      var box = document.getElementById('additional-details');
+      if (box && !box.value && messages[key]) box.value = messages[key];
+    })();
+
     (function() {
       var form = document.getElementById('bid-form');
       var btn = document.getElementById('bid-submit');
