@@ -30,6 +30,33 @@
   margin-bottom: 2rem;
 }
 
+/* ---- HERO MAP (decorative) ----
+   Isometric game-day venue map: 4 lot-to-gate tram routes draw in on scroll,
+   then trams loop. SVG + SMIL, started by a small IntersectionObserver IIFE at
+   the end of solutions/index.html (reduced motion: frozen finished frame).
+   Absolutely positioned and pinned to the top (not centred), so it reserves no
+   space and can't move when the web font swaps in. Design handoff source is in
+   _source_files/hero-map-handoff/. */
+.hub-hero { position: relative; }
+.hub-hero > :not(.ft-hero-map) { position: relative; z-index: 1; }
+.ft-hero-map {
+  position: absolute;
+  right: 0;
+  top: 24px;
+  width: min(calc(100% - 440px), 520px);
+  height: auto;
+  overflow: visible;
+  pointer-events: none;
+}
+/* Desktop: narrow the hero copy so the map has a column to sit in. */
+@media (min-width: 1000px) {
+  .hub-hero .hero-heading,
+  .hub-hero .hero-sub { max-width: 420px; }
+}
+@media (max-width: 999px) {
+  .ft-hero-map { display: none; }
+}
+
 /* ---- VALUE PROPS ---- */
 .props-row {
   display: grid;
