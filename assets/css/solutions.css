@@ -41,8 +41,12 @@
 .hub-hero > :not(.ft-hero-map) { position: relative; z-index: 1; }
 .ft-hero-map {
   position: absolute;
-  right: 0;
-  top: 24px;
+  /* The SVG's viewBox has ~12px of empty margin on the right: -12px lines the
+     drawing's right tip up with the content edge (divider, nav button). top is a
+     fixed value (not centring) that puts the drawing's middle on the middle of
+     the hero text block at desktop widths. */
+  right: -12px;
+  top: 53px;
   width: min(calc(100% - 440px), 520px);
   height: auto;
   overflow: visible;
