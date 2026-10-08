@@ -199,7 +199,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -532,6 +532,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.flextram.com/blog/distillery-visitor-transportation</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-distillery-visitor-transportation.jpg</image:loc>
+      <image:caption>Rolling green pasture with dark plank fencing, grazing horses, and a large wooden barn against a treeline at dusk</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.flextram.com/blog/parking-operator-contract-expansion</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
@@ -753,7 +763,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/friction-is-eating-demand</loc>
-    <lastmod>2026-08-11</lastmod>
+    <lastmod>2026-10-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -843,7 +853,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/plant-tour-transportation</loc>
-    <lastmod>2026-08-11</lastmod>
+    <lastmod>2026-10-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
