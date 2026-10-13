@@ -199,7 +199,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/</loc>
-    <lastmod>2026-10-08</lastmod>
+    <lastmod>2026-10-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -483,7 +483,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/turnkey-mass-transit</loc>
-    <lastmod>2026-09-20</lastmod>
+    <lastmod>2026-10-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -529,6 +529,16 @@
     <image:image>
       <image:loc>https://www.flextram.com/assets/img/hero-world-cup-houston-nrg.jpg</image:loc>
       <image:caption>NRG Stadium in Houston lit up at dusk with a full parking lot in the foreground</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.flextram.com/blog/section-179-venue-transportation-2026</loc>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-section-179-venue-transportation.jpg</image:loc>
+      <image:caption>Split image of the FLEXTRAM logo on a tram mud flap on the Bonneville Salt Flats beside a spread of hundred-dollar bills</image:caption>
     </image:image>
   </url>
   <url>
@@ -743,7 +753,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/already-paying-for-transportation</loc>
-    <lastmod>2026-08-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
