@@ -165,6 +165,14 @@
     background: var(--surface-2); z-index: 1;
   }
   @media (max-width: 640px) { #map { height: 420px; } }
+  .map-lock {
+    position: absolute; inset: 0; z-index: 2; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    background: rgba(241, 239, 232, 0.72); backdrop-filter: blur(2px); text-align: center; color: var(--ink); font-size: 15px; padding: 24px;
+  }
+  .map-lock strong { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; font-size: 24px; }
+  .venue-set .map-lock { display: none; }
+  .far-warn { display: none; margin-top: 10px; font-size: 13px; color: var(--orange-deep); background: var(--orange-soft); border: 1px solid #ecc5b5; border-radius: 6px; padding: 8px 12px; }
+  .far-warn.show { display: block; }
   .map-tools {
     display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 12px 0 0;
     font-size: 13px; color: var(--muted);
@@ -370,21 +378,22 @@
 
   <p class="step">Step 1</p>
   <h2>Find your venue</h2>
-  <p class="section-hint">Search by name or address, then zoom into the lots, gates, and entrances. Satellite view, so you can see where people actually park.</p>
+  <p class="section-hint">Search by name or address. FlexTram runs inside the event footprint, so the plan starts from the venue itself: its lots, gates, and entrances.</p>
   <div class="search">
     <input type="text" id="venueQ" placeholder="e.g. Doak Campbell Stadium, Tallahassee" aria-label="Venue search" autocomplete="off"/>
     <button type="button" class="primary" id="venueGo">Search</button>
     <div class="search-results" id="venueResults"></div>
   </div>
-  <p class="search-note">Or skip the search and drop pins straight onto the map.</p>
+  <p class="search-note" id="venueStatus">Pick a venue to unlock the map.</p>
 
   <p class="step">Step 2</p>
   <h2>Place stops and draw lines</h2>
-  <p class="section-hint">Click the map to add a stop. Mark the ones that are gates or entrances. Create a line, then click stops in the order a tram would visit them.</p>
+  <p class="section-hint">Click the map to add a stop: a lot, a gate, a campground, a drop-off. Create a line, then click stops in the order a tram would visit them. Stops more than a mile from the venue get flagged; that leg is bus territory.</p>
 
   <div class="builder">
     <div class="map-col">
       <div id="map" role="application" aria-label="Venue map for placing tram stops"></div>
+      <div class="map-lock" id="mapLock"><div><strong>Find your venue first.</strong><br>Search above and the satellite view will open on it.</div></div>
       <div class="map-tools">
         <div class="seg" role="group" aria-label="Map mode">
           <button type="button" id="modeStop" class="on">Add stops</button>
@@ -393,6 +402,7 @@
         <button type="button" class="icon-btn" id="clearAll">Start over</button>
         <span class="map-hint" id="mapHint">Click anywhere on the map to add a stop.</span>
       </div>
+      <div class="far-warn" id="farWarn"></div>
     </div>
 
     <aside>
@@ -528,6 +538,7 @@
         <li>An alternate egress pickup for each line, for when buses, media strike, or crowds close the primary one.</li>
         <li>Signage and brand ambassadors at every stop so riders find the right line on day one.</li>
         <li>Rider counts after the first event. The plan tightens quickly once real ridership replaces the estimate.</li>
+        <li>Any stop outside the event footprint. FlexTram is built for the last stretch inside the site, not the drive in.</li>
       </ul>
     </div>
 
@@ -597,6 +608,7 @@
   // ---------- State ----------
   const state = {
     venue: "",
+    venueCenter: null,
     center: null,
     zoom: null,
     stops: [],   // {id, name, lat, lng, gate}
@@ -636,6 +648,7 @@
   }
 
   map.on("click", (e) => {
+    if (!state.venueCenter) return;
     if (state.mode !== "stop") return;
     addStop(e.latlng.lat, e.latlng.lng);
   });
@@ -852,6 +865,12 @@
       ? "<strong>" + r.operators + " operator" + (r.operators === 1 ? "" : "s") + "</strong><br>" + fmt(r.peakRidersHr) + " riders/hr at peak<br>" + r.rows.length + (r.rows.length === 1 ? " line" : " lines") + " · " + fmt(r.headway) + "-min headways" + (r.vipUnits ? " · +" + r.vipUnits + " VIP unit" : "")
       : "Add stops and a line to start sizing.";
 
+    const FAR_MI = 1;
+    const far = state.venueCenter ? state.stops.filter((s) => haversineMi({ lat: state.venueCenter[0], lng: state.venueCenter[1] }, s) > FAR_MI) : [];
+    const fw = $("farWarn");
+    fw.classList.toggle("show", far.length > 0);
+    fw.textContent = far.length ? far.map((s) => stopLabel(s) + " is " + fmt(haversineMi({ lat: state.venueCenter[0], lng: state.venueCenter[1] }, s), 1) + " mi from the venue").join("; ") + ". FlexTram works inside the event footprint; a leg that long is usually bus territory, and the plan assumes in-footprint speeds." : "";
+
     $("gateNeed").style.display = ready ? "none" : "block";
     $("gateBtn").disabled = !ready;
 
@@ -928,10 +947,11 @@
           results.classList.remove("show");
           state.venue = d.display_name.split(",").slice(0, 2).join(",");
           $("venueQ").value = state.venue;
+          setVenue(+d.lat, +d.lon);
           if (d.boundingbox) {
             const bb = d.boundingbox.map(parseFloat);
             map.fitBounds([[bb[0], bb[2]], [bb[1], bb[3]]], { maxZoom: 17, padding: [20, 20] });
-          } else map.setView([+d.lat, +d.lon], 16);
+          } else map.setView([+d.lat, +d.lon], 17);
           gtag("event", "route_planner_search", { venue: state.venue });
           refreshPlan(); saveHash();
         });
@@ -940,6 +960,12 @@
     } catch (e) {
       results.innerHTML = '<button type="button" disabled>Search unavailable right now. Drop pins directly on the map.</button>';
     }
+  }
+  function setVenue(lat, lng) {
+    state.venueCenter = [lat, lng];
+    document.body.classList.add("venue-set");
+    $("venueStatus").textContent = "Venue set: " + state.venue + ". Now click the map to place stops.";
+    setTimeout(() => map.invalidateSize(), 50);
   }
   $("venueGo").addEventListener("click", searchVenue);
   $("venueQ").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); searchVenue(); } });
@@ -958,6 +984,7 @@
     for (const k in polylines) delete polylines[k];
     state.stops = []; state.lines = []; state.nextStop = 1; state.nextLine = 1; state.activeLine = null;
     setMode("stop"); render();
+    if (state.venueCenter) map.setView(state.venueCenter, 17);
   });
   ["attendance", "share", "peakHrs", "wait", "hours", "dwell", "peakShare", "roadFactor", "seats"].forEach((id) => $(id).addEventListener("input", () => { render(); }));
   ["vip", "adaOnly"].forEach((id) => $(id).addEventListener("change", () => { render(); }));
@@ -971,7 +998,7 @@
     clearTimeout(hashTimer);
     hashTimer = setTimeout(() => {
       const payload = {
-        v: state.venue, c: state.center, z: state.zoom,
+        v: state.venue, vc: state.venueCenter, c: state.center, z: state.zoom,
         s: state.stops.map((s) => [s.id, s.name, +s.lat.toFixed(6), +s.lng.toFixed(6), s.gate ? 1 : 0]),
         l: state.lines.map((l) => [l.id, l.name, l.color, l.stops, l.mode]),
         i: INPUT_IDS.map((id) => $(id).value), f: [$("vip").checked ? 1 : 0, $("adaOnly").checked ? 1 : 0]
@@ -990,6 +1017,8 @@
       const p = JSON.parse(decodeURIComponent(escape(atob(m[1]))));
       state.venue = p.v || "";
       $("venueQ").value = state.venue;
+      if (p.vc) setVenue(p.vc[0], p.vc[1]);
+      else if (p.s && p.s.length) setVenue(p.s[0][2], p.s[0][3]);
       (p.i || []).forEach((v, k) => { if (INPUT_IDS[k] && v != null) $(INPUT_IDS[k]).value = v; });
       $("speedOut").textContent = $("speed").value + " mph";
       if (p.f) { $("vip").checked = !!p.f[0]; $("adaOnly").checked = !!p.f[1]; }
