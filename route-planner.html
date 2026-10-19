@@ -266,6 +266,7 @@
   }
   .ft-pin.gate { background: var(--orange); }
   .ft-pin.in-active { box-shadow: 0 0 0 3px rgba(196,67,35,0.5), 0 1px 4px rgba(0,0,0,0.4); }
+  .ft-via { width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 3px solid var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.4); cursor: grab; }
   .leaflet-container { font-family: "DM Sans", sans-serif; }
 
   /* Inputs grid */
@@ -401,7 +402,7 @@
 
   <p class="step">Step 2</p>
   <h2>Place stops and draw lines</h2>
-  <p class="section-hint">Click the map to add a stop: a lot, a gate, a campground, a drop-off. Create a line, then click stops in the order a tram would visit them; the route snaps to mapped roads. Stops more than a mile from the venue get flagged; that leg is bus territory.</p>
+  <p class="section-hint">Click the map to add a stop: a lot, a gate, a campground, a drop-off. Create a line, then click stops in the order a tram would visit them; the route snaps to mapped roads, and you can click a line to bend it along lot aisles and service roads the map doesn't know. Stops more than a mile from the venue get flagged; that leg is bus territory.</p>
 
   <div class="builder">
     <div class="map-col">
@@ -595,7 +596,7 @@
   </div>
 
   <div class="fine">
-    This is a planning estimate, not a quote. Fleet size uses Little's Law on each line: cycle time (route length at planning speed plus dwell at every stop) divided by headway (twice your target wait), then checked against peak riders per hour at your seat count. Routes follow mapped public roads where the map data has them (routing by OSRM / OpenStreetMap); parking-lot aisles and service roads are often unmapped, so a drawn route may skirt a lot your tram would cut through. Add a stop along the real path to correct it. A leg whose road route runs more than twice the straight distance is treated as an unmapped tram path and drawn direct (dashed) instead; tick "direct" on a line to do that for the whole line. Where routing is unavailable the line is a dashed straight-line estimate scaled by the road factor. Every FlexTram is ADA-compliant and seats up to 27 with one operator. Map imagery © Esri and contributors; venue search, capacity, lot and entrance suggestions from OpenStreetMap (Nominatim, Overpass) and Wikidata. Already running a cart fleet? The <a href="/savings-calculator">savings calculator</a> covers what consolidating it costs and saves.
+    This is a planning estimate, not a quote. Fleet size uses Little's Law on each line: cycle time (route length at planning speed plus dwell at every stop) divided by headway (twice your target wait), then checked against peak riders per hour at your seat count. Routes follow mapped public roads where the map data has them (routing by OSRM / OpenStreetMap); parking-lot aisles and service roads are often unmapped, so a drawn route may skirt a lot your tram would cut through. Add a stop along the real path to correct it. Click a line to add shaping points and trace the real tram path; a traced leg uses its drawn length with no road factor. A leg whose road route runs more than twice the straight distance is treated as an unmapped tram path and drawn direct (dashed) instead; tick "direct" on a line to do that for the whole line. Where routing is unavailable the line is a dashed straight-line estimate scaled by the road factor. Every FlexTram is ADA-compliant and seats up to 27 with one operator. Map imagery © Esri and contributors; venue search, capacity, lot and entrance suggestions from OpenStreetMap (Nominatim, Overpass) and Wikidata. Already running a cart fleet? The <a href="/savings-calculator">savings calculator</a> covers what consolidating it costs and saves.
   </div>
 </div>
 
@@ -695,7 +696,7 @@
   }
   function addLine() {
     const p = PALETTE[(state.nextLine - 1) % PALETTE.length];
-    const line = { id: state.nextLine++, name: p.name, color: p.color, stops: [], mode: "loop", w: null, direct: false };
+    const line = { id: state.nextLine++, name: p.name, color: p.color, stops: [], mode: "loop", w: null, direct: false, via: {} };
     state.lines.push(line);
     state.activeLine = line.id;
     setMode("line");
@@ -705,6 +706,7 @@
     state.lines = state.lines.filter((l) => l.id !== id);
     if (polylines[id]) { map.removeLayer(polylines[id].solid); map.removeLayer(polylines[id].dashed); delete polylines[id]; }
     if (halos[id]) { map.removeLayer(halos[id]); delete halos[id]; }
+    if (viaMarkers[id]) { viaMarkers[id].forEach((m) => map.removeLayer(m)); delete viaMarkers[id]; }
     if (state.activeLine === id) state.activeLine = state.lines.length ? state.lines[state.lines.length - 1].id : null;
     render();
   }
@@ -722,7 +724,7 @@
     const l = state.lines.find((x) => x.id === state.activeLine);
     $("mapHint").textContent = mode === "stop"
       ? "Click anywhere on the map to add a stop."
-      : (l ? "Click stops in order to add them to " + l.name + ". Click again to remove." : "Create a line first, then click stops to assign them.");
+      : (l ? "Click stops in order to add them to " + l.name + ". Click the line itself to bend it where the tram really drives." : "Create a line first, then click stops to assign them.");
     map.getContainer().style.cursor = mode === "stop" ? "crosshair" : "pointer";
     Object.keys(markers).forEach((id) => { const s = stopById(+id); if (s) markers[id].setIcon(pinIcon(s)); });
   }
@@ -757,41 +759,48 @@
   // Compose a line's drawn path + length from its routed legs, replacing any leg that
   // detours past DETOUR_CAP (or every leg, if the line is set to direct) with a straight
   // segment scaled by the road factor. Returns null when no routing is in use at all.
+  // Shaping ("via") points live per leg, keyed by the stop ids the leg joins, so they
+  // survive stops being added elsewhere on the line. A leg with via points is hand-drawn:
+  // it bypasses the router and its length is the traced path, no road factor.
+  function legKey(a, b) { return a.id + "-" + b.id; }
+  function legVia(line, a, b) { return (line.via && line.via[legKey(a, b)]) || []; }
   function composeRoute(line) {
     const pts = linePath(line);
     if (pts.length < 2) return null;
     const r = line.direct ? null : routeFor(line);
-    if (!r) return null;
     const factor = num("roadFactor", 1.2);
-    let meters = 0, latlngs = [], directLegs = 0, solid = [], dashed = [];
+    let meters = 0, latlngs = [], directLegs = 0, drawnLegs = 0, routedLegs = 0, solid = [], dashed = [];
     for (let i = 1; i < pts.length; i++) {
-      const straightMi = haversineMi(pts[i - 1], pts[i]);
-      const leg = r.legs[i - 1];
+      const a = pts[i - 1], b = pts[i];
+      const via = legVia(line, a, b);
+      const straightMi = haversineMi(a, b);
+      const leg = r && r.legs[i - 1];
       const routedMi = leg ? leg.meters / 1609.344 : Infinity;
-      if (leg && routedMi <= Math.max(straightMi * DETOUR_CAP, straightMi + 0.05)) {
+      if (via.length) {
+        drawnLegs++;
+        const path = [[a.lat, a.lng]].concat(via, [[b.lat, b.lng]]);
+        for (let k = 1; k < path.length; k++) meters += haversineMi({ lat: path[k - 1][0], lng: path[k - 1][1] }, { lat: path[k][0], lng: path[k][1] }) * 1609.344;
+        latlngs = latlngs.concat(path);
+        solid.push(path);
+      } else if (leg && routedMi <= Math.max(straightMi * DETOUR_CAP, straightMi + 0.05)) {
+        routedLegs++;
         meters += leg.meters;
         latlngs = latlngs.concat(leg.latlngs);
         solid.push(leg.latlngs);
       } else {
         directLegs++;
         meters += straightMi * factor * 1609.344;
-        const seg = [[pts[i - 1].lat, pts[i - 1].lng], [pts[i].lat, pts[i].lng]];
+        const seg = [[a.lat, a.lng], [b.lat, b.lng]];
         latlngs = latlngs.concat(seg);
         dashed.push(seg);
       }
     }
-    return { meters, latlngs, directLegs, legs: pts.length - 1, solid, dashed };
-  }
-  function straightMiles(line) {
-    const pts = linePath(line);
-    let d = 0;
-    for (let i = 1; i < pts.length; i++) d += haversineMi(pts[i - 1], pts[i]);
-    return d;
+    return { meters, latlngs, directLegs, drawnLegs, routedLegs, legs: pts.length - 1, solid, dashed };
   }
   function lineMiles(line) {
     const pts = linePath(line);
     const r = composeRoute(line);
-    let d = r ? r.meters / 1609.344 : straightMiles(line) * num("roadFactor", 1.2);
+    let d = r ? r.meters / 1609.344 : 0;
     if (line.mode === "outback" || pts.length === 2) d *= 2; // out and back
     return d;
   }
@@ -825,17 +834,75 @@
   function drawLines() {
     state.lines.forEach((line) => {
       const r = composeRoute(line);
-      const straight = linePath(line).map((p) => [p.lat, p.lng]);
       const solid = r ? r.solid : [];
-      const dashed = r ? r.dashed : (straight.length >= 2 ? [straight] : []);
-      const halo = r ? r.latlngs : straight;
+      const dashed = r ? r.dashed : [];
+      const halo = r ? r.latlngs : [];
       const base = { color: line.color, weight: 5, opacity: 0.95, lineCap: "round", lineJoin: "round" };
       if (!halos[line.id]) halos[line.id] = L.polyline([], { color: "#fff", weight: 10, opacity: 0.9, lineCap: "round", lineJoin: "round", interactive: false }).addTo(map);
-      if (!polylines[line.id]) polylines[line.id] = { solid: L.polyline([], base).addTo(map), dashed: L.polyline([], Object.assign({ dashArray: "8 8" }, base)).addTo(map) };
+      if (!polylines[line.id]) {
+        polylines[line.id] = { solid: L.polyline([], base).addTo(map), dashed: L.polyline([], Object.assign({ dashArray: "8 8" }, base)).addTo(map) };
+        [polylines[line.id].solid, polylines[line.id].dashed].forEach((pl) => pl.on("click", (e) => {
+          L.DomEvent.stopPropagation(e);
+          if (state.activeLine !== line.id) { state.activeLine = line.id; setMode("line"); render(); return; }
+          addVia(line, e.latlng);
+        }));
+      }
       halos[line.id].setLatLngs(line.id === state.activeLine ? halo : []);
       polylines[line.id].solid.setLatLngs(solid).setStyle(base).bringToFront();
       polylines[line.id].dashed.setLatLngs(dashed).setStyle(Object.assign({ dashArray: "8 8" }, base)).bringToFront();
     });
+  }
+  // Shaping-point handles: shown for the active line only, draggable, click to remove.
+  const viaMarkers = {}; // lineId -> [marker]
+  function viaIcon(color) {
+    return L.divIcon({ className: "", html: '<div class="ft-via" style="border-color:' + color + '"></div>', iconSize: [14, 14], iconAnchor: [7, 7] });
+  }
+  function renderVia() {
+    Object.keys(viaMarkers).forEach((id) => { viaMarkers[id].forEach((m) => map.removeLayer(m)); delete viaMarkers[id]; });
+    const line = state.lines.find((l) => l.id === state.activeLine);
+    if (!line || !line.via) return;
+    const pts = linePath(line);
+    viaMarkers[line.id] = [];
+    for (let i = 1; i < pts.length; i++) {
+      const key = legKey(pts[i - 1], pts[i]);
+      const via = line.via[key];
+      if (!via) continue;
+      via.forEach((pt, idx) => {
+        const m = L.marker(pt, { icon: viaIcon(line.color), draggable: true, title: "Drag to bend the line. Click to remove." });
+        m.on("drag", () => { const p = m.getLatLng(); via[idx] = [p.lat, p.lng]; drawLines(); });
+        m.on("dragend", () => { render(); });
+        m.on("click", () => { via.splice(idx, 1); if (!via.length) delete line.via[key]; render(); });
+        m.addTo(map);
+        viaMarkers[line.id].push(m);
+      });
+    }
+  }
+  // Insert a shaping point on the active line's nearest leg, at the nearest position along it.
+  function addVia(line, latlng) {
+    const pts = linePath(line);
+    if (pts.length < 2) return;
+    const P = map.latLngToLayerPoint(latlng);
+    let best = null;
+    for (let i = 1; i < pts.length; i++) {
+      const a = pts[i - 1], b = pts[i];
+      const path = [[a.lat, a.lng]].concat(legVia(line, a, b), [[b.lat, b.lng]]);
+      for (let k = 1; k < path.length; k++) {
+        const d = L.LineUtil.pointToSegmentDistance(P, map.latLngToLayerPoint(path[k - 1]), map.latLngToLayerPoint(path[k]));
+        if (!best || d < best.d) best = { d, key: legKey(a, b), insertAt: k - 1 };
+      }
+    }
+    if (!best) return;
+    line.via = line.via || {};
+    const via = line.via[best.key] || (line.via[best.key] = []);
+    via.splice(best.insertAt, 0, [latlng.lat, latlng.lng]);
+    render();
+  }
+  function pruneVia(line) {
+    if (!line.via) return;
+    const pts = linePath(line);
+    const keep = {};
+    for (let i = 1; i < pts.length; i++) keep[legKey(pts[i - 1], pts[i])] = 1;
+    Object.keys(line.via).forEach((k) => { if (!keep[k]) delete line.via[k]; });
   }
   function renderLineMeta() {
     state.lines.forEach((line) => {
@@ -843,7 +910,15 @@
       if (!el) return;
       const r = routeFor(line);
       const c = composeRoute(line);
-      el.textContent = line.stops.length >= 2 ? fmt(lineMiles(line), 2) + " mi" + (line.direct ? " direct" : c ? (c.directLegs ? " by road, " + c.directLegs + " of " + c.legs + " legs direct" : " by road") : (routeCache[routeKey(line)] === "pending" ? " (routing…)" : " straight-line est.")) : "";
+      let how = "";
+      if (c) {
+        const parts = [];
+        if (c.drawnLegs) parts.push(c.drawnLegs === c.legs ? "drawn" : c.drawnLegs + " drawn");
+        if (c.routedLegs) parts.push(c.routedLegs === c.legs ? "by road" : c.routedLegs + " by road");
+        if (c.directLegs) parts.push(line.direct ? "direct" : (c.directLegs === c.legs ? (routeCache[routeKey(line)] === "pending" ? "routing…" : "straight-line est.") : c.directLegs + " direct"));
+        how = " · " + parts.join(", ");
+      }
+      el.textContent = line.stops.length >= 2 ? fmt(lineMiles(line), 2) + " mi" + how : "";
     });
   }
 
@@ -886,7 +961,7 @@
       const vCap = capPerTram > 0 ? Math.ceil(ridersHr / capPerTram) : 0;
       const trams = Math.max(1, vWait, vCap);
       return {
-        line, miles, cycle, trams, ridersHr, shareOfDemand, snapped: !!composeRoute(line) && !line.direct,
+        line, miles, cycle, trams, ridersHr, shareOfDemand, compose: composeRoute(line),
         effHeadway: cycle / trams,
         capacityHr: trams * capPerTram,
         binding: vCap > vWait ? "capacity" : "wait"
@@ -911,7 +986,9 @@
   let lastResult = null;
 
   function render() {
+    state.lines.forEach(pruneVia);
     drawLines();
+    renderVia();
     scheduleRouting();
     Object.keys(markers).forEach((id) => { const s = stopById(+id); if (s) markers[id].setIcon(pinIcon(s)); });
 
@@ -1040,13 +1117,21 @@
     $("methodList").innerHTML = ready ? [
       "<li>Daily ridership: " + fmt(r.attendance) + " × " + fmt(r.share * 100) + "% = <strong>" + fmt(r.ridersDay) + " riders</strong>.</li>",
       "<li>Peak demand: " + fmt(r.peakShare * 100) + "% of riders inside a " + r.peakHrs + "-hour window = <strong>" + fmt(r.peakRidersHr) + " riders/hr</strong>, split across lines by boarding stops.</li>",
-      "<li>Cycle time per line: route length ÷ " + r.speed + " mph + " + r.dwellSec + "s dwell at each stop. " + (r.rows.every((x) => x.snapped) ? "Route lengths follow mapped roads (OSRM); any leg where the road route detours past " + DETOUR_CAP + "× the straight distance is taken direct instead, since lot interiors are rarely mapped." : r.rows.some((x) => x.snapped) ? "Some route lengths follow mapped roads; " + r.rows.filter((x) => !x.snapped).map((x) => escapeHtml(x.line.name)).join(", ") + " uses a straight-line estimate × " + num("roadFactor", 1.2) + "." : "Route lengths are straight-line estimates × " + num("roadFactor", 1.2) + " road factor.") + "</li>",
+      "<li>Cycle time per line: route length ÷ " + r.speed + " mph + " + r.dwellSec + "s dwell at each stop. " + routingNote(r) + "</li>",
       "<li>Headway target: " + fmt(r.headway) + " min (twice the " + r.wait + "-min target wait). Trams for wait = cycle ÷ headway.</li>",
       "<li>Capacity check: " + r.seats + " seats × trips per hour must cover the line's peak riders. The larger of the two tram counts wins" + (r.rows.some((x) => x.binding === "capacity") ? " (capacity is the binding constraint on " + r.rows.filter((x) => x.binding === "capacity").map((x) => escapeHtml(x.line.name)).join(", ") + ")" : "") + ".</li>",
       r.vipUnits ? "<li>VIP service adds " + r.vipUnits + " utility unit" + (r.vipUnits > 1 ? "s" : "") + " outside the loop math.</li>" : ""
     ].join("") : "";
   }
 
+  function routingNote(r) {
+    const t = r.rows.reduce((a, x) => { const c = x.compose || {}; a.drawn += c.drawnLegs || 0; a.road += c.routedLegs || 0; a.direct += c.directLegs || 0; return a; }, { drawn: 0, road: 0, direct: 0 });
+    const parts = [];
+    if (t.drawn) parts.push(t.drawn + (t.drawn === 1 ? " leg is" : " legs are") + " hand-drawn (the traced path, no road factor)");
+    if (t.road) parts.push(t.road + (t.road === 1 ? " leg follows" : " legs follow") + " mapped roads (OSRM; a leg detouring past " + DETOUR_CAP + "× its straight distance is taken direct instead)");
+    if (t.direct) parts.push(t.direct + (t.direct === 1 ? " leg is" : " legs are") + " straight-line estimates × " + num("roadFactor", 1.2) + " road factor");
+    return parts.length ? parts.join("; ") + "." : "";
+  }
   function escapeHtml(s) { return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
 
   // ---------- Venue search (Nominatim) ----------
@@ -1234,7 +1319,7 @@
       const payload = {
         v: state.venue, vc: state.venueCenter, c: state.center, z: state.zoom,
         s: state.stops.map((s) => [s.id, s.name, +s.lat.toFixed(6), +s.lng.toFixed(6), s.gate ? 1 : 0]),
-        l: state.lines.map((l) => [l.id, l.name, l.color, l.stops, l.mode, l.w == null ? null : l.w, l.direct ? 1 : 0]),
+        l: state.lines.map((l) => [l.id, l.name, l.color, l.stops, l.mode, l.w == null ? null : l.w, l.direct ? 1 : 0, viaOut(l)]),
         i: INPUT_IDS.map((id) => $(id).value), f: [$("vip").checked ? 1 : 0, $("adaOnly").checked ? 1 : 0]
       };
       if (!state.stops.length && !state.lines.length && !state.venue) { history.replaceState(null, "", location.pathname); return; }
@@ -1243,6 +1328,12 @@
         history.replaceState(null, "", "#p=" + enc);
       } catch (e) {}
     }, 250);
+  }
+  function viaOut(l) {
+    if (!l.via) return null;
+    const o = {}; let any = false;
+    Object.keys(l.via).forEach((k) => { if (l.via[k].length) { any = true; o[k] = l.via[k].map((p) => [+p[0].toFixed(6), +p[1].toFixed(6)]); } });
+    return any ? o : null;
   }
   function loadHash() {
     const m = location.hash.match(/^#p=(.+)$/);
@@ -1259,7 +1350,7 @@
       // addStop() takes its id from nextStop, so set it per restored stop to keep ids stable.
       (p.s || []).forEach((a) => { state.nextStop = a[0]; addStop(a[2], a[3], a[1], !!a[4]); });
       state.nextStop = state.stops.reduce((a, s) => Math.max(a, s.id), 0) + 1;
-      (p.l || []).forEach((a) => { state.lines.push({ id: a[0], name: a[1], color: a[2], stops: a[3] || [], mode: a[4] || "loop", w: a[5] == null ? null : a[5], direct: !!a[6] }); });
+      (p.l || []).forEach((a) => { state.lines.push({ id: a[0], name: a[1], color: a[2], stops: a[3] || [], mode: a[4] || "loop", w: a[5] == null ? null : a[5], direct: !!a[6], via: a[7] || {} }); });
       state.nextLine = state.lines.reduce((a, l) => Math.max(a, l.id), 0) + 1;
       state.activeLine = state.lines.length ? state.lines[0].id : null;
       if (state.stops.length) map.fitBounds(state.stops.map((s) => [s.lat, s.lng]), { padding: [40, 40], maxZoom: 17 });
