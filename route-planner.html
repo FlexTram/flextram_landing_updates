@@ -610,11 +610,17 @@
 
   // ---------- Map ----------
   const map = L.map("map", { zoomControl: true, attributionControl: true }).setView([37.8, -96.9], 4);
-  L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
-    maxZoom: 19, attribution: "Imagery &copy; Esri, Maxar, Earthstar Geographics"
+  // Satellite base + two Esri reference overlays: street names (Transportation) and
+  // place / POI labels (Boundaries_and_Places). Imagery is native to z19; z20 upsamples.
+  const ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services/";
+  L.tileLayer(ESRI + "World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+    maxZoom: 20, maxNativeZoom: 19, attribution: "Imagery &copy; Esri, Maxar, Earthstar Geographics"
   }).addTo(map);
-  L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}", {
-    maxZoom: 19, pane: "overlayPane", opacity: 0.9
+  L.tileLayer(ESRI + "Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}", {
+    maxZoom: 20, maxNativeZoom: 19, pane: "overlayPane"
+  }).addTo(map);
+  L.tileLayer(ESRI + "Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}", {
+    maxZoom: 20, maxNativeZoom: 19, pane: "overlayPane"
   }).addTo(map);
 
   const markers = {};   // stopId -> marker
@@ -924,7 +930,7 @@
           $("venueQ").value = state.venue;
           if (d.boundingbox) {
             const bb = d.boundingbox.map(parseFloat);
-            map.fitBounds([[bb[0], bb[2]], [bb[1], bb[3]]], { maxZoom: 17 });
+            map.fitBounds([[bb[0], bb[2]], [bb[1], bb[3]]], { maxZoom: 17, padding: [20, 20] });
           } else map.setView([+d.lat, +d.lon], 16);
           gtag("event", "route_planner_search", { venue: state.venue });
           refreshPlan(); saveHash();
