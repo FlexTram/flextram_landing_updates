@@ -704,7 +704,7 @@
   }
   function removeLine(id) {
     state.lines = state.lines.filter((l) => l.id !== id);
-    if (polylines[id]) { map.removeLayer(polylines[id].solid); map.removeLayer(polylines[id].dashed); delete polylines[id]; }
+    if (polylines[id]) { map.removeLayer(polylines[id].solid); map.removeLayer(polylines[id].dashed); map.removeLayer(polylines[id].hit); delete polylines[id]; }
     if (halos[id]) { map.removeLayer(halos[id]); delete halos[id]; }
     if (viaMarkers[id]) { viaMarkers[id].forEach((m) => map.removeLayer(m)); delete viaMarkers[id]; }
     if (state.activeLine === id) state.activeLine = state.lines.length ? state.lines[state.lines.length - 1].id : null;
@@ -840,8 +840,9 @@
       const base = { color: line.color, weight: 5, opacity: 0.95, lineCap: "round", lineJoin: "round" };
       if (!halos[line.id]) halos[line.id] = L.polyline([], { color: "#fff", weight: 10, opacity: 0.9, lineCap: "round", lineJoin: "round", interactive: false }).addTo(map);
       if (!polylines[line.id]) {
-        polylines[line.id] = { solid: L.polyline([], base).addTo(map), dashed: L.polyline([], Object.assign({ dashArray: "8 8" }, base)).addTo(map) };
-        [polylines[line.id].solid, polylines[line.id].dashed].forEach((pl) => pl.on("click", (e) => {
+        // "hit" is an invisible 22px stroke over the whole path so a near-miss click still lands on the line.
+        polylines[line.id] = { solid: L.polyline([], base).addTo(map), dashed: L.polyline([], Object.assign({ dashArray: "8 8" }, base)).addTo(map), hit: L.polyline([], { color: "#000", weight: 22, opacity: 0.001, lineCap: "round", lineJoin: "round" }).addTo(map) };
+        [polylines[line.id].solid, polylines[line.id].dashed, polylines[line.id].hit].forEach((pl) => pl.on("click", (e) => {
           L.DomEvent.stopPropagation(e);
           if (state.activeLine !== line.id) { state.activeLine = line.id; setMode("line"); render(); return; }
           addVia(line, e.latlng);
@@ -850,6 +851,7 @@
       halos[line.id].setLatLngs(line.id === state.activeLine ? halo : []);
       polylines[line.id].solid.setLatLngs(solid).setStyle(base).bringToFront();
       polylines[line.id].dashed.setLatLngs(dashed).setStyle(Object.assign({ dashArray: "8 8" }, base)).bringToFront();
+      polylines[line.id].hit.setLatLngs(halo).bringToFront();
     });
   }
   // Shaping-point handles: shown for the active line only, draggable, click to remove.
@@ -1294,7 +1296,7 @@
     if (!state.stops.length && !state.lines.length) return;
     if (!confirm("Clear all stops and lines?")) return;
     Object.values(markers).forEach((m) => map.removeLayer(m));
-    Object.values(polylines).forEach((p) => { map.removeLayer(p.solid); map.removeLayer(p.dashed); });
+    Object.values(polylines).forEach((p) => { map.removeLayer(p.solid); map.removeLayer(p.dashed); map.removeLayer(p.hit); });
     Object.values(halos).forEach((p) => map.removeLayer(p));
     for (const k in markers) delete markers[k];
     for (const k in polylines) delete polylines[k];
