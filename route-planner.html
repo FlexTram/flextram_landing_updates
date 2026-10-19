@@ -234,6 +234,19 @@
   }
   button.ghost:hover { background: var(--ink); color: var(--cream); }
 
+  /* Found-on-the-map suggestions */
+  .found { display: none; }
+  .venue-set .found { display: block; }
+  .found-row { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .found-row:last-child { border-bottom: 0; }
+  .found-row .tag { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); background: var(--surface-2); border-radius: 4px; padding: 2px 6px; flex: none; }
+  .found-row .tag.gate { color: var(--orange-deep); background: var(--orange-soft); }
+  .found-row .nm { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink); }
+  .found-row .cap { color: var(--mid); font-size: 12px; flex: none; }
+  .found-row button { background: none; border: 1px solid var(--ink); color: var(--ink); border-radius: 4px; font: inherit; font-size: 12px; padding: 3px 8px; cursor: pointer; flex: none; }
+  .found-row button:hover { background: var(--ink); color: var(--cream); }
+  .found-row button:disabled { border-color: var(--border); color: var(--mid); cursor: default; background: none; }
+
   /* Stops list */
   .stop-row { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--border); }
   .stop-row:last-child { border-bottom: 0; }
@@ -421,6 +434,13 @@
         <button type="button" class="ghost" id="addLine">+ New line</button>
       </div>
 
+      <div class="panel found" id="foundPanel">
+        <h3>Found on the map</h3>
+        <p class="sub" id="foundSub">Looking for named lots and entrances near the venue…</p>
+        <div id="foundList"></div>
+        <button type="button" class="ghost" id="addAllLots" style="display:none;">+ Add all lots as stops</button>
+      </div>
+
       <div class="panel">
         <h3>Stops</h3>
         <p class="sub">Drag a pin to move it. Tick "gate" for stadium entrances and drop-offs.</p>
@@ -437,7 +457,7 @@
       <div class="field">
         <label for="attendance">Attendance / headcount</label>
         <input type="number" id="attendance" min="50" step="100" value="20000"/>
-        <span class="hint">Total people on site for the event or shift.</span>
+        <span class="hint" id="attHint">Total people on site for the event or shift.</span>
       </div>
       <div class="field">
         <label for="share">Ridership share</label>
@@ -575,7 +595,7 @@
   </div>
 
   <div class="fine">
-    This is a planning estimate, not a quote. Fleet size uses Little's Law on each line: cycle time (route length at planning speed plus dwell at every stop) divided by headway (twice your target wait), then checked against peak riders per hour at your seat count. Routes follow mapped public roads where the map data has them (routing by OSRM / OpenStreetMap); parking-lot aisles and service roads are often unmapped, so a drawn route may skirt a lot your tram would cut through. Add a stop along the real path to correct it. Where routing is unavailable the line is a dashed straight-line estimate scaled by the road factor. Every FlexTram is ADA-compliant and seats up to 27 with one operator. Map imagery © Esri and contributors; venue search by OpenStreetMap Nominatim. Already running a cart fleet? The <a href="/savings-calculator">savings calculator</a> covers what consolidating it costs and saves.
+    This is a planning estimate, not a quote. Fleet size uses Little's Law on each line: cycle time (route length at planning speed plus dwell at every stop) divided by headway (twice your target wait), then checked against peak riders per hour at your seat count. Routes follow mapped public roads where the map data has them (routing by OSRM / OpenStreetMap); parking-lot aisles and service roads are often unmapped, so a drawn route may skirt a lot your tram would cut through. Add a stop along the real path to correct it. Where routing is unavailable the line is a dashed straight-line estimate scaled by the road factor. Every FlexTram is ADA-compliant and seats up to 27 with one operator. Map imagery © Esri and contributors; venue search, capacity, lot and entrance suggestions from OpenStreetMap (Nominatim, Overpass) and Wikidata. Already running a cart fleet? The <a href="/savings-calculator">savings calculator</a> covers what consolidating it costs and saves.
   </div>
 </div>
 
@@ -996,7 +1016,7 @@
     results.innerHTML = '<button type="button" disabled>Searching…</button>';
     results.classList.add("show");
     try {
-      const res = await fetch("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&q=" + encodeURIComponent(q), { headers: { "Accept": "application/json" } });
+      const res = await fetch("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&extratags=1&q=" + encodeURIComponent(q), { headers: { "Accept": "application/json" } });
       const data = await res.json();
       results.innerHTML = "";
       if (!data.length) { results.innerHTML = '<button type="button" disabled>No results. Try an address, or drop pins directly.</button>'; return; }
@@ -1009,6 +1029,8 @@
           state.venue = d.display_name.split(",").slice(0, 2).join(",");
           $("venueQ").value = state.venue;
           setVenue(+d.lat, +d.lon);
+          prefillCapacity(d.extratags || {});
+          findNearby(+d.lat, +d.lon);
           if (d.boundingbox) {
             const bb = d.boundingbox.map(parseFloat);
             map.fitBounds([[bb[0], bb[2]], [bb[1], bb[3]]], { maxZoom: 17, padding: [20, 20] });
@@ -1032,6 +1054,112 @@
   $("venueQ").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); searchVenue(); } });
   document.addEventListener("click", (e) => { if (!e.target.closest(".search")) results.classList.remove("show"); });
 
+  // ---------- OSM enrichment: capacity pre-fill + nearby lots / entrances ----------
+  function applyCapacity(n, src) {
+    if (!(n > 50)) return false;
+    $("attendance").value = Math.round(n);
+    $("attHint").textContent = "Pre-filled from " + src + ": " + fmt(n) + " capacity. Change it to your expected crowd.";
+    render();
+    return true;
+  }
+  async function prefillCapacity(tags) {
+    const cap = parseInt(String(tags.capacity || "").replace(/[^0-9]/g, ""), 10);
+    if (applyCapacity(cap, "OpenStreetMap")) return;
+    if (!tags.wikidata) return;
+    try {
+      const res = await fetch("https://www.wikidata.org/wiki/Special:EntityData/" + encodeURIComponent(tags.wikidata) + ".json");
+      const data = await res.json();
+      const ent = data.entities && data.entities[tags.wikidata];
+      const claims = ent && ent.claims && ent.claims.P1083; // maximum capacity
+      const amount = claims && claims[0].mainsnak.datavalue && claims[0].mainsnak.datavalue.value.amount;
+      applyCapacity(parseFloat(amount), "Wikidata");
+    } catch (e) {}
+  }
+
+  const OVERPASS = ["https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter"];
+  async function overpassQuery(q) {
+    let lastErr;
+    for (const ep of OVERPASS) {
+      const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 30000);
+      try {
+        const res = await fetch(ep, { method: "POST", body: "data=" + encodeURIComponent(q), headers: { "Content-Type": "application/x-www-form-urlencoded", "Accept": "application/json" }, signal: ctl.signal });
+        clearTimeout(t);
+        if (!res.ok) throw new Error(res.status);
+        return await res.json();
+      } catch (e) { clearTimeout(t); lastErr = e; }
+    }
+    throw lastErr;
+  }
+  let found = []; // {kind:'lot'|'gate', name, cap, lat, lng, key}
+  let findGen = 0; // only the latest lookup may render; a slow earlier one is dropped
+  async function findNearby(lat, lng) {
+    const gen = ++findGen;
+    const list = $("foundList"), sub = $("foundSub");
+    list.innerHTML = ""; found = []; $("addAllLots").style.display = "none";
+    sub.textContent = "Looking for named lots and entrances near the venue…";
+    const q = "[out:json][timeout:20];(" +
+      'nwr["amenity"="parking"]["name"](around:1500,' + lat + "," + lng + ");" +
+      'node["entrance"]["name"](around:800,' + lat + "," + lng + ");" +
+      'node["entrance"]["ref"](around:800,' + lat + "," + lng + ");" +
+      'node["entrance"="main"](around:800,' + lat + "," + lng + ");" +
+      ");out center tags;";
+    try {
+      // Public Overpass mirrors are best-effort: try two in turn, 30s each. overpass-api.de
+      // answers 406 (with no CORS headers) to a bare Accept: */*, so the Accept header is load-bearing.
+      const data = await overpassQuery(q);
+      if (gen !== findGen) return;
+      const seen = {};
+      (data.elements || []).forEach((el) => {
+        const t = el.tags || {};
+        const c = el.center || el;
+        if (!(c.lat && c.lon)) return;
+        const isGate = !!t.entrance;
+        const name = isGate ? (t.name || (t.ref ? "Gate " + t.ref : "Main entrance")) : t.name;
+        if (!name) return;
+        const key = (isGate ? "g:" : "l:") + name.toLowerCase();
+        if (seen[key]) return; seen[key] = 1;
+        found.push({ kind: isGate ? "gate" : "lot", name, cap: parseInt(t.capacity, 10) || null, lat: c.lat, lng: c.lon, key });
+      });
+      found.sort((a, b) => (a.kind === b.kind ? (b.cap || 0) - (a.cap || 0) : a.kind === "lot" ? -1 : 1));
+      found = found.slice(0, 24);
+    } catch (e) {
+      if (gen !== findGen) return;
+      sub.textContent = "Map lookup unavailable right now. Place stops by hand.";
+      return;
+    }
+    if (!found.length) {
+      sub.textContent = "No named lots or entrances mapped here yet. Place stops by hand; the satellite shows the lots.";
+      return;
+    }
+    const lots = found.filter((f) => f.kind === "lot").length, gates = found.length - lots;
+    sub.textContent = "OpenStreetMap has " + (lots ? lots + " named lot" + (lots > 1 ? "s" : "") : "no named lots") + (gates ? " and " + gates + " entrance" + (gates > 1 ? "s" : "") : "") + " near here. Add the ones your tram would serve.";
+    found.forEach((f) => {
+      const row = document.createElement("div");
+      row.className = "found-row";
+      row.innerHTML = '<span class="tag' + (f.kind === "gate" ? " gate" : "") + '">' + (f.kind === "gate" ? "gate" : "lot") + '</span><span class="nm" title="' + escapeHtml(f.name) + '">' + escapeHtml(f.name) + "</span>" + (f.cap ? '<span class="cap">' + fmt(f.cap) + " cars</span>" : "") + "<button type=\"button\">+ Add</button>";
+      const btn = row.querySelector("button");
+      btn.addEventListener("click", () => { addFound(f); });
+      row.addEventListener("mouseenter", () => { if (!f.marker) { f.marker = L.circleMarker([f.lat, f.lng], { radius: 9, color: "#fff", weight: 2, fillColor: f.kind === "gate" ? "#c44323" : "#0A0A0A", fillOpacity: 0.6 }).addTo(map); } });
+      row.addEventListener("mouseleave", () => { if (f.marker) { map.removeLayer(f.marker); f.marker = null; } });
+      f.row = row;
+      list.appendChild(row);
+    });
+    if (lots) $("addAllLots").style.display = "block";
+    gtag("event", "route_planner_enrich", { lots: lots, gates: gates });
+  }
+  function addFound(f) {
+    if (f.added) return;
+    f.added = true;
+    if (f.marker) { map.removeLayer(f.marker); f.marker = null; }
+    addStop(f.lat, f.lng, f.name, f.kind === "gate");
+    const btn = f.row.querySelector("button"); btn.textContent = "Added"; btn.disabled = true;
+  }
+  $("addAllLots").addEventListener("click", () => {
+    found.filter((f) => f.kind === "lot" && !f.added).forEach(addFound);
+    if (state.stops.length) map.fitBounds(state.stops.map((s) => [s.lat, s.lng]), { padding: [40, 40], maxZoom: 17 });
+    $("addAllLots").style.display = "none";
+  });
+
   // ---------- Controls ----------
   $("modeStop").addEventListener("click", () => setMode("stop"));
   $("modeLine").addEventListener("click", () => { if (!state.lines.length) addLine(); else setMode("line"); });
@@ -1046,6 +1174,8 @@
     state.stops = []; state.lines = []; state.nextStop = 1; state.nextLine = 1; state.activeLine = null;
     setMode("stop"); render();
     if (state.venueCenter) map.setView(state.venueCenter, 17);
+    found.forEach((f) => { f.added = false; const b = f.row && f.row.querySelector("button"); if (b) { b.disabled = false; b.textContent = "+ Add"; } });
+    if (found.some((f) => f.kind === "lot")) $("addAllLots").style.display = "block";
   });
   ["attendance", "share", "peakHrs", "wait", "hours", "dwell", "peakShare", "roadFactor", "seats"].forEach((id) => $(id).addEventListener("input", () => { render(); }));
   ["vip", "adaOnly"].forEach((id) => $(id).addEventListener("change", () => { render(); }));
@@ -1078,7 +1208,7 @@
       const p = JSON.parse(decodeURIComponent(escape(atob(m[1]))));
       state.venue = p.v || "";
       $("venueQ").value = state.venue;
-      if (p.vc) setVenue(p.vc[0], p.vc[1]);
+      if (p.vc) { setVenue(p.vc[0], p.vc[1]); findNearby(p.vc[0], p.vc[1]); }
       else if (p.s && p.s.length) setVenue(p.s[0][2], p.s[0][3]);
       (p.i || []).forEach((v, k) => { if (INPUT_IDS[k] && v != null) $(INPUT_IDS[k]).value = v; });
       $("speedOut").textContent = $("speed").value + " mph";
