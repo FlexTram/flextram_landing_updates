@@ -595,7 +595,7 @@
   </div>
 
   <div class="fine">
-    This is a planning estimate, not a quote. Fleet size uses Little's Law on each line: cycle time (route length at planning speed plus dwell at every stop) divided by headway (twice your target wait), then checked against peak riders per hour at your seat count. Routes follow mapped public roads where the map data has them (routing by OSRM / OpenStreetMap); parking-lot aisles and service roads are often unmapped, so a drawn route may skirt a lot your tram would cut through. Add a stop along the real path to correct it. Where routing is unavailable the line is a dashed straight-line estimate scaled by the road factor. Every FlexTram is ADA-compliant and seats up to 27 with one operator. Map imagery © Esri and contributors; venue search, capacity, lot and entrance suggestions from OpenStreetMap (Nominatim, Overpass) and Wikidata. Already running a cart fleet? The <a href="/savings-calculator">savings calculator</a> covers what consolidating it costs and saves.
+    This is a planning estimate, not a quote. Fleet size uses Little's Law on each line: cycle time (route length at planning speed plus dwell at every stop) divided by headway (twice your target wait), then checked against peak riders per hour at your seat count. Routes follow mapped public roads where the map data has them (routing by OSRM / OpenStreetMap); parking-lot aisles and service roads are often unmapped, so a drawn route may skirt a lot your tram would cut through. Add a stop along the real path to correct it. A leg whose road route runs more than twice the straight distance is treated as an unmapped tram path and drawn direct (dashed) instead; tick "direct" on a line to do that for the whole line. Where routing is unavailable the line is a dashed straight-line estimate scaled by the road factor. Every FlexTram is ADA-compliant and seats up to 27 with one operator. Map imagery © Esri and contributors; venue search, capacity, lot and entrance suggestions from OpenStreetMap (Nominatim, Overpass) and Wikidata. Already running a cart fleet? The <a href="/savings-calculator">savings calculator</a> covers what consolidating it costs and saves.
   </div>
 </div>
 
@@ -695,7 +695,7 @@
   }
   function addLine() {
     const p = PALETTE[(state.nextLine - 1) % PALETTE.length];
-    const line = { id: state.nextLine++, name: p.name, color: p.color, stops: [], mode: "loop", w: null };
+    const line = { id: state.nextLine++, name: p.name, color: p.color, stops: [], mode: "loop", w: null, direct: false };
     state.lines.push(line);
     state.activeLine = line.id;
     setMode("line");
@@ -703,7 +703,8 @@
   }
   function removeLine(id) {
     state.lines = state.lines.filter((l) => l.id !== id);
-    if (polylines[id]) { map.removeLayer(polylines[id]); delete polylines[id]; }
+    if (polylines[id]) { map.removeLayer(polylines[id].solid); map.removeLayer(polylines[id].dashed); delete polylines[id]; }
+    if (halos[id]) { map.removeLayer(halos[id]); delete halos[id]; }
     if (state.activeLine === id) state.activeLine = state.lines.length ? state.lines[state.lines.length - 1].id : null;
     render();
   }
@@ -742,7 +743,9 @@
   // Road routing via the public OSRM server. Each line's route is cached by its
   // stop coordinates; while a request is in flight (or if it fails) the line falls
   // back to straight segments scaled by the road factor. No key, no SLA.
-  const routeCache = {}; // routeKey -> { latlngs, meters } | "pending" | "failed"
+  const routeCache = {}; // routeKey -> { legs: [{ latlngs, meters }] } | "pending" | "failed"
+  const DETOUR_CAP = 2.0;  // a routed leg longer than this × straight-line is a public-road detour, not a tram path
+  const halos = {};        // lineId -> white casing polyline under the active line
   let routeTimer = null;
   function routeKey(line) {
     return linePath(line).map((p) => p.lat.toFixed(5) + "," + p.lng.toFixed(5)).join(";");
@@ -750,6 +753,34 @@
   function routeFor(line) {
     const r = routeCache[routeKey(line)];
     return r && typeof r === "object" ? r : null;
+  }
+  // Compose a line's drawn path + length from its routed legs, replacing any leg that
+  // detours past DETOUR_CAP (or every leg, if the line is set to direct) with a straight
+  // segment scaled by the road factor. Returns null when no routing is in use at all.
+  function composeRoute(line) {
+    const pts = linePath(line);
+    if (pts.length < 2) return null;
+    const r = line.direct ? null : routeFor(line);
+    if (!r) return null;
+    const factor = num("roadFactor", 1.2);
+    let meters = 0, latlngs = [], directLegs = 0, solid = [], dashed = [];
+    for (let i = 1; i < pts.length; i++) {
+      const straightMi = haversineMi(pts[i - 1], pts[i]);
+      const leg = r.legs[i - 1];
+      const routedMi = leg ? leg.meters / 1609.344 : Infinity;
+      if (leg && routedMi <= Math.max(straightMi * DETOUR_CAP, straightMi + 0.05)) {
+        meters += leg.meters;
+        latlngs = latlngs.concat(leg.latlngs);
+        solid.push(leg.latlngs);
+      } else {
+        directLegs++;
+        meters += straightMi * factor * 1609.344;
+        const seg = [[pts[i - 1].lat, pts[i - 1].lng], [pts[i].lat, pts[i].lng]];
+        latlngs = latlngs.concat(seg);
+        dashed.push(seg);
+      }
+    }
+    return { meters, latlngs, directLegs, legs: pts.length - 1, solid, dashed };
   }
   function straightMiles(line) {
     const pts = linePath(line);
@@ -759,7 +790,7 @@
   }
   function lineMiles(line) {
     const pts = linePath(line);
-    const r = routeFor(line);
+    const r = composeRoute(line);
     let d = r ? r.meters / 1609.344 : straightMiles(line) * num("roadFactor", 1.2);
     if (line.mode === "outback" || pts.length === 2) d *= 2; // out and back
     return d;
@@ -769,34 +800,41 @@
     routeTimer = setTimeout(() => {
       state.lines.forEach((line) => {
         const pts = linePath(line);
-        if (pts.length < 2) return;
+        if (pts.length < 2 || line.direct) return;
         const key = routeKey(line);
         if (routeCache[key]) return;
         routeCache[key] = "pending";
         const coords = pts.map((p) => p.lng.toFixed(6) + "," + p.lat.toFixed(6)).join(";");
-        fetch("https://router.project-osrm.org/route/v1/driving/" + coords + "?overview=full&geometries=geojson&steps=false")
+        fetch("https://router.project-osrm.org/route/v1/driving/" + coords + "?overview=false&geometries=geojson&steps=true")
           .then((res) => res.ok ? res.json() : Promise.reject(res.status))
           .then((data) => {
             const route = data && data.routes && data.routes[0];
             if (!route) throw new Error("no route");
-            routeCache[key] = { latlngs: route.geometry.coordinates.map((c) => [c[1], c[0]]), meters: route.distance };
+            routeCache[key] = { legs: route.legs.map((leg) => ({
+              meters: leg.distance,
+              latlngs: [].concat.apply([], leg.steps.map((st) => st.geometry.coordinates.map((c) => [c[1], c[0]])))
+            })) };
           })
           .catch(() => { routeCache[key] = "failed"; })
           .then(() => { drawLines(); refreshPlan(); renderLineMeta(); });
       });
     }, 400);
   }
+  // Each line is three layers: a white halo (only when active), solid road-routed legs,
+  // and dashed direct legs. A multi-polyline keeps legs apart so only the direct ones dash.
   function drawLines() {
     state.lines.forEach((line) => {
-      const r = routeFor(line);
-      const pts = r ? r.latlngs : linePath(line).map((p) => [p.lat, p.lng]);
-      const style = { color: line.color, weight: line.id === state.activeLine ? 6 : 4, opacity: 0.95, dashArray: r ? null : "8 8" };
-      if (polylines[line.id]) {
-        polylines[line.id].setLatLngs(pts);
-        polylines[line.id].setStyle(style);
-      } else {
-        polylines[line.id] = L.polyline(pts, style).addTo(map);
-      }
+      const r = composeRoute(line);
+      const straight = linePath(line).map((p) => [p.lat, p.lng]);
+      const solid = r ? r.solid : [];
+      const dashed = r ? r.dashed : (straight.length >= 2 ? [straight] : []);
+      const halo = r ? r.latlngs : straight;
+      const base = { color: line.color, weight: 5, opacity: 0.95, lineCap: "round", lineJoin: "round" };
+      if (!halos[line.id]) halos[line.id] = L.polyline([], { color: "#fff", weight: 10, opacity: 0.9, lineCap: "round", lineJoin: "round", interactive: false }).addTo(map);
+      if (!polylines[line.id]) polylines[line.id] = { solid: L.polyline([], base).addTo(map), dashed: L.polyline([], Object.assign({ dashArray: "8 8" }, base)).addTo(map) };
+      halos[line.id].setLatLngs(line.id === state.activeLine ? halo : []);
+      polylines[line.id].solid.setLatLngs(solid).setStyle(base).bringToFront();
+      polylines[line.id].dashed.setLatLngs(dashed).setStyle(Object.assign({ dashArray: "8 8" }, base)).bringToFront();
     });
   }
   function renderLineMeta() {
@@ -804,7 +842,8 @@
       const el = document.querySelector('[data-line-len="' + line.id + '"]');
       if (!el) return;
       const r = routeFor(line);
-      el.textContent = line.stops.length >= 2 ? fmt(lineMiles(line), 2) + " mi" + (r ? " by road" : (routeCache[routeKey(line)] === "pending" ? " (routing…)" : " straight-line est.")) : "";
+      const c = composeRoute(line);
+      el.textContent = line.stops.length >= 2 ? fmt(lineMiles(line), 2) + " mi" + (line.direct ? " direct" : c ? (c.directLegs ? " by road, " + c.directLegs + " of " + c.legs + " legs direct" : " by road") : (routeCache[routeKey(line)] === "pending" ? " (routing…)" : " straight-line est.")) : "";
     });
   }
 
@@ -847,7 +886,7 @@
       const vCap = capPerTram > 0 ? Math.ceil(ridersHr / capPerTram) : 0;
       const trams = Math.max(1, vWait, vCap);
       return {
-        line, miles, cycle, trams, ridersHr, shareOfDemand, snapped: !!routeFor(line),
+        line, miles, cycle, trams, ridersHr, shareOfDemand, snapped: !!composeRoute(line) && !line.direct,
         effHeadway: cycle / trams,
         capacityHr: trams * capPerTram,
         binding: vCap > vWait ? "capacity" : "wait"
@@ -893,7 +932,8 @@
         '<span data-line-len="' + line.id + '"></span>' +
         '<label title="Share of peak riders on this line. Blank = split by stop count.">share <input type="number" min="0" max="100" step="5" value="' + (line.w == null ? "" : line.w) + '" placeholder="auto" data-act="weight" style="width:58px;padding:2px 4px;font-size:12px;" aria-label="Share of riders on this line"/>%</label>' +
         '<label><input type="radio" name="mode' + line.id + '" value="loop"' + (line.mode === "loop" ? " checked" : "") + ' data-act="mode"/> loop</label>' +
-        '<label><input type="radio" name="mode' + line.id + '" value="outback"' + (line.mode === "outback" ? " checked" : "") + ' data-act="mode"/> out &amp; back</label></div>';
+        '<label><input type="radio" name="mode' + line.id + '" value="outback"' + (line.mode === "outback" ? " checked" : "") + ' data-act="mode"/> out &amp; back</label>' +
+        '<label title="Ignore mapped roads and draw this line straight between stops (for routes through lots and service roads the map does not know)."><input type="checkbox"' + (line.direct ? " checked" : "") + ' data-act="direct"/> direct</label></div>';
       row.addEventListener("click", (e) => {
         if (e.target.dataset.act) return;
         state.activeLine = line.id; setMode("line"); render();
@@ -902,6 +942,7 @@
       row.querySelector('[data-act="rename"]').addEventListener("focus", () => { state.activeLine = line.id; setMode("line"); drawLines(); });
       row.querySelector('[data-act="del"]').addEventListener("click", () => removeLine(line.id));
       row.querySelectorAll('[data-act="mode"]').forEach((r) => r.addEventListener("change", (e) => { line.mode = e.target.value; render(); }));
+      row.querySelector('[data-act="direct"]').addEventListener("change", (e) => { line.direct = e.target.checked; render(); });
       const wIn = row.querySelector('[data-act="weight"]');
       wIn.addEventListener("click", (e) => e.stopPropagation());
       wIn.addEventListener("input", (e) => { const v = parseFloat(e.target.value); line.w = isFinite(v) ? v : null; refreshPlan(); saveHash(); });
@@ -999,7 +1040,7 @@
     $("methodList").innerHTML = ready ? [
       "<li>Daily ridership: " + fmt(r.attendance) + " × " + fmt(r.share * 100) + "% = <strong>" + fmt(r.ridersDay) + " riders</strong>.</li>",
       "<li>Peak demand: " + fmt(r.peakShare * 100) + "% of riders inside a " + r.peakHrs + "-hour window = <strong>" + fmt(r.peakRidersHr) + " riders/hr</strong>, split across lines by boarding stops.</li>",
-      "<li>Cycle time per line: route length ÷ " + r.speed + " mph + " + r.dwellSec + "s dwell at each stop. " + (r.rows.every((x) => x.snapped) ? "Route lengths follow mapped roads (OSRM)." : r.rows.some((x) => x.snapped) ? "Some route lengths follow mapped roads; " + r.rows.filter((x) => !x.snapped).map((x) => escapeHtml(x.line.name)).join(", ") + " uses a straight-line estimate × " + num("roadFactor", 1.2) + "." : "Route lengths are straight-line estimates × " + num("roadFactor", 1.2) + " road factor.") + "</li>",
+      "<li>Cycle time per line: route length ÷ " + r.speed + " mph + " + r.dwellSec + "s dwell at each stop. " + (r.rows.every((x) => x.snapped) ? "Route lengths follow mapped roads (OSRM); any leg where the road route detours past " + DETOUR_CAP + "× the straight distance is taken direct instead, since lot interiors are rarely mapped." : r.rows.some((x) => x.snapped) ? "Some route lengths follow mapped roads; " + r.rows.filter((x) => !x.snapped).map((x) => escapeHtml(x.line.name)).join(", ") + " uses a straight-line estimate × " + num("roadFactor", 1.2) + "." : "Route lengths are straight-line estimates × " + num("roadFactor", 1.2) + " road factor.") + "</li>",
       "<li>Headway target: " + fmt(r.headway) + " min (twice the " + r.wait + "-min target wait). Trams for wait = cycle ÷ headway.</li>",
       "<li>Capacity check: " + r.seats + " seats × trips per hour must cover the line's peak riders. The larger of the two tram counts wins" + (r.rows.some((x) => x.binding === "capacity") ? " (capacity is the binding constraint on " + r.rows.filter((x) => x.binding === "capacity").map((x) => escapeHtml(x.line.name)).join(", ") + ")" : "") + ".</li>",
       r.vipUnits ? "<li>VIP service adds " + r.vipUnits + " utility unit" + (r.vipUnits > 1 ? "s" : "") + " outside the loop math.</li>" : ""
@@ -1168,9 +1209,11 @@
     if (!state.stops.length && !state.lines.length) return;
     if (!confirm("Clear all stops and lines?")) return;
     Object.values(markers).forEach((m) => map.removeLayer(m));
-    Object.values(polylines).forEach((p) => map.removeLayer(p));
+    Object.values(polylines).forEach((p) => { map.removeLayer(p.solid); map.removeLayer(p.dashed); });
+    Object.values(halos).forEach((p) => map.removeLayer(p));
     for (const k in markers) delete markers[k];
     for (const k in polylines) delete polylines[k];
+    for (const k in halos) delete halos[k];
     state.stops = []; state.lines = []; state.nextStop = 1; state.nextLine = 1; state.activeLine = null;
     setMode("stop"); render();
     if (state.venueCenter) map.setView(state.venueCenter, 17);
@@ -1191,7 +1234,7 @@
       const payload = {
         v: state.venue, vc: state.venueCenter, c: state.center, z: state.zoom,
         s: state.stops.map((s) => [s.id, s.name, +s.lat.toFixed(6), +s.lng.toFixed(6), s.gate ? 1 : 0]),
-        l: state.lines.map((l) => [l.id, l.name, l.color, l.stops, l.mode, l.w == null ? null : l.w]),
+        l: state.lines.map((l) => [l.id, l.name, l.color, l.stops, l.mode, l.w == null ? null : l.w, l.direct ? 1 : 0]),
         i: INPUT_IDS.map((id) => $(id).value), f: [$("vip").checked ? 1 : 0, $("adaOnly").checked ? 1 : 0]
       };
       if (!state.stops.length && !state.lines.length && !state.venue) { history.replaceState(null, "", location.pathname); return; }
@@ -1216,7 +1259,7 @@
       // addStop() takes its id from nextStop, so set it per restored stop to keep ids stable.
       (p.s || []).forEach((a) => { state.nextStop = a[0]; addStop(a[2], a[3], a[1], !!a[4]); });
       state.nextStop = state.stops.reduce((a, s) => Math.max(a, s.id), 0) + 1;
-      (p.l || []).forEach((a) => { state.lines.push({ id: a[0], name: a[1], color: a[2], stops: a[3] || [], mode: a[4] || "loop", w: a[5] == null ? null : a[5] }); });
+      (p.l || []).forEach((a) => { state.lines.push({ id: a[0], name: a[1], color: a[2], stops: a[3] || [], mode: a[4] || "loop", w: a[5] == null ? null : a[5], direct: !!a[6] }); });
       state.nextLine = state.lines.reduce((a, l) => Math.max(a, l.id), 0) + 1;
       state.activeLine = state.lines.length ? state.lines[0].id : null;
       if (state.stops.length) map.fitBounds(state.stops.map((s) => [s.lat, s.lng]), { padding: [40, 40], maxZoom: 17 });
