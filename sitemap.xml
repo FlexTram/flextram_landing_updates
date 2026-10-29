@@ -267,7 +267,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/data-center-construction-people-moving</loc>
-    <lastmod>2026-08-11</lastmod>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
       <image:image>
@@ -545,6 +545,16 @@
     <image:image>
       <image:loc>https://www.flextram.com/assets/img/hero-section-179-venue-transportation.jpg</image:loc>
       <image:caption>Split image of the FLEXTRAM logo on a tram mud flap on the Bonneville Salt Flats beside a spread of hundred-dollar bills</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.flextram.com/blog/industrial-crews-plant-tours</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-industrial-crews-plant-tours.jpg</image:loc>
+      <image:caption>Aerial view of a large industrial construction site with cranes, a partly clad steel-framed building, contractor trailers, and stockpiled materials, with farmland and a town beyond</image:caption>
     </image:image>
   </url>
   <url>
@@ -879,7 +889,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/plant-tour-transportation</loc>
-    <lastmod>2026-10-08</lastmod>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
