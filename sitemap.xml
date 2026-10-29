@@ -199,7 +199,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -429,7 +429,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/hidden-cost-of-making-fans-walk</loc>
-    <lastmod>2026-08-11</lastmod>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
       <image:image>
@@ -545,6 +545,16 @@
     <image:image>
       <image:loc>https://www.flextram.com/assets/img/hero-section-179-venue-transportation.jpg</image:loc>
       <image:caption>Split image of the FLEXTRAM logo on a tram mud flap on the Bonneville Salt Flats beside a spread of hundred-dollar bills</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.flextram.com/blog/dispatched-vs-scheduled</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-dispatched-vs-scheduled.jpg</image:loc>
+      <image:caption>Aerial view of a road course circuit beside full spectator parking lots stretching across open grassland, with hills and a town in the distance</image:caption>
     </image:image>
   </url>
   <url>
@@ -689,7 +699,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/ada-demand-surge</loc>
-    <lastmod>2026-08-11</lastmod>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
