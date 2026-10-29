@@ -738,7 +738,8 @@
   })();
   </script>
 
-  <!-- Golf-cart savings calculator scroll toast (non-blocking, dismissible, once per session) -->
+  <!-- Purchase-inquiry scroll toast (non-blocking, dismissible, once per session). The golf-cart
+       calculator toast that used to live here moved to the solutions hub on 2026-10-29. -->
   <style>
     .calc-toast{position:fixed;right:20px;bottom:20px;z-index:9998;width:322px;max-width:calc(100vw - 32px);background:#fff;border:1px solid #e6e3dc;border-radius:12px;box-shadow:0 10px 34px rgba(0,0,0,0.17);padding:20px 20px 18px;transform:translateY(24px);opacity:0;visibility:hidden;transition:transform .35s ease,opacity .35s ease,visibility .35s ease;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;}
     .calc-toast.is-visible{transform:translateY(0);opacity:1;visibility:visible;}
@@ -751,17 +752,17 @@
     @media (max-width:480px){.calc-toast{right:12px;left:12px;bottom:12px;width:auto;}}
     @media (prefers-reduced-motion:reduce){.calc-toast{transition:opacity .2s ease,visibility .2s ease;transform:none;}}
   </style>
-  <div id="calc-toast" class="calc-toast" role="dialog" aria-label="Golf cart fleet savings calculator" aria-hidden="true">
+  <div id="calc-toast" class="calc-toast" role="dialog" aria-label="Purchase FlexTram equipment" aria-hidden="true">
     <button type="button" class="calc-toast-close" aria-label="Dismiss">&times;</button>
-    <p class="calc-toast-title">Running a golf cart fleet?</p>
-    <p class="calc-toast-text">See what you'd save by consolidating into FlexTram &mdash; real numbers on labor, fuel, insurance, and maintenance.</p>
-    <a href="/savings-calculator" class="calc-toast-cta">See your savings &rarr;</a>
+    <p class="calc-toast-title">Thinking about upgrading your onsite transportation?</p>
+    <p class="calc-toast-text">FlexTram now sells the same trams it runs at the country's biggest events, to approved venues and operators. Rent it, lease it, or own it.</p>
+    <a href="/purchase-inquiry" class="calc-toast-cta">Apply to purchase &rarr;</a>
   </div>
   <script>
   (function(){
     var toast = document.getElementById('calc-toast');
     if (!toast) return;
-    var KEY = 'calcToastSeen';
+    var KEY = 'purchaseToastSeen';
     try { if (sessionStorage.getItem(KEY)) return; } catch(e){}
     var shown = false;
     function markSeen(){ try { sessionStorage.setItem(KEY,'1'); } catch(e){} }
@@ -769,7 +770,7 @@
       if (shown) return; shown = true;
       toast.classList.add('is-visible');
       toast.setAttribute('aria-hidden','false');
-      if (typeof gtag === 'function') gtag('event','cta_view',{cta_type:'savings_calculator',cta_location:'homepage_scroll_toast'});
+      if (typeof gtag === 'function') gtag('event','cta_view',{cta_type:'purchase_inquiry',cta_location:'homepage_scroll_toast'});
       window.removeEventListener('scroll', onScroll);
     }
     function dismiss(){

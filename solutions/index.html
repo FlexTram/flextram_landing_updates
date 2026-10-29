@@ -815,5 +815,62 @@
       Array.prototype.forEach.call(vids, function(v) { io.observe(v); });
     })();
   </script>
+
+  <!-- Golf-cart savings calculator toast (moved here from the homepage 2026-10-29). Non-blocking,
+       dismissible, once per session. Reveals when the industry grid scrolls into view, via
+       IntersectionObserver per the site rule (no scroll listeners). -->
+  <style>
+    .calc-toast{position:fixed;right:20px;bottom:20px;z-index:9998;width:322px;max-width:calc(100vw - 32px);background:#fff;border:1px solid var(--color-border-mid,#e6e3dc);border-radius:12px;box-shadow:0 10px 34px rgba(0,0,0,0.17);padding:20px 20px 18px;transform:translateY(24px);opacity:0;visibility:hidden;transition:transform .35s ease,opacity .35s ease,visibility .35s ease;}
+    .calc-toast.is-visible{transform:translateY(0);opacity:1;visibility:visible;}
+    .calc-toast-close{position:absolute;top:7px;right:9px;background:none;border:none;font-size:22px;line-height:1;color:var(--color-text-tertiary,#6b6a64);cursor:pointer;padding:4px 6px;}
+    .calc-toast-close:hover{color:#1a1a1a;}
+    .calc-toast-title{font-weight:700;font-size:17px;color:#111;margin:0 0 6px;letter-spacing:-0.01em;}
+    .calc-toast-text{font-size:14px;line-height:1.5;color:#3c3a34;margin:0 0 15px;}
+    .calc-toast-cta{display:inline-block;background:#c44323;color:#fff;font-size:13px;font-weight:700;text-decoration:none;padding:9px 18px;border-radius:50px;transition:transform .2s ease,box-shadow .2s ease;}
+    .calc-toast-cta:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(196,67,35,0.35);color:#fff;}
+    @media (max-width:480px){.calc-toast{right:12px;left:12px;bottom:12px;width:auto;}}
+    @media (prefers-reduced-motion:reduce){.calc-toast{transition:opacity .2s ease,visibility .2s ease;transform:none;}}
+  </style>
+  <div id="calc-toast" class="calc-toast" role="dialog" aria-label="Golf cart fleet savings calculator" aria-hidden="true">
+    <button type="button" class="calc-toast-close" aria-label="Dismiss">&times;</button>
+    <p class="calc-toast-title">Running a golf cart fleet?</p>
+    <p class="calc-toast-text">See what you'd save by consolidating into FlexTram &mdash; real numbers on labor, fuel, insurance, and maintenance.</p>
+    <a href="/savings-calculator" class="calc-toast-cta">See your savings &rarr;</a>
+  </div>
+  <script>
+  (function(){
+    var toast = document.getElementById('calc-toast');
+    if (!toast) return;
+    var KEY = 'calcToastSeen';
+    try { if (sessionStorage.getItem(KEY)) return; } catch(e){}
+    var shown = false;
+    function markSeen(){ try { sessionStorage.setItem(KEY,'1'); } catch(e){} }
+    function show(){
+      if (shown) return; shown = true;
+      toast.classList.add('is-visible');
+      toast.setAttribute('aria-hidden','false');
+      if (typeof gtag === 'function') gtag('event','cta_view',{cta_type:'savings_calculator',cta_location:'solutions_scroll_toast'});
+    }
+    function dismiss(){
+      toast.classList.remove('is-visible');
+      toast.setAttribute('aria-hidden','true');
+      markSeen();
+    }
+    toast.querySelector('.calc-toast-close').addEventListener('click', dismiss);
+    toast.querySelector('.calc-toast-cta').addEventListener('click', function(){
+      markSeen();
+      if (typeof gtag === 'function') gtag('event','cta_click',{cta_type:'savings_calculator',cta_location:'solutions_scroll_toast',cta_destination:'/savings-calculator'});
+    });
+    // Trigger: the industry grid enters the viewport (roughly mid-page). The grid is tall, so
+    // it intersects for any scroll position inside it, unlike its one-line heading.
+    var target = document.querySelector('.grid') || document.querySelectorAll('.section-label')[1];
+    if (!target) return;
+    if (!('IntersectionObserver' in window)) { show(); return; }
+    var io = new IntersectionObserver(function(entries){
+      if (entries.some(function(e){ return e.isIntersecting; })) { show(); io.disconnect(); }
+    }, { rootMargin: '0px 0px -20% 0px' });
+    io.observe(target);
+  })();
+  </script>
 </body>
 </html>
