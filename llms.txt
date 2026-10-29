@@ -135,6 +135,7 @@ Key facts:
 - [Contact form](https://www.flextram.com/#contact-form): Casual or exploratory inquiries.
 - [Request a bid](https://www.flextram.com/request-a-bid): Structured procurement form for RFPs and large deployments.
 - [Procurement packet](https://www.flextram.com/procurement-packet): Vehicle specifications, ADA compliance, COI on request, deployment SOPs (gated lead capture).
+- [Purchase inquiry](https://www.flextram.com/purchase-inquiry): FlexTram sells equipment to approved organizations. Short review form (organization, venue, operating plan, units, in-service date); reply within one business day with quote and payment structure. Rentals and turnkey plans do not require approval.
 - [Savings calculator](https://www.flextram.com/savings-calculator): Interactive tool — model labor, fuel, insurance, and maintenance savings from replacing a golf cart fleet with FlexTram. Live, traceable math.
 - [Route planner](https://www.flextram.com/route-planner): Interactive tool — drop stops on a satellite map of your venue, draw named lines, enter attendance and target wait, and get a basic ops plan (trams, operators, headways, capacity per line) sized with Little's Law. Gated plan, shareable link.
 - [Calendly](https://calendly.com/jb-flextram/30min): 30-minute discovery call.

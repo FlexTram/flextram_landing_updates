@@ -291,7 +291,7 @@
         <div class="row">
           <div class="col-md-8 ml-auto mr-auto">
             <img src="assets/img/logo_black_new.png" alt="FlexTrams" width="300" height="61" style="max-width: 300px; margin: 20px auto; display: block;">
-            <p style="font-weight:500;font-size:1.25em;line-height:1.6">FlexTram (also known as FlexTrolley) builds proprietary micro-mobility vehicles designed for the demands of live events, large venues, and high-volume operations. We offer rentals, long-term leases, outright purchase, turnkey transportation plans, and custom modifications for experiential marketing.</p>
+            <p style="font-weight:500;font-size:1.25em;line-height:1.6">FlexTram (also known as FlexTrolley) builds proprietary micro-mobility vehicles designed for the demands of live events, large venues, and high-volume operations. We offer rentals, long-term leases, <a href="/purchase-inquiry" style="color:#c44323;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(196,67,35,0.4);">outright purchase</a> (to approved organizations), turnkey transportation plans, and custom modifications for experiential marketing.</p>
             <br />
             <br />
             <p style="font-weight:500;font-size:1.25em;line-height:1.6">The vehicle is just the starting point.</p>
@@ -428,7 +428,7 @@
         <div class="row">
           <div class="col-md-8 ml-auto mr-auto">
             <h2 class="text-center title" style="color:white;">Tell us about your venue.</h2>
-            <p class="text-center" style="color:rgba(255,255,255,0.75);font-size:14px;margin-top:-0.5rem;margin-bottom:2rem;"><a href="/where-we-operate" style="color:rgba(255,255,255,0.9);text-decoration:underline;text-decoration-color:rgba(255,255,255,0.3);text-underline-offset:3px;">Deploying across the United States and Canada.</a> Rentals, leases, purchase, and turnkey plans available.</p>
+            <p class="text-center" style="color:rgba(255,255,255,0.75);font-size:14px;margin-top:-0.5rem;margin-bottom:2rem;"><a href="/where-we-operate" style="color:rgba(255,255,255,0.9);text-decoration:underline;text-decoration-color:rgba(255,255,255,0.3);text-underline-offset:3px;">Deploying across the United States and Canada.</a> Rentals, leases, <a href="/purchase-inquiry" style="color:rgba(255,255,255,0.9);text-decoration:underline;text-decoration-color:rgba(255,255,255,0.3);text-underline-offset:3px;">purchase</a>, and turnkey plans available.</p>
             <div class="contact-success" role="status">
               <p class="contact-success-title"><span class="contact-success-check" aria-hidden="true">&#10003;</span> Message sent.</p>
               <p class="contact-success-body">Thanks &mdash; it&rsquo;s in our inbox and a real person will get back to you, usually within one business day. If your timeline is tighter than that, <a href="https://calendly.com/jb-flextram/30min" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline;text-underline-offset:3px;">book a 30-minute call</a> and we&rsquo;ll accelerate.</p>
@@ -698,13 +698,14 @@
 
     // CTA click tracking
     document.addEventListener('click', function(e) {
-      var link = e.target.closest('a[href*="contact-form"], a[href*="/request-a-bid"], a[href*="calendly.com"], a[href*="/savings-calculator"], a[href*="FlexTram-In-The-Field"], .nav-cta');
+      var link = e.target.closest('a[href*="contact-form"], a[href*="/request-a-bid"], a[href*="calendly.com"], a[href*="/savings-calculator"], a[href*="/purchase-inquiry"], a[href*="FlexTram-In-The-Field"], .nav-cta');
       if (link) {
         var dest = link.getAttribute('href') || '';
         var cta_type = 'contact_form';
         if (dest.indexOf('calendly.com') > -1) cta_type = 'calendly';
         else if (dest.indexOf('request-a-bid') > -1) cta_type = 'bid_form';
         else if (dest.indexOf('savings-calculator') > -1) cta_type = 'savings_calculator';
+        else if (dest.indexOf('purchase-inquiry') > -1) cta_type = 'purchase_inquiry';
         else if (dest.indexOf('FlexTram-In-The-Field') > -1) cta_type = 'field_sheet';
         gtag('event', 'cta_click', {
           cta_text: link.textContent.trim(),

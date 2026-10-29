@@ -386,6 +386,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.flextram.com/purchase-inquiry</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.flextram.com/savings-calculator</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>monthly</changefreq>
@@ -533,7 +539,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/section-179-venue-transportation-2026</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Google tag (gtag.js) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZYK6B5M9QT');
+    // Fire conversion event on arrival (buffered in dataLayer, flushed when gtag.js loads)
+    gtag('event', 'purchase_inquiry_received', { event_category: 'conversion', event_label: 'purchase_thanks_page' });
+    (function() {
+      var loaded = false;
+      function loadGA() {
+        if (loaded) return; loaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-ZYK6B5M9QT';
+        document.head.appendChild(s);
+      }
+      ['scroll','mousemove','touchstart','keydown','click','pointerdown'].forEach(function(e) {
+        window.addEventListener(e, loadGA, { once: true, passive: true });
+      });
+      setTimeout(loadGA, 2500);
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Purchase inquiry received — FlexTram</title>
+  <meta name="description" content="Your FlexTram purchase inquiry is in. Joseph will review it and respond within one business day." />
+  <meta name="robots" content="noindex,follow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" /></noscript>
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <meta name="theme-color" content="#000000">
+  <link rel="stylesheet" href="assets/css/global.css" />
+  <link rel="stylesheet" href="assets/css/bid-request.css?v=2" />
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="/" class="nav-logo"><img src="assets/img/logo_black_new.png" alt="FlexTram" width="147" height="30" style="height: 30px;"></a>
+    <div class="nav-links">
+      <a href="/solutions" class="nav-link">Solutions</a>
+      <a href="/blog/" class="nav-link">Blog</a>
+      <a href="/#contact-form" class="nav-cta">Get in Touch</a>
+    </div>
+  </nav>
+
+  <main class="bid-wrap">
+
+    <div class="bid-thanks">
+
+      <p class="eyebrow">Purchase inquiry received</p>
+      <h1 class="bid-thanks-heading">We've got it.</h1>
+      <p class="bid-thanks-sub">Thanks for submitting. Joseph will review your organization and operating plan and respond within <strong>one business day</strong>. If it's a fit, the reply comes with a quote and payment options; if he has questions first, expect a short call.</p>
+
+      <div class="bid-slick-card">
+        <h2>Want to talk through it live?</h2>
+        <p>Book a 30-minute call with Joseph to walk the venue, the operating plan, and the payment structure. Useful if you're working against a placed-in-service date.</p>
+        <a href="https://calendly.com/jb-flextram/30min" class="btn-primary" target="_blank" rel="noopener" style="display:inline-block;">Book a 30-min call &rarr;</a>
+      </div>
+
+      <div class="bid-slick-card">
+        <h2>Buying before December 31?</h2>
+        <p>Equipment has to be delivered and ready to run by the end of your tax year to count in 2026. The tax post covers Section 179, bonus depreciation, and the placed-in-service rule in plain terms.</p>
+        <a href="/blog/section-179-venue-transportation-2026" class="btn-primary" style="display:inline-block;">Read the 2026 tax window &rarr;</a>
+      </div>
+
+      <div class="bid-contact-card">
+        <p>Questions in the meantime?</p>
+        <p class="bid-contact-name">Joseph Bradley</p>
+        <p><a class="js-mail bc-link" href="/#contact-form" data-u="jb" data-d="flextram.com" data-show>Email Joseph</a> &middot; <a class="js-tel bc-link" href="/#contact-form" data-p1="865" data-p2="300" data-p3="4834" data-show>Call Joseph</a></p>
+        <p style="margin-top:1rem;"><a href="/" class="bc-link">&larr; Back to FlexTram.com</a></p>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    // CTA click tracking on purchase thank-you page
+    document.addEventListener('click', function(e) {
+      var link = e.target.closest('a[href*="calendly.com"], a[href^="mailto:"], a[href*="section-179"]');
+      if (link && typeof gtag === 'function') {
+        var dest = link.getAttribute('href') || '';
+        var cta_type = 'other';
+        if (dest.indexOf('calendly.com') > -1) cta_type = 'calendly';
+        else if (dest.indexOf('mailto:') === 0) cta_type = 'email';
+        else if (dest.indexOf('section-179') > -1) cta_type = 'tax_post';
+        gtag('event', 'cta_click', {
+          cta_text: link.textContent.trim(),
+          cta_location: 'purchase_thanks_page',
+          cta_type: cta_type,
+          cta_destination: dest
+        });
+      }
+    });
+  </script>
+
+  <script>
+    // Contact details are split across data attributes and assembled at runtime,
+    // so no complete address or number ever appears in the HTML source for
+    // pattern-matching harvesters. Falls back to /#contact-form without JS.
+    (function() {
+      var AT = String.fromCharCode(64);
+      Array.prototype.forEach.call(document.querySelectorAll('.js-mail'), function(el) {
+        var addr = el.getAttribute('data-u') + AT + el.getAttribute('data-d');
+        var subj = el.getAttribute('data-s');
+        el.setAttribute('href', 'mailto:' + addr + (subj ? '?subject=' + subj : ''));
+        if (el.hasAttribute('data-show')) el.textContent = addr;
+      });
+      Array.prototype.forEach.call(document.querySelectorAll('.js-tel'), function(el) {
+        var parts = [el.getAttribute('data-p1'), el.getAttribute('data-p2'), el.getAttribute('data-p3')];
+        el.setAttribute('href', 'tel:+1' + parts.join(''));
+        if (el.hasAttribute('data-show')) el.textContent = parts.join('.');
+      });
+    })();
+  </script>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <span class="site-footer-copy">&copy; <script>document.write(new Date().getFullYear())</script> FlexTram Systems</span>
+      <nav class="site-footer-nav" aria-label="Footer">
+        <a href="/solutions">Solutions</a>
+        <a href="/blog/">Blog</a>
+        <a href="/where-we-operate">Coverage</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/#contact-form">Contact</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
