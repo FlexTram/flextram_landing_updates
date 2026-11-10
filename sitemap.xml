@@ -199,7 +199,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-11-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -548,6 +548,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.flextram.com/blog/winter-light-show-transportation</loc>
+    <lastmod>2026-11-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-winter-light-shows.jpg</image:loc>
+      <image:caption>A plaza at night with trees wrapped in blue and white string lights and a walk-through tunnel of hanging lights, with a visitor walking past</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.flextram.com/blog/industrial-crews-plant-tours</loc>
     <lastmod>2026-10-29</lastmod>
     <changefreq>monthly</changefreq>
@@ -589,7 +599,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/state-park-shuttle-systems</loc>
-    <lastmod>2026-08-25</lastmod>
+    <lastmod>2026-11-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -599,7 +609,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/small-midsize-amusement-parks</loc>
-    <lastmod>2026-08-25</lastmod>
+    <lastmod>2026-11-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
