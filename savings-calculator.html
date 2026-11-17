@@ -72,6 +72,16 @@
 }
 </script>
 <style>
+  /* Metric-matched fallbacks so the web-font swap does not reflow the page (Session 45, 2026-11-16).
+     Ratios measured on this page's own copy at 412px: DM Sans 400 = 1.039 x Arial, 500 = 1.076 x Arial,
+     600/700 = 0.991 x Arial Bold; Instrument Serif = 0.76 x Georgia. font-display: swap keeps a cold
+     local() lookup from blocking first paint. */
+  @font-face { font-family: "DM Sans Fallback"; src: local("Arial"); font-weight: 400; size-adjust: 103.9%; font-display: swap; }
+  @font-face { font-family: "DM Sans Fallback"; src: local("Arial"); font-weight: 500; size-adjust: 107.6%; font-display: swap; }
+  @font-face { font-family: "DM Sans Fallback"; src: local("Arial Bold"), local("Arial-BoldMT"); font-weight: 600 700; size-adjust: 99.1%; font-display: swap; }
+  @font-face { font-family: "Instrument Serif Fallback"; src: local("Georgia"); size-adjust: 76%; font-display: swap; }
+  @font-face { font-family: "Instrument Serif Fallback"; src: local("Georgia Italic"), local("Georgia-Italic"); font-style: italic; size-adjust: 76%; font-display: swap; }
+
   :root {
     --cream: #F1EFE8;
     --surface: #F8F7F3;
@@ -90,7 +100,7 @@
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; background: var(--cream); color: var(--body); }
   body {
-    font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    font-family: "DM Sans", "DM Sans Fallback", Arial, sans-serif;
     font-size: 16px;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
@@ -124,7 +134,7 @@
 
   /* Hero */
   h1 {
-    font-family: "Instrument Serif", Georgia, serif;
+    font-family: "Instrument Serif", "Instrument Serif Fallback", Georgia, serif;
     font-weight: 400;
     font-size: clamp(40px, 6vw, 60px);
     line-height: 1.05;
@@ -146,7 +156,7 @@
 
   /* Section heading */
   h2 {
-    font-family: "Instrument Serif", Georgia, serif;
+    font-family: "Instrument Serif", "Instrument Serif Fallback", Georgia, serif;
     font-weight: 400;
     font-size: 26px;
     letter-spacing: 0;
@@ -270,7 +280,7 @@
     padding: 28px 32px;
   }
   .math h3 {
-    font-family: "Instrument Serif", Georgia, serif;
+    font-family: "Instrument Serif", "Instrument Serif Fallback", Georgia, serif;
     font-weight: 400;
     font-size: 22px;
     margin: 0 0 4px;
@@ -298,7 +308,7 @@
     color: var(--ink);
   }
   .math .row-value {
-    font-family: "Instrument Serif", Georgia, serif;
+    font-family: "Instrument Serif", "Instrument Serif Fallback", Georgia, serif;
     font-weight: 400;
     font-size: 24px;
     color: var(--ink);
@@ -339,7 +349,7 @@
     margin-bottom: 8px;
   }
   .total-card .total-number {
-    font-family: "Instrument Serif", Georgia, serif;
+    font-family: "Instrument Serif", "Instrument Serif Fallback", Georgia, serif;
     font-weight: 400;
     font-size: clamp(44px, 7.5vw, 68px);
     color: var(--orange);
@@ -372,7 +382,7 @@
     margin-bottom: 6px;
   }
   .total-card .secondary .value {
-    font-family: "Instrument Serif", Georgia, serif;
+    font-family: "Instrument Serif", "Instrument Serif Fallback", Georgia, serif;
     font-weight: 400;
     font-size: 26px;
     color: var(--cream);
@@ -408,7 +418,7 @@
     pointer-events: none;
   }
   .gate h3 {
-    font-family: "Instrument Serif", Georgia, serif;
+    font-family: "Instrument Serif", "Instrument Serif Fallback", Georgia, serif;
     font-size: 24px;
     margin: 0 0 6px;
     color: var(--ink);
