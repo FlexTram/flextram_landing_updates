@@ -1,0 +1,161 @@
+/* FlexTram video embeds.
+   .yt is a 16:9 box. On content pages it holds a click-to-load facade: a
+   self-hosted thumbnail and a play link to YouTube. yt-facade.js swaps in the
+   youtube-nocookie player on click, so no YouTube request happens until then.
+   On /videos/<slug> watch pages the box holds the real iframe from the start,
+   so search engines see the video as the page's main content. The box reserves
+   its height before anything loads, so neither version shifts layout. */
+
+.yt {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.yt picture,
+.yt img,
+.yt iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.yt img {
+  object-fit: cover;
+  display: block;
+}
+
+.yt-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none !important;
+  background: linear-gradient(to top, rgba(0,0,0,0.35), rgba(0,0,0,0) 45%);
+  cursor: pointer;
+}
+.yt-play-btn {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #c44323;
+  box-shadow: 0 2px 14px rgba(0,0,0,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, transform 0.15s;
+}
+.yt-play-btn::before {
+  content: "";
+  margin-left: 5px;
+  border-style: solid;
+  border-width: 13px 0 13px 22px;
+  border-color: transparent transparent transparent #fff;
+}
+.yt-play:hover .yt-play-btn,
+.yt-play:focus-visible .yt-play-btn,
+a.video-card:hover .yt-play-btn {
+  background: #a3361b;
+  transform: scale(1.06);
+}
+.yt-play:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: -3px;
+}
+.yt-duration {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(0,0,0,0.75);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+}
+
+/* In-page figure (solution pages, blog posts, where-we-operate). */
+.video-figure {
+  max-width: 720px;
+  margin: 2rem auto;
+}
+.video-figure figcaption {
+  margin-top: 0.75rem;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--color-text-tertiary);
+}
+.video-figure figcaption a {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Watch page body. */
+.watch-player {
+  margin: 0 0 2rem;
+}
+.watch-meta {
+  font-size: 13px;
+  color: var(--color-text-tertiary);
+  margin: 0 0 1.5rem;
+}
+.onscreen-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+  display: grid;
+  gap: 6px;
+}
+.onscreen-list li {
+  font-size: 15px;
+  line-height: 1.5;
+  padding: 0.5rem 0.85rem;
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-sm);
+}
+
+/* /videos hub grid. */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin: 0 0 1rem;
+}
+.video-card {
+  display: block;
+  border: 0.5px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+.video-card:hover {
+  border-color: var(--color-border-mid);
+  background: var(--color-bg-secondary);
+}
+.video-card .yt {
+  border-radius: 0;
+}
+.video-card-body {
+  padding: 0.85rem 1rem 1rem;
+}
+.video-card-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin: 0 0 0.3rem;
+}
+.video-card-desc {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
