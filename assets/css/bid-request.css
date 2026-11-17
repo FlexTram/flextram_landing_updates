@@ -4,10 +4,11 @@
    ====================== */
 
 /* Metric-matched fallbacks so the web-font swap does not reflow the page.
-   Measured 2026-11-16 at 412px on the forms' own copy: DM Sans 400 is ~2.7% wider than Arial,
-   500 is ~4.4% (103.7% was too wide: it added a line to the procurement lead); Instrument Serif is ~24% narrower than Georgia (ratio 0.757, atlas hub). */
-@font-face { font-family: 'DM Sans Fallback'; src: local('Arial'); font-weight: 400; size-adjust: 102.5%; }
-@font-face { font-family: 'DM Sans Fallback'; src: local('Arial'); font-weight: 500; size-adjust: 104.2%; }
+   Swept 100-104% at 412px against line-level text geometry on all three forms (2026-11-16):
+   103.0-103.5% keeps every hero/first-step line break; 102.5% reflowed request-a-bid and
+   procurement leads, 103.7% added a line to the procurement lead. 500 weight = 400 x 1.017. Instrument Serif is ~24% narrower than Georgia (ratio 0.757, atlas hub). */
+@font-face { font-family: 'DM Sans Fallback'; src: local('Arial'); font-weight: 400; size-adjust: 103.2%; }
+@font-face { font-family: 'DM Sans Fallback'; src: local('Arial'); font-weight: 500; size-adjust: 105%; }
 @font-face { font-family: 'Instrument Serif Fallback'; src: local('Georgia'); size-adjust: 76%; }
 @font-face { font-family: 'Instrument Serif Fallback'; src: local('Georgia Italic'), local('Georgia-Italic'); font-style: italic; size-adjust: 76%; }
 :root {
