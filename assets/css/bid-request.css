@@ -3,6 +3,17 @@
    /request-a-bid.html + /request-a-bid-received.html
    ====================== */
 
+/* Metric-matched fallbacks so the web-font swap does not reflow the page.
+   Measured 2026-11-16 at 412px: DM Sans 400 is 3.7% wider than Arial on the same
+   string; Instrument Serif is ~24% narrower than Georgia (ratio 0.757, atlas hub). */
+@font-face { font-family: 'DM Sans Fallback'; src: local('Arial'); size-adjust: 103.7%; }
+@font-face { font-family: 'Instrument Serif Fallback'; src: local('Georgia'); size-adjust: 76%; }
+@font-face { font-family: 'Instrument Serif Fallback'; src: local('Georgia Italic'), local('Georgia-Italic'); font-style: italic; size-adjust: 76%; }
+:root {
+  --font-sans: 'DM Sans', 'DM Sans Fallback', Arial, sans-serif;
+  --font-serif: 'Instrument Serif', 'Instrument Serif Fallback', Georgia, serif;
+}
+
 .bid-wrap {
   max-width: var(--max-width);
   margin: 0 auto;
