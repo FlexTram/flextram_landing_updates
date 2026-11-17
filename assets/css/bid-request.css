@@ -6,11 +6,13 @@
 /* Metric-matched fallbacks so the web-font swap does not reflow the page.
    Swept 100-104% at 412px against line-level text geometry on all three forms (2026-11-16):
    103.0-103.5% keeps every hero/first-step line break; 102.5% reflowed request-a-bid and
-   procurement leads, 103.7% added a line to the procurement lead. 500 weight = 400 x 1.017. Instrument Serif is ~24% narrower than Georgia (ratio 0.757, atlas hub). */
-@font-face { font-family: 'DM Sans Fallback'; src: local('Arial'); font-weight: 400; size-adjust: 103.2%; }
-@font-face { font-family: 'DM Sans Fallback'; src: local('Arial'); font-weight: 500; size-adjust: 105%; }
-@font-face { font-family: 'Instrument Serif Fallback'; src: local('Georgia'); size-adjust: 76%; }
-@font-face { font-family: 'Instrument Serif Fallback'; src: local('Georgia Italic'), local('Georgia-Italic'); font-style: italic; size-adjust: 76%; }
+   procurement leads, 103.7% added a line to the procurement lead. 500 weight = 400 x 1.017.
+   font-display: swap on the local() faces: a cold local-font lookup under the default block
+   period held text invisible for ~2 s in 3 of 19 fresh-profile Lighthouse runs. Instrument Serif is ~24% narrower than Georgia (ratio 0.757, atlas hub). */
+@font-face { font-family: 'DM Sans Fallback'; src: local('Arial'); font-weight: 400; size-adjust: 103.2%; font-display: swap; }
+@font-face { font-family: 'DM Sans Fallback'; src: local('Arial'); font-weight: 500; size-adjust: 105%; font-display: swap; }
+@font-face { font-family: 'Instrument Serif Fallback'; src: local('Georgia'); size-adjust: 76%; font-display: swap; }
+@font-face { font-family: 'Instrument Serif Fallback'; src: local('Georgia Italic'), local('Georgia-Italic'); font-style: italic; size-adjust: 76%; font-display: swap; }
 :root {
   --font-sans: 'DM Sans', 'DM Sans Fallback', Arial, sans-serif;
   --font-serif: 'Instrument Serif', 'Instrument Serif Fallback', Georgia, serif;
