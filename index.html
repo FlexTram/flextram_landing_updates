@@ -436,7 +436,7 @@
               <p class="contact-success-body">Thanks &mdash; it&rsquo;s in our inbox and a real person will get back to you, usually within one business day. If your timeline is tighter than that, <a href="https://calendly.com/jb-flextram/30min" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline;text-underline-offset:3px;">book a 30-minute call</a> and we&rsquo;ll accelerate.</p>
             </div>
 
-            <form id="contact-form" action="https://formspree.io/f/mvzzoarr" method="POST" accept-charset="UTF-8" name="contact">
+            <form id="contact-form" data-ajax-submit data-success="inline" action="https://formspree.io/f/mvzzoarr" method="POST" accept-charset="UTF-8" name="contact">
               <input type="hidden" name="_next" value="/?success=true">
               <input type="hidden" name="_subject" value="Website Inquiry — FlexTram.com">
               <input hidden="true" name="source" value="flextram"></input>
@@ -815,6 +815,7 @@
     window.addEventListener('resize', function(){ if (window.innerWidth >= 992) setOpen(false); });
   })();
   </script>
+  <script src="assets/js/form-submit.js" defer></script>
 </body>
 
 </html>

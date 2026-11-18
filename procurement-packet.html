@@ -113,7 +113,7 @@
       <p style="font-size: 0.85rem; color: var(--color-text-tertiary); margin-top: 1.25rem; font-style: italic;">Each packet is assembled in response to the project — not a one-size-fits-all download. Expect a response within one business day.</p>
     </section>
 
-    <form class="bid-form" id="procurement-form" action="https://formspree.io/f/mvzzoarr" method="POST" accept-charset="UTF-8" name="procurement-packet">
+    <form class="bid-form" id="procurement-form" data-ajax-submit action="https://formspree.io/f/mvzzoarr" method="POST" accept-charset="UTF-8" name="procurement-packet">
       <input type="hidden" name="_next" value="/procurement-packet-received">
       <input type="hidden" name="_subject" value="Procurement Packet Request — FlexTram.com">
       <input type="hidden" name="source" value="procurement_packet">
@@ -237,5 +237,6 @@
       </nav>
     </div>
   </footer>
+  <script src="assets/js/form-submit.js" defer></script>
 </body>
 </html>
