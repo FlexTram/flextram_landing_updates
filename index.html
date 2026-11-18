@@ -753,6 +753,9 @@
     .calc-toast-cta:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(196,67,35,0.35);color:#fff;}
     @media (max-width:480px){.calc-toast{right:12px;left:12px;bottom:12px;width:auto;}}
     @media (prefers-reduced-motion:reduce){.calc-toast{transition:opacity .2s ease,visibility .2s ease;transform:none;}}
+    /* Footer links on small phones: centred rows that wrap evenly (paper-kit gives them an 85px line-height). */
+    @media (max-width:400px){.footer .footer-nav{display:flex;flex-wrap:wrap;justify-content:center;column-gap:18px;line-height:44px;padding:12px 12px 0;}.footer .footer-nav a{margin-left:0 !important;}}
+    @media (max-width:360px){.footer .footer-nav{column-gap:12px;padding:12px 8px 0;}.footer .footer-nav a{font-size:13px !important;}}
   </style>
   <div id="calc-toast" class="calc-toast" role="dialog" aria-label="Purchase FlexTram equipment" aria-hidden="true">
     <button type="button" class="calc-toast-close" aria-label="Dismiss">&times;</button>
