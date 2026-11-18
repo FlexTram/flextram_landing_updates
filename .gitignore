@@ -1,3 +1,6 @@
 **/.DS_Store
 _source_files/
 CLAUDE.md
+
+# Local Claude Code settings: never publish (repo root is served verbatim)
+.claude/
