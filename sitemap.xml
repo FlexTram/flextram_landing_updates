@@ -200,7 +200,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/</loc>
-    <lastmod>2026-11-16</lastmod>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
       <image:image>
@@ -540,7 +540,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/section-179-venue-transportation-2026</loc>
-    <lastmod>2026-11-16</lastmod>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -556,6 +556,16 @@
     <image:image>
       <image:loc>https://www.flextram.com/assets/img/hero-winter-light-shows.jpg</image:loc>
       <image:caption>A plaza at night with trees wrapped in blue and white string lights and a walk-through tunnel of hanging lights, with a visitor walking past</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.flextram.com/blog/year-end-equipment-purchases</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.flextram.com/assets/img/hero-year-end-equipment-purchases.jpg</image:loc>
+      <image:caption>The word FINISH painted in white on green artificial turf beside a white finish line</image:caption>
     </image:image>
   </url>
   <url>
@@ -790,7 +800,7 @@
   </url>
   <url>
     <loc>https://www.flextram.com/blog/already-paying-for-transportation</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
